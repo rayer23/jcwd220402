@@ -1,17 +1,32 @@
-require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
+const db = require("../models");
+const { verifyToken } = require("../middlewares/authMiddleware");
 
-const PORT = process.env.PORT || 8000;
+require("dotenv/config");
+const fs = require("fs");
+
+// Import Routes
+const {
+  admin,
+  auth,
+  product,
+  profile,
+  userdata,
+  userProfile,
+} = require("../routes");
+
+const PORT = process.env.PORT;
 const app = express();
 app.use(
-  cors({
-    origin: [
-      process.env.WHITELISTED_DOMAIN &&
-        process.env.WHITELISTED_DOMAIN.split(","),
-    ],
-  })
+  cors()
+  //     {
+  //     origin: [
+  //         process.env.WHITELISTED_DOMAIN &&
+  //             process.env.WHITELISTED_DOMAIN.split(","),
+  //     ],
+  // }
 );
 
 app.use(express.json());
@@ -20,6 +35,13 @@ app.use(express.json());
 
 // ===========================
 // NOTE : Add your routes here
+app.use("/public", express.static("public"));
+app.use("/admin", admin);
+app.use("/userData", userdata);
+app.use("/product", product);
+app.use("/auth", auth);
+app.use("/profile", verifyToken, profile);
+app.use("/user-profile", verifyToken, userProfile);
 
 app.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
@@ -69,6 +91,10 @@ app.listen(PORT, (err) => {
   if (err) {
     console.log(`ERROR: ${err}`);
   } else {
-    console.log(`APP RUNNING at ${PORT} ✅`);
+    // db.sequelize.sync({ alter: true })
+    if (!fs.existsSync("public")) {
+      fs.mkdirSync("public");
+    }
+    console.log(`Server running at PORT : ${PORT}`);
   }
 });
