@@ -121,8 +121,8 @@ module.exports = {
         await emailer({
           to: email,
           html: htmlResult,
-          subject: "Welcome to Shopedia",
-          text: "Welcome to Shopedia",
+          subject: "Welcome to Delisha",
+          text: "Welcome to Delisha",
         });
 
         return res.status(201).json({
@@ -169,7 +169,7 @@ module.exports = {
         id: findUserByEmail.id,
       });
 
-      const resetPasswordLink = `${process.env.BASE_URL_FE}reset-password-confirmation?reset_token=${reset_token}`
+      const resetPasswordLink = `${process.env.BASE_URL_FE}reset-password-confirmation?reset_token=${reset_token}`;
 
       const rawHTML = fs.readFileSync("templates/reset.html", "utf-8");
 
