@@ -169,7 +169,7 @@ module.exports = {
         id: findUserByEmail.id,
       });
 
-      const resetPasswordLink = `${process.env.BASE_URL_FE}reset-password-confirmation?reset_token=${reset_token}`;
+      const resetPasswordLink = `${process.env.BASE_URL_FE}reset-confirm?reset_token=${reset_token}`;
 
       const rawHTML = fs.readFileSync("templates/reset.html", "utf-8");
 

@@ -9,12 +9,14 @@ import { login } from "./redux/features/authSlice";
 import { attach } from "./redux/features/resetSlice";
 
 //route
+import ResetPassword from "./pages/resetpassword";
+import ResetConfirm from "./pages/resetconfirm";
 
-import NotFound from "./components/404Page"
+import NotFound from "./components/404Page";
 // roles route
 import GuestRoute from "./components/route/GuestRoute";
-import ProtectedRoute from "./components/route/ProtectedRoute"
-import AdminRoute from "./components/route/AdminRoute"
+import ProtectedRoute from "./components/route/ProtectedRoute";
+import AdminRoute from "./components/route/AdminRoute";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -88,11 +90,20 @@ function App() {
 
   return (
     <>
-        <Routes>
-            <Route path="/*" element={<NotFound />} />
-        </Routes>
+      <Routes>
+        <Route path="/*" element={<NotFound />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/reset-confirm"
+          element={
+            <GuestRoute>
+              <ResetConfirm />
+            </GuestRoute>
+          }
+        />
+      </Routes>
     </>
-)
+  );
 }
 
 export default App;
