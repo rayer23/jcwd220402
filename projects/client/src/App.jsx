@@ -11,7 +11,9 @@ import { attach } from "./redux/features/resetSlice";
 //route
 import ResetPassword from "./pages/resetpassword";
 import ResetConfirm from "./pages/resetconfirm";
+import Dashboard from "./pages/admin/dashboard";
 
+import NavbarAdmin from "./components/navbaradmin";
 import NotFound from "./components/404Page";
 // roles route
 import GuestRoute from "./components/route/GuestRoute";
@@ -90,6 +92,20 @@ function App() {
 
   return (
     <>
+      {/* {authSelector.RoleId === 3 || authSelector.RoleId === 2 ? (
+        <NavbarAdmin />
+      ) : null} */}
+      <NavbarAdmin />
+      {/* {location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/reset-password" ||
+      location.pathname === "/reset-confirm" ||
+      authSelector.RoleId === 3 ||
+      authSelector.RoleId === 2 ? null : (
+        <Box>
+          <Navbar />
+        </Box>
+      )} */}
       <Routes>
         <Route path="/*" element={<NotFound />} />
         <Route path="/reset-password" element={<ResetPassword />} />
@@ -101,7 +117,27 @@ function App() {
             </GuestRoute>
           }
         />
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
       </Routes>
+
+      {/* {location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/reset-password" ||
+      location.pathname === "/reset-confirm" |||
+      authSelector.RoleId === 3 ||
+      authSelector.RoleId === 2 ? null : (
+        <Box>
+          <Footer />
+        </Box> 
+      )} */}
     </>
   );
 }
