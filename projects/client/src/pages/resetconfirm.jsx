@@ -122,6 +122,7 @@ const ResetPasswordConfirmation = () => {
         <Box w={"100px"} pt={"30px"}>
           <Button
             bgColor={"white"}
+            size={"lg"}
             fontSize={"75px"}
             _hover={"none"}
             pb={"5px"}

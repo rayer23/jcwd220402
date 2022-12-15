@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Link,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -15,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { axiosInstance } from "../api";
 import * as Yup from "yup";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { TfiControlBackward } from "react-icons/tfi";
 
 import { attach } from "../redux/features/resetSlice";
@@ -81,9 +81,10 @@ const RequestResetPassword = () => {
 
   return (
     <Box>
-      <Link to="/login">
-        <Box w={"100px"} pt={"30px"}>
+      <Link to="/">
+        <Box w={"150px"} pt={"30px"}>
           <Button
+            size={"lg"}
             bgColor={"white"}
             fontSize={"75px"}
             _hover={"none"}
