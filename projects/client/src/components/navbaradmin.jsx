@@ -84,10 +84,10 @@ const Sidebar = () => {
                     <i className=" nav-link-icon">
                       <TbSofa />
                     </i>
-                    <span className="nav-link-name">Manage User Data</span>
+                    <span className="nav-link-name">Update Product Stock</span>
                   </Link>
                 </>
-              ) : null}
+               ) : null}
 
               <Link to="/admin/product" className="nav-link">
                 <i className="nav-link-icon">
@@ -104,7 +104,7 @@ const Sidebar = () => {
               </Link>
 
               {authSelector.RoleId === 2 ? (
-                <Link to="/admin/category" className="nav-link">
+                <Link to="/admin/update-stock" className="nav-link">
                   <i className=" nav-link-icon">
                     <TbSofa />
                   </i>
@@ -118,7 +118,7 @@ const Sidebar = () => {
                 </i>
                 <span className="nav-link-name">Change Role Status</span>
               </Link>
-              <Link to="#empty" className="nav-link">
+              <Link to="/sales-report" className="nav-link">
                 <i className="nav-link-icon">
                   <RiMoneyDollarBoxFill />
                 </i>

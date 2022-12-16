@@ -3,8 +3,8 @@ const { userdata } = require("../controllers/index");
 const { upload } = require("../helpers/uploader");
 const { verifyToken } = require("../middlewares/authMiddleware");
 
-router.get("/getAllUser", verifyToken, userdata.getAllUser);
-router.get("/getAllWarehouseAdmin", verifyToken, userdata.getAllWarehouseAdmin);
+router.get("/allUser", verifyToken, userdata.getAllUser);
+router.get("/allWarehouseAdmin", verifyToken, userdata.getAllWarehouseAdmin);
 router.post(
   "/addNewAdmin",
   verifyToken,
