@@ -54,7 +54,7 @@ const Sidebar = () => {
                 <i className="nav-link-icon">
                   <MdTableChart />
                 </i>
-                <span className="nav-link-name">Home Page</span>
+                <span className="nav-link-name">Home</span>
               </Link>
 
               <Link to="/admin/warehouse-management" className="nav-link">
@@ -82,12 +82,11 @@ const Sidebar = () => {
 
                   <Link to="/admin/update-stock" className="nav-link">
                     <i className=" nav-link-icon">
-                    <TbSofa />
+                      <TbSofa />
                     </i>
                     <span className="nav-link-name">Manage User Data</span>
                   </Link>
                 </>
-                
               ) : null}
 
               <Link to="/admin/product" className="nav-link">

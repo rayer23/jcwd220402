@@ -1,34 +1,32 @@
 import { Box, Image, Text } from "@chakra-ui/react";
+import Gambar from "../../assets/admin.svg";
 
 const AdminDashboard = () => {
   return (
     <>
-      <Box marginTop="100px" marginLeft={"275px"} marginRight={"20px"}>
+      <Box marginTop="60px" marginLeft={"275px"} marginRight={"20px"}>
         <Box>
           <Text fontWeight={"bold"} fontSize="30px">
-            Content
+            Admin Dashboard
           </Text>
           <br />
-          {/* <Image
-              src={Logo}
-              alt="Logo"
-              textAlign={"center"}
-              paddingLeft="35%"
-              // justifyContent={"center"}
-              // justifyItems="center"
-              // justifySelf={"center"}
-              // alignItems="center"
-              // alignSelf={"center"}
-              // alignContent={"center"}
-              // textAlign="center"
-            /> */}
-          <Text textAlign="center">
-            Admin dashboard
+          <Image
+            src={Gambar}
+            alt={"Admin Dashboard"}
+            w="500px"
+            mx={"auto"}
+            mb="14px"
+          />
+          <Text textAlign={"center"} fontWeight={"bold"}>
+            You are the admin.
           </Text>
-          <br />
-          <br />
           <Text textAlign={"center"}>
-            You are the admin. Let's do something!
+            Delisha is an e-commerce application that implements more than one
+            warehouse in storing goods.
+          </Text>
+          <Text textAlign={"center"}>
+            The application of this aims to increase the speed of delivery and
+            also reduce shipping costs.
           </Text>
         </Box>
       </Box>
