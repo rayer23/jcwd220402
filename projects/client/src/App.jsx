@@ -11,9 +11,12 @@ import { attach } from "./redux/features/resetSlice";
 //route
 import ResetPassword from "./pages/resetpassword";
 import ResetConfirm from "./pages/resetconfirm";
-import Dashboard from "./pages/admin/dashboard";
 
+//route admin
 import NavbarAdmin from "./components/navbaradmin";
+import Dashboard from "./pages/admin/dashboard";
+import ManageUser from "./pages/admin/manageuser";
+
 import NotFound from "./components/404Page";
 // roles route
 import GuestRoute from "./components/route/GuestRoute";
@@ -126,6 +129,14 @@ function App() {
             // </AdminRoute>
           }
         />
+        <Route
+                    path="/admin/manage-user-data"
+                    element={
+                            <ManageUser />
+                        // <AdminRoute>
+                        // </AdminRoute>
+                    }
+                />
       </Routes>
 
       {/* {location.pathname === "/login" ||

@@ -4,9 +4,9 @@ import Gambar from "../../assets/admin.svg";
 const AdminDashboard = () => {
   return (
     <>
-      <Box marginTop="60px" marginLeft={"275px"} marginRight={"20px"}>
+      <Box marginTop="90px" marginLeft={"90px"} marginRight={"20px"}>
         <Box>
-          <Text fontWeight={"bold"} fontSize="30px">
+          <Text fontWeight={"bold"} fontSize={"2xl"}>
             Admin Dashboard
           </Text>
           <br />
