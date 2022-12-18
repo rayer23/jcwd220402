@@ -46,7 +46,7 @@ const Sidebar = () => {
               <i className={`nav-logo-icon`}>
                 <FaHouseUser />
               </i>
-              <span className="nav-logo-name">Admin Dashboard</span>
+              <span className="nav-logo-name">{authSelector.RoleId === 3 ? "Super Admin" : "Warehouse Admin"}</span>
             </div>
 
             <div className="nav-list">
