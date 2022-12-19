@@ -132,7 +132,6 @@ const ManageUserData = () => {
     fetchUserData();
   }, [currentSearch, page, sortDir, sortBy, openedAddress]);
 
-  
   return (
     <Box marginLeft={"90px"}>
       <Box p="20px 0" display={"flex"} justifyContent="space-between" mr="4">
@@ -140,7 +139,6 @@ const ManageUserData = () => {
           <Text fontSize={"2xl"} fontWeight="bold">
             User Data Management
           </Text>
-          
         </Box>
 
         <Box gap="4" display={"flex"}>
@@ -163,6 +161,9 @@ const ManageUserData = () => {
           <form onSubmit={formikSearch.handleSubmit}>
             <FormControl>
               <InputGroup textAlign={"right"}>
+              <Button borderRightRadius={"0"} type="submit">
+                  <TbSearch />
+                </Button>
                 <Input
                   type={"text"}
                   placeholder="Search by username"
@@ -170,13 +171,11 @@ const ManageUserData = () => {
                   w="200px"
                   onChange={searchAdminHandler}
                   _placeholder={"halo"}
-                  borderRightRadius="0"
+                  borderLeftRadius="0"
                   value={formikSearch.values.search}
                 />
 
-                <Button borderLeftRadius={"0"} type="submit">
-                  <TbSearch />
-                </Button>
+                
               </InputGroup>
             </FormControl>
           </form>
@@ -208,6 +207,10 @@ const ManageUserData = () => {
           </Box>
         </Box>
       ) : null}
+        <Text fontSize={"2xl"} fontWeight="bold" color={"#0095DA"}>
+          Total User:{totalCount}
+        </Text>
+    
 
       <Center>
         <Box p="50px">
@@ -220,6 +223,7 @@ const ManageUserData = () => {
                 {"<"}
               </Button>
             )}
+
             {page >= maxPage ? null : (
               <Button
                 onClick={nextPage}
