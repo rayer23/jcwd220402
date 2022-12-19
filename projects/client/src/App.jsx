@@ -16,12 +16,13 @@ import ResetConfirm from "./pages/resetconfirm";
 import NavbarAdmin from "./components/navbaradmin";
 import Dashboard from "./pages/admin/dashboard";
 import ManageUser from "./pages/admin/manageuser";
+import ManageAdmin from "./pages/admin/manageadmin";
 
 import NotFound from "./components/404Page";
 // roles route
-import GuestRoute from "./components/route/GuestRoute";
-import ProtectedRoute from "./components/route/ProtectedRoute";
-import AdminRoute from "./components/route/AdminRoute";
+import GuestRoute from "./components/GuestRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/admin/adminroute";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -95,10 +96,10 @@ function App() {
 
   return (
     <>
-      {/* {authSelector.RoleId === 3 || authSelector.RoleId === 2 ? (
+      {authSelector.RoleId === 3 || authSelector.RoleId === 2 ? (
         <NavbarAdmin />
-      ) : null} */}
-      <NavbarAdmin />
+      ) : null}
+      {/* <NavbarAdmin /> */}
       {/* {location.pathname === "/login" ||
       location.pathname === "/register" ||
       location.pathname === "/reset-password" ||
@@ -124,21 +125,28 @@ function App() {
         <Route
           path="/admin/dashboard"
           element={
+            <AdminRoute>
               <Dashboard />
-            // <AdminRoute>
-            // </AdminRoute>
+            </AdminRoute>
           }
         />
         <Route
-                    path="/admin/manage-user-data"
-                    element={
-                            <ManageUser />
-                        // <AdminRoute>
-                        // </AdminRoute>
-                    }
-                />
+          path="/admin/manage-user-data"
+          element={
+            <AdminRoute>
+              <ManageUser />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-admin-data"
+          element={
+            <AdminRoute>
+              <ManageAdmin />
+            </AdminRoute>
+          }
+        />
       </Routes>
-
       {/* {location.pathname === "/login" ||
       location.pathname === "/register" ||
       location.pathname === "/reset-password" ||
