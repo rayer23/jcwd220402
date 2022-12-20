@@ -9,12 +9,20 @@ import { login } from "./redux/features/authSlice";
 import { attach } from "./redux/features/resetSlice";
 
 //route
+import ResetPassword from "./pages/resetpassword";
+import ResetConfirm from "./pages/resetconfirm";
 
-import NotFound from "./components/404Page"
+//route admin
+import NavbarAdmin from "./components/navbaradmin";
+import Dashboard from "./pages/admin/dashboard";
+import ManageUser from "./pages/admin/manageuser";
+import ManageAdmin from "./pages/admin/manageadmin";
+
+import NotFound from "./components/404Page";
 // roles route
-import GuestRoute from "./components/route/GuestRoute";
-import ProtectedRoute from "./components/route/ProtectedRoute"
-import AdminRoute from "./components/route/AdminRoute"
+import GuestRoute from "./components/GuestRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/admin/adminroute";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -88,11 +96,69 @@ function App() {
 
   return (
     <>
-        <Routes>
-            <Route path="/*" element={<NotFound />} />
-        </Routes>
+      {authSelector.RoleId === 3 || authSelector.RoleId === 2 ? (
+        <NavbarAdmin />
+      ) : null}
+      {/* <NavbarAdmin /> */}
+      {/* {location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/reset-password" ||
+      location.pathname === "/reset-confirm" ||
+      authSelector.RoleId === 3 ||
+      authSelector.RoleId === 2 ? null : (
+        <Box>
+          <Navbar />
+        </Box>
+      )} */}
+      <Routes>
+        <Route path="/*" element={<NotFound />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/reset-confirm"
+          element={
+            <GuestRoute>
+              <ResetConfirm />
+            </GuestRoute>
+          }
+        />
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-user-data"
+          element={
+            <AdminRoute>
+              <ManageUser />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-admin-data"
+          element={
+            <AdminRoute>
+              <ManageAdmin />
+            </AdminRoute>
+          }
+        />
+      </Routes>
+      {/* {location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/reset-password" ||
+      location.pathname === "/reset-confirm" |||
+      authSelector.RoleId === 3 ||
+      authSelector.RoleId === 2 ? null : (
+        <Box>
+          <Footer />
+        </Box> 
+      )} */}
     </>
-)
+  );
 }
 
 export default App;

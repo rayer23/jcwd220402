@@ -154,7 +154,7 @@ module.exports = {
         });
       }
 
-      const profile_picture = `http://localhost:8000/public/${req.file.filename}`;
+      const profile_picture = `${req.file.filename}`;
       const { email, password, phone_number, username, WarehouseId } = req.body;
 
       const findEmail = await db.User.findOne({
