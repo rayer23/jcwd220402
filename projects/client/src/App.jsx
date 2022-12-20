@@ -1,4 +1,6 @@
 import axios from "axios";
+import Register from "./pages/Register"
+
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -112,6 +114,7 @@ function App() {
       )} */}
       <Routes>
         <Route path="/*" element={<NotFound />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/reset-confirm"
