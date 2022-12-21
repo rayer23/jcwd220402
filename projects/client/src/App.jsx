@@ -1,5 +1,7 @@
 import axios from "axios";
 import Register from "./pages/Register"
+import RegisterVerification from "./pages/RegisterVerification"
+import Home from "./pages/Home"
 
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -114,7 +116,9 @@ function App() {
       )} */}
       <Routes>
         <Route path="/*" element={<NotFound />} />
+        <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register/verification" element={<RegisterVerification />}/>
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/reset-confirm"
