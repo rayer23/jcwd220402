@@ -1,6 +1,7 @@
 import axios from "axios";
 import Register from "./pages/Register"
 import RegisterVerification from "./pages/RegisterVerification"
+import LoginPage from "./pages/Login"
 import Home from "./pages/Home"
 
 import { useEffect, useState } from "react";
@@ -117,6 +118,14 @@ function App() {
       <Routes>
         <Route path="/*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
+        <Route
+              path="/login"
+              element={
+              <GuestRoute>
+                <LoginPage />
+              </GuestRoute>
+              }
+          />
         <Route path="/register" element={<Register />} />
         <Route path="/register/verification" element={<RegisterVerification />}/>
         <Route path="/reset-password" element={<ResetPassword />} />
