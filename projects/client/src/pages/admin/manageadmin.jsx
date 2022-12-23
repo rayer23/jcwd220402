@@ -30,6 +30,7 @@ import EditAdmin from "../../components/admin/editadmin";
 import { RiUserAddFill, RiUserSettingsFill ,RiUserUnfollowFill} from "react-icons/ri";
 import { TbSearch } from "react-icons/tb";
 import { IoIosAlert } from "react-icons/io";
+import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai"
 
 const ManageAdminData = () => {
   const [userData, setUserData] = useState([]);
@@ -535,29 +536,32 @@ const ManageAdminData = () => {
           Total Admin: {totalCount}
         </Text>
      
-      <Center>
         <Box p="20px">
-          <Box textAlign={"center"}>
-            {page === 1 ? null : (
-              <Button
-                onClick={previousPage}
-                disabled={page === 1 ? true : null}
-              >
-                {"<"}
-              </Button>
-            )}
-            {page >= maxPage ? null : (
-              <Button
-                onClick={nextPage}
-                ml="10px"
-                disabled={page >= maxPage ? true : null}
-              >
-                {">"}
-              </Button>
-            )}
+        <Box textAlign={"center"}>
+          <Button
+            onClick={previousPage}
+            disabled={page === 1 ? true : null}
+            _hover={false}
+            _active={false}
+          >
+            <AiOutlineLeftCircle fontSize={"20px"} />
+          </Button>
+
+          <Box display={"inline"}>{page}</Box>
+
+          <Button
+            onClick={nextPage}
+            disabled={page >= maxPage ? true : null}
+            _hover={false}
+            _active={false}
+          >
+            <AiOutlineRightCircle fontSize={"20px"} />
+          </Button>
+          <Box>
+            Page: {page} of {maxPage}
           </Box>
         </Box>
-      </Center>
+      </Box>
     </Box>
   );
 };

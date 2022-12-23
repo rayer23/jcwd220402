@@ -29,6 +29,7 @@ import { IoIosAlert } from "react-icons/io";
 import { TbSearch } from "react-icons/tb";
 import { axiosInstance } from "../../api";
 import AddressUser from "../../components/admin/addressuser";
+import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai"
 
 import { FcHome } from "react-icons/fc";
 
@@ -212,30 +213,32 @@ const ManageUserData = () => {
         </Text>
     
 
-      <Center>
-        <Box p="50px">
-          <Box>
-            {page === 1 ? null : (
-              <Button
-                onClick={previousPage}
-                disabled={page === 1 ? true : null}
-              >
-                {"<"}
-              </Button>
-            )}
+        <Box p="20px">
+        <Box textAlign={"center"}>
+          <Button
+            onClick={previousPage}
+            disabled={page === 1 ? true : null}
+            _hover={false}
+            _active={false}
+          >
+            <AiOutlineLeftCircle fontSize={"20px"} />
+          </Button>
 
-            {page >= maxPage ? null : (
-              <Button
-                onClick={nextPage}
-                ml="10px"
-                disabled={page >= maxPage ? true : null}
-              >
-                {">"}
-              </Button>
-            )}
+          <Box display={"inline"}>{page}</Box>
+
+          <Button
+            onClick={nextPage}
+            disabled={page >= maxPage ? true : null}
+            _hover={false}
+            _active={false}
+          >
+            <AiOutlineRightCircle fontSize={"20px"} />
+          </Button>
+          <Box>
+            Page: {page} of {maxPage}
           </Box>
         </Box>
-      </Center>
+      </Box>
 
       <AddressUser
         color={"#0095DA"}

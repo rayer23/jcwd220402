@@ -1,39 +1,47 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Box } from "@chakra-ui/react";
+import axios from 'axios';
+import Register from './pages/Register';
+import RegisterVerification from './pages/RegisterVerification';
+import LoginPage from './pages/Login';
 
-import { axiosInstance } from "./api";
-import { login } from "./redux/features/authSlice";
-import { attach } from "./redux/features/resetSlice";
+import { useEffect, useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Box } from '@chakra-ui/react';
+
+import { axiosInstance } from './api';
+import { login } from './redux/features/authSlice';
+import { attach } from './redux/features/resetSlice';
 
 //route
-import ResetPassword from "./pages/resetpassword";
-import ResetConfirm from "./pages/resetconfirm";
+import Navbar from './components/navbar';
+import HomePage from './pages/Home';
+import Footer from "./components/footer"
+
+import ResetPassword from './pages/resetpassword';
+import ResetConfirm from './pages/resetconfirm';
 
 //route admin
-import NavbarAdmin from "./components/navbaradmin";
-import Dashboard from "./pages/admin/dashboard";
-import ManageUser from "./pages/admin/manageuser";
-import ManageAdmin from "./pages/admin/manageadmin";
+import NavbarAdmin from './components/navbaradmin';
+import Dashboard from './pages/admin/dashboard';
+import ManageUser from './pages/admin/manageuser';
+import ManageAdmin from './pages/admin/manageadmin';
 
-import NotFound from "./components/404Page";
+import NotFound from './components/404Page';
 // roles route
-import GuestRoute from "./components/GuestRoute";
-import ProtectedRoute from "./components/ProtectedRoute";
-import AdminRoute from "./components/admin/adminroute";
+import GuestRoute from './components/GuestRoute';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/admin/adminroute';
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const authSelector = useSelector((state) => state.auth);
 
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/api/greetings`
+        `${process.env.REACT_APP_API_BASE_URL}/api/greetings`,
       );
-      setMessage(data?.message || "");
+      setMessage(data?.message || '');
     })();
   }, []);
 
@@ -45,18 +53,18 @@ function App() {
 
   const keepUserLoggedIn = async () => {
     try {
-      const auth_token = localStorage.getItem("auth_token");
+      const auth_token = localStorage.getItem('auth_token');
 
       if (!auth_token) {
         setAuthCheck(true);
         return;
       }
 
-      const response = await axiosInstance.get("/auth/refresh-token");
+      const response = await axiosInstance.get('/auth/refresh-token');
 
       dispatch(login(response.data.data));
 
-      localStorage.setItem("auth_token", response.data.token);
+      localStorage.setItem('auth_token', response.data.token);
       setAuthCheck(true);
     } catch (err) {
       console.log(err);
@@ -68,18 +76,18 @@ function App() {
 
   const userResetData = async () => {
     try {
-      const reset_token = localStorage.getItem("reset_token");
+      const reset_token = localStorage.getItem('reset_token');
 
       if (!reset_token) {
         setAuthCheck(true);
         return;
       }
 
-      const response = await axiosInstance.get("/auth/refresh-token");
+      const response = await axiosInstance.get('/auth/refresh-token');
 
       dispatch(attach(response.data.data));
 
-      localStorage.setItem("reset_token", response.data.token);
+      localStorage.setItem('reset_token', response.data.token);
       setAuthCheck(true);
     } catch (err) {
       console.log(err);
@@ -99,19 +107,34 @@ function App() {
       {authSelector.RoleId === 3 || authSelector.RoleId === 2 ? (
         <NavbarAdmin />
       ) : null}
-      {/* <NavbarAdmin /> */}
-      {/* {location.pathname === "/login" ||
-      location.pathname === "/register" ||
-      location.pathname === "/reset-password" ||
-      location.pathname === "/reset-confirm" ||
+      {location.pathname === '/login' ||
+      location.pathname === '/register' ||
+      location.pathname === '/register/verification' ||
+      location.pathname === '/reset-password' ||
+      location.pathname === '/reset-confirm' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
           <Navbar />
         </Box>
-      )} */}
+      )}
       <Routes>
         <Route path="/*" element={<NotFound />} />
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/login"
+          element={
+            <GuestRoute>
+              <LoginPage />
+            </GuestRoute>
+          }
+        />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register/verification"
+          element={<RegisterVerification />}
+        />
+
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/reset-confirm"
@@ -147,16 +170,17 @@ function App() {
           }
         />
       </Routes>
-      {/* {location.pathname === "/login" ||
+      {location.pathname === "/login" ||
       location.pathname === "/register" ||
+      location.pathname === '/register/verification' ||
       location.pathname === "/reset-password" ||
-      location.pathname === "/reset-confirm" |||
+      location.pathname === "/reset-confirm" ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
           <Footer />
         </Box> 
-      )} */}
+      )}
     </>
   );
 }
