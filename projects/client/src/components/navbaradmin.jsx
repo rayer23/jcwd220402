@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { Button, Text, useToast } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/features/authSlice";
-import { MdTableChart } from "react-icons/md";
-import { ImHome } from "react-icons/im";
-import { FaChair, FaHouseUser, FaUserCog } from "react-icons/fa";
-import { BiCategoryAlt } from "react-icons/bi";
-import { TbSofa } from "react-icons/tb";
-import { CgLogOut } from "react-icons/cg";
-import { RiAdminFill, RiUser2Fill, RiMoneyDollarBoxFill } from "react-icons/ri";
-import "./navbaradmin.css";
+import React, { useState } from 'react';
+import { Button, Text, useToast } from '@chakra-ui/react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/features/authSlice';
+import { MdTableChart } from 'react-icons/md';
+import { ImHome } from 'react-icons/im';
+import { FaChair, FaHouseUser, FaUserCog } from 'react-icons/fa';
+import { BiCategoryAlt } from 'react-icons/bi';
+import { TbSofa } from 'react-icons/tb';
+import { CgLogOut } from 'react-icons/cg';
+import { RiAdminFill, RiUser2Fill, RiMoneyDollarBoxFill } from 'react-icons/ri';
+import { AiOutlineStock } from 'react-icons/ai';
+import { TfiShoppingCartFull } from 'react-icons/tfi';
+import { HiClipboardDocument } from 'react-icons/hi2';
+import './navbaradmin.css';
 
 const Sidebar = () => {
   const authSelector = useSelector((state) => state.auth);
@@ -21,32 +24,34 @@ const Sidebar = () => {
   const toast = useToast();
 
   const logoutBtnHandler = () => {
-    localStorage.removeItem("auth_token");
+    localStorage.removeItem('auth_token');
     dispatch(logout());
     toast({
-      title: "User Logout",
-      status: "info",
+      title: 'User Logout',
+      status: 'info',
     });
-    navigate("/");
+    navigate('/');
   };
   const [show, setShow] = useState(false);
 
   return (
-    <main className={show ? "space-toggle" : null}>
-      <header className={`header ${show ? "space-toggle" : null}`}>
+    <main className={show ? 'space-toggle' : null}>
+      <header className={`header ${show ? 'space-toggle' : null}`}>
         <div className="header-toggle" onClick={() => setShow(!show)}>
-          <i className={`fas fa-bars ${show ? "fa-solid fa-xmark" : null}`}></i>
+          <i className={`fas fa-bars ${show ? 'fa-solid fa-xmark' : null}`}></i>
         </div>
       </header>
 
-      <aside className={`sidebar ${show ? "show" : null}`}>
+      <aside className={`sidebar ${show ? 'show' : null}`}>
         <nav className="nav">
           <div>
             <div className="nav-logo">
               <i className={`nav-logo-icon`}>
                 <FaHouseUser />
               </i>
-              <span className="nav-logo-name">{authSelector.RoleId === 3 ? "Super Admin" : "Warehouse Admin"}</span>
+              <span className="nav-logo-name">
+                {authSelector.RoleId === 3 ? 'Super Admin' : 'Warehouse Admin'}
+              </span>
             </div>
 
             <div className="nav-list">
@@ -87,7 +92,7 @@ const Sidebar = () => {
                     <span className="nav-link-name">Update Product Stock</span>
                   </Link>
                 </>
-               ) : null}
+              ) : null}
 
               <Link to="/admin/product" className="nav-link">
                 <i className="nav-link-icon">
@@ -112,17 +117,29 @@ const Sidebar = () => {
                 </Link>
               ) : null}
 
-              <Link to="/user-data" className="nav-link">
+              <Link to="/admin/order" className="nav-link">
                 <i className="nav-link-icon">
-                  <FaUserCog />
+                  <TfiShoppingCartFull />
                 </i>
-                <span className="nav-link-name">Change Role Status</span>
+                <span className="nav-link-name">Order</span>
               </Link>
-              <Link to="/sales-report" className="nav-link">
+              <Link to="/admin/order-history" className="nav-link">
+                <i className="nav-link-icon">
+                  <HiClipboardDocument />
+                </i>
+                <span className="nav-link-name">Order History</span>
+              </Link>
+              <Link to="/admin/sales-report" className="nav-link">
                 <i className="nav-link-icon">
                   <RiMoneyDollarBoxFill />
                 </i>
                 <span className="nav-link-name">Sales Report</span>
+              </Link>
+              <Link to="/admin/report/stock" className="nav-link">
+                <i className="nav-link-icon">
+                  <AiOutlineStock />
+                </i>
+                <span className="nav-link-name">Stock Report</span>
               </Link>
             </div>
           </div>

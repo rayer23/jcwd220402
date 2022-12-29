@@ -62,8 +62,8 @@ const CategoryHomeItems = ({ category_name, category_image }) => {
                     }}
                 >
                     <Image
-                        w={'80px'}
-                        h={'80px'}
+                        w={'120px'}
+                        h={'120px'}
                         src={category_image}
                     />
                 </motion.button>

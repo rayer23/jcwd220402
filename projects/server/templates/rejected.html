@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Welcome !</title>
+    <title>Payment Rejected</title>
     <style>
       body {
         background: #f4f5f7;
@@ -65,8 +65,8 @@
                 height="70"
                 style="
                   height: 70px;
-                  background-color: #078FCD;
-                  background-image: linear-gradient(-45deg, #078FCD, #078FCD);
+                  background-color: #078fcd;
+                  background-image: linear-gradient(-45deg, #078fcd, #078fcd);
                 "
               >
                 <table valign="top" border="0" cellpadding="0" cellspacing="0">
@@ -94,8 +94,8 @@
                   border="0"
                   cellpadding="0"
                   cellspacing="0"
-                  width="480"
-                  style="max-width: 480px; background: #ffffff"
+                  width="550"
+                  style="max-width: 550px; background: #ffffff"
                 >
                   <tr>
                     <td>
@@ -110,7 +110,7 @@
                           line-height: 30px;
                         "
                       >
-                        Welcome, {{username}}
+                        Sorry, your payment is rejected
                       </h1>
                     </td>
                   </tr>
@@ -118,8 +118,6 @@
                     <td>
                       <p
                         style="
-                        width: 100%;
-                          font-family: Arial, Helvetica;
                           font-size: 18px;
                           color: #6a767c;
                           margin: 0;
@@ -127,62 +125,44 @@
                           line-height: 30px;
                         "
                       >
-                        Thank you for signing up for our website. We're really happy to have you !
+                        Hello, {{username}}
                       </p>
-					  
-                    </td>
-                  </tr>
-                  <tr>
-                    <td height="30" style="height: 30px; line-height: 0 ; text-align: center; 
-                    vertical-align: middle;">
-                      &nbsp;
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="{{link}}" style="text-decoration: none">
-                        <div
-                        style="
-                          width: 100%;
-                          padding: 8px;
-                          font-weight: bold;
-                          border-radius: 8px;
-                          border-style: solid;
-                          border-width: 3px;
-                          border-color: #078FCD;
-                          color: #078FCD;
-                          text-align: center;
-                          height: 35px;
-                          line-height: 35px;
-                            ">
-                        Start Shopping 
-                      </div>   
-                    </a>
-                  </td>
-                  </tr>
-                  <tr>
-                    <td height="30" style="height: 30px; line-height: 0">
-                      &nbsp;
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
                       <p
                         style="
-                          font-family: Arial, Helvetica;
-                          font-size: 12px;
+                          font-size: 18px;
                           color: #6a767c;
                           margin: 0;
-                          margin-bottom: 10px;
                           padding: 0;
-                          line-height: 20px;
-                          text-align: left;
+                          line-height: 30px;
                         "
                       >
-                        You can go direcly to our website now by clicking the button on top.
+                        {{message}}
+                      </p>
+
+                      <div style="padding-top: 24px">
+                        <a href="{{uploadLink}}" style="text-decoration: none">
+                          <div
+                            style="
+                              width: 100%;
+                              padding: 8px;
+                              font-weight: bold;
+                              color: white;
+                              background-color: #078fcd;
+                              border: 0px;
+                              border-radius: 5px;
+                              text-align: center;
+                              height: 35px;
+                              line-height: 35px;
+                            "
+                          >
+                            Upload Payment
+                          </div>
+                        </a>
+                      </div>
+                      <p style="padding-top: 12px; margin: 0px">
+                        Click the button to upload new proof payment.
                       </p>
                     </td>
-                  </tr>
                   </tr>
                 </table>
               </td>

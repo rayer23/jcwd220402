@@ -30,7 +30,6 @@ import {
   useLocation,
 } from 'react-router-dom';
 import logo from '../assets/LogoDelisha.18.02.jpeg';
-// import emptyCart from "../assets/emptyCart.png";
 import { BiSearch } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/features/authSlice';
@@ -41,10 +40,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { fillCart } from '../redux/features/cartSlice';
 import { axiosInstance } from '../api';
-// import status1 from "../assets/transactionStatusLogo/awaiting.png";
-// import status2 from "../assets/transactionStatusLogo/processed2.png";
-// import status3 from "../assets/transactionStatusLogo/Delivered.png";
-// import status4 from "../assets/transactionStatusLogo/Shipping.png";
 import { RiSearchEyeFill } from 'react-icons/ri';
 import { CgRemote } from 'react-icons/cg';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
@@ -249,7 +244,7 @@ const Navbar = ({ onChange, onClick, onKeyDown }) => {
         left="0"
         right={'0'}
         top="0"
-        backgroundColor={"#EEEEEE"}
+        backgroundColor={'#EEEEEE'}
         zIndex="9998"
       >
         <Box backgroundColor="#fcfcfc">
@@ -396,14 +391,7 @@ const Navbar = ({ onChange, onClick, onKeyDown }) => {
                           pb={'7px'}
                           pt={'5px'}
                         >
-                          <Text
-                            fontSize={'15px'}
-                            fontWeight={600}
-                            ml={'10px'}
-                            // fontFamily={
-                            //   "Open Sauce One,Nunito Sans, sans-serif"
-                            // }
-                          >
+                          <Text fontSize={'15px'} fontWeight={600} ml={'10px'}>
                             Transaction
                           </Text>
                           <Link to={'/transaction'}>
@@ -664,15 +652,6 @@ const Navbar = ({ onChange, onClick, onKeyDown }) => {
                         <PopoverContent>
                           <PopoverBody>
                             <Box>
-                              {/* <Image
-                                                            p="10px"
-                                                            margin={
-                                                                "0 auto"
-                                                            }
-                                                            width={"200px"}
-                                                            src={emptyCart}
-                                                        /> */}
-
                               <Text
                                 color={'#393d43'}
                                 textAlign="center"
@@ -743,7 +722,6 @@ const Navbar = ({ onChange, onClick, onKeyDown }) => {
                         <Text
                           my="auto"
                           fontSize="16px"
-                          //   padding={'8px'}
                           textTransform={'capitalize'}
                         >
                           {authSelector.username.split(' ')[0]}
@@ -871,18 +849,6 @@ const Navbar = ({ onChange, onClick, onKeyDown }) => {
                 >
                   <Link to={'/login'} replace state={{ from: location }}>
                     <Box width={'85px'}>
-                      {/* <Button
-                        _hover={'null'}
-                        // height="32px"
-                        border={'1px solid #0095DA'}
-                        bgColor={'white'}
-                        color={'#0095DA'}
-                        fontSize="12px"
-                        fontWeight={'bold'}
-                        borderRadius={'15px'}
-                      >
-                        Login
-                      </Button> */}
                       <Button
                         borderColor={'#0095DA'}
                         colorScheme="silver"
@@ -898,24 +864,9 @@ const Navbar = ({ onChange, onClick, onKeyDown }) => {
                   </Link>
                   <Link to="/register">
                     <Box width={'85px'}>
-                      {/* <Button
-                        _hover={'null'}
-                        height="32px"
-                        borderRadius={'12px'}
+                      <Button
                         bgColor={'#0095DA'}
-                        border={'1px solid #0095DA'}
-                        color={'#fff'}
-                        fontWeight={'bold'}
-                        fontSize="12px"
-                        textAlign="center"
-                        mx={'auto'}
-                        w={'65px'}
-                      >
-                        Register
-                      </Button> */}
-                     < Button
-                        bgColor={'#0095DA'}
-                        variant='solid'
+                        variant="solid"
                         fontWeight={'bold'}
                         size="md"
                         color={'white'}
