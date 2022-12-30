@@ -15,7 +15,7 @@ import { attach } from './redux/features/resetSlice';
 //route
 import Navbar from './components/navbar';
 import HomePage from './pages/Home';
-import Footer from "./components/footer"
+import Footer from './components/footer';
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -25,6 +25,7 @@ import NavbarAdmin from './components/navbaradmin';
 import Dashboard from './pages/admin/dashboard';
 import ManageUser from './pages/admin/manageuser';
 import ManageAdmin from './pages/admin/manageadmin';
+import ManageWarehouse from './pages/admin/warehousemanagement';
 
 import NotFound from './components/404Page';
 // roles route
@@ -169,17 +170,25 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route
+          path="/admin/warehouse-management"
+          element={
+            <AdminRoute>
+              <ManageWarehouse />
+            </AdminRoute>
+          }
+        />
       </Routes>
-      {location.pathname === "/login" ||
-      location.pathname === "/register" ||
+      {location.pathname === '/login' ||
+      location.pathname === '/register' ||
       location.pathname === '/register/verification' ||
-      location.pathname === "/reset-password" ||
-      location.pathname === "/reset-confirm" ||
+      location.pathname === '/reset-password' ||
+      location.pathname === '/reset-confirm' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
           <Footer />
-        </Box> 
+        </Box>
       )}
     </>
   );

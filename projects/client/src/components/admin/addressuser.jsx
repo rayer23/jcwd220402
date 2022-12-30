@@ -19,7 +19,7 @@ import {
         size={"3xl"}
       >
         <ModalOverlay />
-        <ModalContent mt={"90px"} borderRadius="8px" overflow={false}>
+        <ModalContent mt={"120px"} borderRadius="8px" overflow={false}>
           <ModalHeader
             fontSize={"24px"}
             fontWeight="bold"
@@ -38,23 +38,9 @@ import {
             p="24px 40px"
             fontSize={"14px"}
           >
-            <Box mt="25px" mb="4px">
+            <Box mt="-10px" mb="4px">
               {val === null ? <Text>The address is null</Text> : val}
             </Box>
-            {/* <Box m="16px 0px" textAlign={"center"}>
-              <Button
-                p="0px 16px"
-                fontSize={"16px"}
-                color="white"
-                fontWeight={"bold"}
-                w="80px"
-                _hover={false}
-                bgColor={color}
-                onClick={onClose}
-              >
-                OK
-              </Button>
-            </Box> */}
           </ModalBody>
         </ModalContent>
       </Modal>

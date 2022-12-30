@@ -1,49 +1,52 @@
-const db = require("../models");
-const axios = require("axios");
-const { Op } = require("sequelize");
+const db = require('../models');
+const axios = require('axios');
+const { Op } = require('sequelize');
 
 module.exports = {
   getAllWarehouseData: async (req, res) => {
     try {
-      const page = parseInt(req.query._page) || 0
-      const limit = parseInt(req.query._limit) || 20
-      const search = req.query._keywordHandler || ""
-      const offset = limit * page
+      const _sortBy = req.query._sortBy;
+      const _sortDir = req.query._sortDir;
+      const page = parseInt(req.query._page) || 0;
+      const limit = parseInt(req.query._limit) || 20;
+      const search = req.query._keywordHandler || '';
+      const offset = limit * page;
 
       const totalRows = await db.Warehouse.count({
         where: {
           [Op.or]: [
-            { warehouse_name: { [Op.like]: "%" + search + "%" } },
-            { address_labels: { [Op.like]: "%" + search + "%" } },
+            { warehouse_name: { [Op.like]: '%' + search + '%' } },
+            { address_labels: { [Op.like]: '%' + search + '%' } },
           ],
         },
-      })
+      });
       // console.log(totalRows)
 
-      const totalPage = Math.ceil(totalRows / limit)
+      const totalPage = Math.ceil(totalRows / limit);
       // console.log(offset)
       const findWarehouse = await db.Warehouse.findAll({
         where: {
           [Op.or]: [
-            { warehouse_name: { [Op.like]: "%" + search + "%" } },
-            { address_labels: { [Op.like]: "%" + search + "%" } },
+            { warehouse_name: { [Op.like]: '%' + search + '%' } },
+            { address_labels: { [Op.like]: '%' + search + '%' } },
           ],
         },
+        order: [[_sortBy, _sortDir]],
         include: [{ model: db.User }],
         offset: offset,
         limit: limit,
-      })
+      });
       return res.status(200).json({
-        message: "Warehouse data found!",
+        message: 'Warehouse data found!',
         data: findWarehouse,
         limit: limit,
         totalRows: totalRows,
         totalPage: totalPage,
-      })
+      });
     } catch (err) {
       return res.status(500).json({
-        message: "Server error get all warehouse",
-      })
+        message: 'Server error get all warehouse',
+      });
     }
   },
 
@@ -56,24 +59,24 @@ module.exports = {
         city,
         districts,
         full_address,
-      } = req.body
+      } = req.body;
 
-      const RajaOngkirKey = process.env.RAJA_KEY
+      const RajaOngkirKey = process.env.RAJA_KEY;
       const provinceAndCity = await axios.get(
-        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`
-      )
-      const provinceName = provinceAndCity.data.rajaongkir.results.province
-      const cityName = provinceAndCity.data.rajaongkir.results.city_name
-      const cityType = provinceAndCity.data.rajaongkir.results.type
-      const cityNameAndType = `${cityType} ${cityName}`
+        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`,
+      );
+      const provinceName = provinceAndCity.data.rajaongkir.results.province;
+      const cityName = provinceAndCity.data.rajaongkir.results.city_name;
+      const cityType = provinceAndCity.data.rajaongkir.results.type;
+      const cityNameAndType = `${cityType} ${cityName}`;
 
-      const key = process.env.GEO_KEY
+      const key = process.env.GEO_KEY;
       const location = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?key=${key}&q=${districts},${cityNameAndType},${provinceName}`
-      )
+        `https://api.opencagedata.com/geocode/v1/json?key=${key}&q=${districts},${cityNameAndType},${provinceName}`,
+      );
 
-      const latitude = location.data.results[0].geometry.lat
-      const longitude = location.data.results[0].geometry.lng
+      const latitude = location.data.results[0].geometry.lat;
+      const longitude = location.data.results[0].geometry.lng;
 
       const response = await db.Warehouse.create({
         warehouse_name,
@@ -86,17 +89,17 @@ module.exports = {
         full_address,
         longitude,
         latitude,
-      })
+      });
 
       return res.status(200).json({
-        message: "Successfully Added New Address",
+        message: 'Successfully Added New Address',
         data: response,
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({
-        message: "Server Error Adding New Address",
-      })
+        message: 'Server Error Adding New Address',
+      });
     }
   },
   editWarehouseData: async (req, res) => {
@@ -108,24 +111,24 @@ module.exports = {
         city,
         districts,
         full_address,
-      } = req.body
+      } = req.body;
 
-      const RajaOngkirKey = process.env.RAJA_KEY
+      const RajaOngkirKey = process.env.RAJA_KEY;
       const provinceAndCity = await axios.get(
-        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`
-      )
-      const provinceName = provinceAndCity.data.rajaongkir.results.province
-      const cityName = provinceAndCity.data.rajaongkir.results.city_name
-      const cityType = provinceAndCity.data.rajaongkir.results.type
-      const cityNameAndType = `${cityType} ${cityName}`
+        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`,
+      );
+      const provinceName = provinceAndCity.data.rajaongkir.results.province;
+      const cityName = provinceAndCity.data.rajaongkir.results.city_name;
+      const cityType = provinceAndCity.data.rajaongkir.results.type;
+      const cityNameAndType = `${cityType} ${cityName}`;
 
-      const key = process.env.GEO_KEY
+      const key = process.env.GEO_KEY;
       const location = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?key=${key}&q=${districts},${cityNameAndType},${provinceName}`
-      )
+        `https://api.opencagedata.com/geocode/v1/json?key=${key}&q=${districts},${cityNameAndType},${provinceName}`,
+      );
 
-      const latitude = location.data.results[0].geometry.lat
-      const longitude = location.data.results[0].geometry.lng
+      const latitude = location.data.results[0].geometry.lat;
+      const longitude = location.data.results[0].geometry.lng;
 
       await db.Warehouse.update(
         {
@@ -144,15 +147,15 @@ module.exports = {
           where: {
             id: req.params.id,
           },
-        }
-      )
+        },
+      );
       return res.status(200).json({
-        message: "Updated this book",
-      })
+        message: 'Updated this book',
+      });
     } catch (error) {
       return res.status(500).json({
-        message: "Server error editing warehouse",
-      })
+        message: 'Server error editing warehouse',
+      });
     }
   },
   deleteWarehouseData: async (req, res) => {
@@ -161,23 +164,23 @@ module.exports = {
         where: {
           id: req.params.id,
         },
-      })
+      });
       return res.status(200).json({
-        message: "Warehouse deleted",
-      })
+        message: 'Warehouse deleted',
+      });
     } catch (error) {
       return res.status(500).json({
-        message: "Server error get all warehouse",
-      })
+        message: 'Server error get all warehouse',
+      });
     }
   },
   getLocation: async (req, res) => {
     try {
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({
-        message: "Server error on getting location",
-      })
+        message: 'Server error on getting location',
+      });
     }
   },
 };

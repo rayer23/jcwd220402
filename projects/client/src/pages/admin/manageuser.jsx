@@ -21,24 +21,24 @@ import {
   Heading,
   Stack,
   StackDivider,
-} from "@chakra-ui/react";
-import { useFormik } from "formik";
-import { useEffect } from "react";
-import { useState } from "react";
-import { IoIosAlert } from "react-icons/io";
-import { TbSearch } from "react-icons/tb";
-import { axiosInstance } from "../../api";
-import AddressUser from "../../components/admin/addressuser";
-import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai"
+} from '@chakra-ui/react';
+import { useFormik } from 'formik';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { IoIosAlert } from 'react-icons/io';
+import { TbSearch } from 'react-icons/tb';
+import { axiosInstance } from '../../api';
+import AddressUser from '../../components/admin/addressuser';
+import { AiOutlineLeftCircle, AiOutlineRightCircle } from 'react-icons/ai';
 
-import { FcHome } from "react-icons/fc";
+import { FcHome } from 'react-icons/fc';
 
 const ManageUserData = () => {
   const [userData, setUserData] = useState([]);
-  const [currentSearch, setCurrentSearch] = useState("");
+  const [currentSearch, setCurrentSearch] = useState('');
   const [totalCount, setTotalCount] = useState(0);
-  const [sortBy, setSortBy] = useState("username");
-  const [sortDir, setSortDir] = useState("ASC");
+  const [sortBy, setSortBy] = useState('username');
+  const [sortDir, setSortDir] = useState('ASC');
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
   const [openedAddress, setOpenedAddress] = useState(false);
@@ -54,7 +54,7 @@ const ManageUserData = () => {
   const fetchUserData = async () => {
     const maxItemsPerPage = 8;
     try {
-      const response = await axiosInstance.get("/userData/allUser", {
+      const response = await axiosInstance.get('/userData/allUser', {
         params: {
           _page: page,
           _limit: maxItemsPerPage,
@@ -83,23 +83,19 @@ const ManageUserData = () => {
       return (
         <Tr>
           <Td p="5px">{val.id}</Td>
-          <Td p="5px">{val.username || "null"}</Td>
+          <Td p="5px">{val.username || 'null'}</Td>
           <Td p="10px">
             <Avatar
-              size={"lg"}
-              borderRadius={"0"}
+              size={'lg'}
+              borderRadius={'0'}
               name={val.username}
               src={`${apiImg}/${val.profile_picture}`}
             />
           </Td>
           <Td p="5px">{val.email}</Td>
-          <Td p="5px">{val.phone_number || "null"}</Td>
-          <Td p="5px" maxW={"200px"}>
-            <Button
-              colorScheme="blue"
-              variant="outline"
-              onClick={() => setOpenedAddress(val)}
-            >
+          <Td p="5px">{val.phone_number || 'null'}</Td>
+          <Td p="5px" maxW={'200px'}>
+            <Button variant="ghost" onClick={() => setOpenedAddress(val)}>
               <FcHome font-size="1.5rem" />
             </Button>
           </Td>
@@ -110,7 +106,7 @@ const ManageUserData = () => {
 
   const formikSearch = useFormik({
     initialValues: {
-      search: "",
+      search: '',
     },
     onSubmit: ({ search }) => {
       setCurrentSearch(search);
@@ -125,8 +121,8 @@ const ManageUserData = () => {
   const sortCategoryHandler = ({ target }) => {
     const { value } = target;
 
-    setSortBy(value.split(" ")[0]);
-    setSortDir(value.split(" ")[1]);
+    setSortBy(value.split(' ')[0]);
+    setSortDir(value.split(' ')[1]);
   };
 
   useEffect(() => {
@@ -134,22 +130,22 @@ const ManageUserData = () => {
   }, [currentSearch, page, sortDir, sortBy, openedAddress]);
 
   return (
-    <Box marginLeft={"90px"}>
-      <Box p="20px 0" display={"flex"} justifyContent="space-between" mr="4">
-        <Box display={"flex"} gap="4" my={"auto"}>
-          <Text fontSize={"2xl"} fontWeight="bold">
+    <Box marginLeft={'90px'}>
+      <Box p="20px 0" display={'flex'} justifyContent="space-between" mr="4">
+        <Box display={'flex'} gap="4" my={'auto'}>
+          <Text fontSize={'2xl'} fontWeight="bold">
             User Data Management
           </Text>
         </Box>
 
-        <Box gap="4" display={"flex"}>
+        <Box gap="4" display={'flex'}>
           <Select
             variant="filled"
             onChange={sortCategoryHandler}
-            fontSize={"15px"}
+            fontSize={'15px'}
             fontWeight="normal"
-            width={"90px"}
-            color={"#6D6D6F"}
+            width={'90px'}
+            color={'#6D6D6F'}
           >
             <option value="username ASC" selected>
               A-Z
@@ -161,22 +157,20 @@ const ManageUserData = () => {
 
           <form onSubmit={formikSearch.handleSubmit}>
             <FormControl>
-              <InputGroup textAlign={"right"}>
-              <Button borderRightRadius={"0"} type="submit">
+              <InputGroup textAlign={'right'}>
+                <Button borderRightRadius={'0'} type="submit">
                   <TbSearch />
                 </Button>
                 <Input
-                  type={"text"}
+                  type={'text'}
                   placeholder="Search by username"
                   name="search"
                   w="200px"
                   onChange={searchAdminHandler}
-                  _placeholder={"halo"}
+                  _placeholder={'halo'}
                   borderLeftRadius="0"
                   value={formikSearch.values.search}
                 />
-
-                
               </InputGroup>
             </FormControl>
           </form>
@@ -197,10 +191,10 @@ const ManageUserData = () => {
         <Tbody>{renderUser()}</Tbody>
       </Table>
       {!userData.length ? (
-        <Box p="10px" bgColor={"#E5F9F6"}>
+        <Box p="10px" bgColor={'#E5F9F6'}>
           <Box mx="auto">
-            <Box display={"flex"} mx="auto" w="170px">
-              <IoIosAlert fontSize={"25px"} color="#0095DA" />
+            <Box display={'flex'} mx="auto" w="170px">
+              <IoIosAlert fontSize={'25px'} color="#0095DA" />
               <Text fontWeight="medium" ml="2">
                 No user found
               </Text>
@@ -208,23 +202,22 @@ const ManageUserData = () => {
           </Box>
         </Box>
       ) : null}
-        <Text fontSize={"2xl"} fontWeight="bold" color={"#0095DA"}>
-          Total User:{totalCount}
-        </Text>
-    
+      <Text fontSize={'2xl'} fontWeight="bold" color={'#0095DA'}>
+        Total User:{totalCount}
+      </Text>
 
-        <Box p="20px">
-        <Box textAlign={"center"}>
+      <Box p="20px">
+        <Box textAlign={'center'}>
           <Button
             onClick={previousPage}
             disabled={page === 1 ? true : null}
             _hover={false}
             _active={false}
           >
-            <AiOutlineLeftCircle fontSize={"20px"} />
+            <AiOutlineLeftCircle fontSize={'20px'} />
           </Button>
 
-          <Box display={"inline"}>{page}</Box>
+          <Box display={'inline'}>{page}</Box>
 
           <Button
             onClick={nextPage}
@@ -232,7 +225,7 @@ const ManageUserData = () => {
             _hover={false}
             _active={false}
           >
-            <AiOutlineRightCircle fontSize={"20px"} />
+            <AiOutlineRightCircle fontSize={'20px'} />
           </Button>
           <Box>
             Page: {page} of {maxPage}
@@ -241,13 +234,13 @@ const ManageUserData = () => {
       </Box>
 
       <AddressUser
-        color={"#0095DA"}
+        color={'#0095DA'}
         header="Details Address"
         isOpen={openedAddress}
         onClose={() => setOpenedAddress(null)}
         val={openedAddress?.Addresses?.map((val) => {
           if (!val) {
-            return "halo";
+            return 'halo';
           } else {
             return (
               <Card>
@@ -258,7 +251,7 @@ const ManageUserData = () => {
                         Receptients Name
                       </Heading>
                       <Text pt="2" fontSize="md">
-                        {val.recipients_name}{" "}
+                        {val.recipients_name}{' '}
                       </Text>
                     </Box>
                     <Box>
@@ -266,7 +259,7 @@ const ManageUserData = () => {
                         Full Address
                       </Heading>
                       <Text pt="2" fontSize="md">
-                        {val.full_address}{" "}
+                        {val.full_address}{' '}
                       </Text>
                     </Box>
                     <Box>
@@ -274,7 +267,7 @@ const ManageUserData = () => {
                         Phone Number
                       </Heading>
                       <Text pt="2" fontSize="md">
-                        {val.phone_number}{" "}
+                        {val.phone_number}{' '}
                       </Text>
                     </Box>
                   </Stack>
