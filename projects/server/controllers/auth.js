@@ -1,9 +1,9 @@
-const db = require("../models");
-const bcrypt = require("bcrypt");
-const { signToken, decode } = require("../helpers/jwt");
-const fs = require("fs");
-const handlebars = require("handlebars");
-const emailer = require("../helpers/emailer");
+const db = require('../models');
+const bcrypt = require('bcrypt');
+const { signToken, decode } = require('../helpers/jwt');
+const fs = require('fs');
+const handlebars = require('handlebars');
+const emailer = require('../helpers/emailer');
 
 const User = db.User;
 
@@ -20,18 +20,22 @@ module.exports = {
 
       if (!findUserByEmail) {
         return res.status(400).json({
-          message: "Email not found",
+          message: 'Email not found',
         });
       }
-
+      if (findUserByEmail.is_verify === false) {
+        return res.status(400).json({
+          message: 'Unverified user',
+        });
+      }
       const passwordValid = bcrypt.compareSync(
         password,
-        findUserByEmail.password
+        findUserByEmail.password,
       );
 
       if (!passwordValid) {
         return res.status(400).json({
-          message: "password invalid",
+          message: 'password invalid',
         });
       }
 
@@ -42,14 +46,14 @@ module.exports = {
       });
 
       return res.status(201).json({
-        message: "Login user",
+        message: 'Login user',
         data: findUserByEmail,
         token: token,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -62,14 +66,14 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Renewed user token",
+        message: 'Renewed user token',
         data: findUserById,
         token: renewedToken,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -86,7 +90,7 @@ module.exports = {
       if (!findUserByEmail) {
         if (findUserByEmail) {
           return res.status(400).json({
-            message: "Email already registered",
+            message: 'Email already registered',
           });
         }
 
@@ -109,7 +113,7 @@ module.exports = {
 
         const link = process.env.BASE_URL_FE;
 
-        const rawHTML = fs.readFileSync("templates/welcome.html", "utf-8");
+        const rawHTML = fs.readFileSync('templates/welcome.html', 'utf-8');
 
         const compiledHTML = handlebars.compile(rawHTML);
 
@@ -121,12 +125,12 @@ module.exports = {
         await emailer({
           to: email,
           html: htmlResult,
-          subject: "Welcome to Delisha",
-          text: "Welcome to Delisha",
+          subject: 'Welcome to Shopedia',
+          text: 'Welcome to Shopedia',
         });
 
         return res.status(201).json({
-          message: "User registered",
+          message: 'User registered',
           data: newUser,
         });
       }
@@ -136,14 +140,14 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Login User",
+        message: 'Login User',
         data: findUserByEmail,
         token: token,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -157,21 +161,23 @@ module.exports = {
         },
       });
 
-      console.log(findUserByEmail);
-
       if (!findUserByEmail) {
         return res.status(400).json({
-          message: "Email not found",
+          message: 'Email not found',
         });
       }
-
+      if (findUserByEmail.is_verify === false) {
+        return res.status(400).json({
+          message: 'Unverified user',
+        });
+      }
       const reset_token = signToken({
         id: findUserByEmail.id,
       });
 
       const resetPasswordLink = `${process.env.BASE_URL_FE}reset-confirm?reset_token=${reset_token}`;
 
-      const rawHTML = fs.readFileSync("templates/reset.html", "utf-8");
+      const rawHTML = fs.readFileSync('templates/reset.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -184,19 +190,19 @@ module.exports = {
       await emailer({
         to: email,
         html: htmlResult,
-        subject: "reset your password",
-        text: "setting new password",
+        subject: 'reset your password',
+        text: 'setting new password',
       });
 
       return res.status(201).json({
-        message: "Your reset password confirmation has been sent",
+        message: 'Your reset password confirmation has been sent',
         data: findUserByEmail,
         token: reset_token,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -206,7 +212,7 @@ module.exports = {
 
       if (!token) {
         return res.status(401).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
@@ -214,7 +220,7 @@ module.exports = {
 
       if (!decodedToken) {
         return res.status(401).json({
-          message: "Unauthorized request",
+          message: 'Unauthorized request',
         });
       }
 
@@ -232,12 +238,12 @@ module.exports = {
 
       const passwordUsed = bcrypt.compareSync(
         newPassword,
-        findUserByEmail.password
+        findUserByEmail.password,
       );
 
       if (passwordUsed) {
         return res.status(400).json({
-          message: "the new password must be different from the old password",
+          message: 'the new password must be different from the old password',
         });
       }
 
@@ -251,16 +257,16 @@ module.exports = {
           where: {
             id: findUserByEmail.id,
           },
-        }
+        },
       );
 
       return res.status(201).json({
-        message: "Password has been reset ",
+        message: 'Password has been reset ',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },

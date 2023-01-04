@@ -1,5 +1,7 @@
-const axios = require("axios");
-const db = require("../models");
+const axios = require('axios');
+const db = require('../models');
+const { validationResult } = require('express-validator');
+
 const Address = db.Address;
 
 const RajaOngkirKey = process.env.RAJA_KEY;
@@ -8,7 +10,7 @@ const OpenCageKey = process.env.GEO_KEY;
 module.exports = {
   getAddressById: async (req, res) => {
     try {
-      const { recipients_name = "", full_address = "" } = req.query;
+      const { recipients_name = '', full_address = '' } = req.query;
 
       if (recipients_name || full_address) {
         const response = await Address.findAll({
@@ -23,11 +25,11 @@ module.exports = {
               },
             },
           },
-          order: [["is_default", "DESC"]],
+          order: [['is_default', 'DESC']],
         });
 
         return res.status(200).json({
-          message: "Get User Address by name and full address",
+          message: 'Get User Address by name and full address',
           data: response,
         });
       }
@@ -36,22 +38,30 @@ module.exports = {
         where: {
           UserId: req.user.id,
         },
-        order: [["is_default", "DESC"]],
+        order: [['is_default', 'DESC']],
       });
 
       return res.status(200).json({
-        message: "Get User Address",
+        message: 'Get User Address',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
   addNewAddress: async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json({
+          errors: errors.array(),
+          message: 'Invalid fields',
+        });
+      }
       const {
         recipients_name,
         phone_number,
@@ -63,7 +73,7 @@ module.exports = {
       } = req.body;
 
       const provinceAndCity = await axios.get(
-        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`
+        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`,
       );
 
       const provinceName = provinceAndCity.data.rajaongkir.results.province;
@@ -72,7 +82,7 @@ module.exports = {
       const cityNameAndType = `${cityType} ${cityName}`;
 
       const location = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?key=${OpenCageKey}&q=${districts},${cityNameAndType},${provinceName}`
+        `https://api.opencagedata.com/geocode/v1/json?key=${OpenCageKey}&q=${districts},${cityNameAndType},${provinceName}`,
       );
 
       const latitude = location.data.results[0].geometry.lat;
@@ -102,7 +112,7 @@ module.exports = {
         });
 
         return res.status(200).json({
-          message: "New Address",
+          message: 'New Address',
           data: response,
         });
       }
@@ -123,18 +133,26 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "New Address",
+        message: 'New Address',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
   updateAddress: async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json({
+          errors: errors.array(),
+          message: 'Invalid fields',
+        });
+      }
       const {
         recipients_name,
         phone_number,
@@ -147,7 +165,7 @@ module.exports = {
 
       const { id } = req.params;
       const provinceAndCity = await axios.get(
-        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`
+        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`,
       );
 
       const provinceName = provinceAndCity.data.rajaongkir.results.province;
@@ -156,7 +174,7 @@ module.exports = {
       const cityNameAndType = `${cityType} ${cityName}`;
 
       const location = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?key=${OpenCageKey}&q=${districts},${cityNameAndType},${provinceName}`
+        `https://api.opencagedata.com/geocode/v1/json?key=${OpenCageKey}&q=${districts},${cityNameAndType},${provinceName}`,
       );
 
       const latitude = location.data.results[0].geometry.lat;
@@ -180,17 +198,17 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
       const findData = await Address.findByPk(id);
       return res.status(200).json({
-        message: "Address Edited",
+        message: 'Address Edited',
         data: findData,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -205,12 +223,12 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Address Deleted",
+        message: 'Address Deleted',
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -232,7 +250,7 @@ module.exports = {
             where: {
               id: findDefault.id,
             },
-          }
+          },
         );
 
         await Address.update(
@@ -243,10 +261,10 @@ module.exports = {
             where: {
               id: id,
             },
-          }
+          },
         );
         return res.status(200).json({
-          message: "Success",
+          message: 'Success',
         });
       }
       if (!findDefault) {
@@ -258,21 +276,21 @@ module.exports = {
             where: {
               id: id,
             },
-          }
+          },
         );
         return res.status(200).json({
-          message: "Success",
+          message: 'Success',
         });
       }
 
       return res.status(200).json({
-        message: "Set as default",
+        message: 'Set as default',
         daat: findDefault,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },

@@ -1,33 +1,25 @@
 const router = require("express").Router();
-const { admin } = require("../controllers/index");
-
+const { adminCategory } = require("../controllers/index");
 const { upload } = require("../helpers/uploader");
-const { verifyToken } = require("../middlewares/authMiddleware");
-
-router.post("/login", admin.adminLogin);
 
 router.post(
   "/categories",
-  verifyToken,
+
   upload({
     acceptedFileTypes: ["png", "jpeg", "jpg"],
     filePrefix: "cat",
   }).single("category_image"),
-  admin.adminCreateCategory
+  adminCategory.adminCreateCategory
 );
-
-router.get("/categories", verifyToken, admin.adminGetAllCategories);
-
+router.get("/categories", adminCategory.adminGetAllCategories);
 router.patch(
   "/categories/:id",
-  verifyToken,
   upload({
     acceptedFileTypes: ["png", "jpeg", "jpg"],
     filePrefix: "cat",
   }).single("category_image"),
-  admin.adminUpdateCategory
+  adminCategory.adminUpdateCategory
 );
-
-router.delete("/categories/:id", verifyToken, admin.adminDeleteCategory);
+router.delete("/categories/:id", adminCategory.adminDeleteCategory);
 
 module.exports = router;

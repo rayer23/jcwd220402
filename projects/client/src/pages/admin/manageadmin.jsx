@@ -34,7 +34,7 @@ import {
 } from 'react-icons/ri';
 import { TbSearch } from 'react-icons/tb';
 import { IoIosAlert } from 'react-icons/io';
-import { AiOutlineLeftCircle, AiOutlineRightCircle } from 'react-icons/ai';
+import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 
 const ManageAdminData = () => {
   const [userData, setUserData] = useState([]);
@@ -482,7 +482,7 @@ const ManageAdminData = () => {
         rightButton={'Delete'}
       />
 
-      {/* Modal Add New Admin */}
+      {/* Modal Add Admin */}
 
       <AddAdmin
         formikAddNewAdmin={formikAddNewAdmin}
@@ -541,8 +541,10 @@ const ManageAdminData = () => {
             disabled={page === 1 ? true : null}
             _hover={false}
             _active={false}
+            color="#0095DA"
+            bgColor={'white'}
           >
-            <AiOutlineLeftCircle fontSize={'20px'} />
+            <BsArrowBarLeft fontSize={'25px'} />
           </Button>
 
           <Box display={'inline'}>{page}</Box>
@@ -552,8 +554,10 @@ const ManageAdminData = () => {
             disabled={page >= maxPage ? true : null}
             _hover={false}
             _active={false}
+            color="#0095DA"
+            bgColor={'white'}
           >
-            <AiOutlineRightCircle fontSize={'20px'} />
+            <BsArrowBarRight fontSize={'25px'} />
           </Button>
           <Box>
             Page: {page} of {maxPage}

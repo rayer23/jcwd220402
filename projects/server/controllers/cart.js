@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require('../models');
 const { Cart } = db;
 module.exports = {
   addToCart: async (req, res) => {
@@ -47,13 +47,13 @@ module.exports = {
 
       if (totalStock === 0) {
         return res.status(400).json({
-          message: "Insufficient product stock",
+          message: 'Insufficient product stock',
         });
       }
 
       if (!findProductinCart && quantity > totalStock) {
         return res.status(400).json({
-          message: "Insufficient product stock",
+          message: 'Insufficient product stock',
         });
       }
 
@@ -82,13 +82,13 @@ module.exports = {
         });
 
         return res.status(201).json({
-          message: "Product added to cart",
+          message: 'Product added to cart',
           data: findCart,
         });
       }
 
       const cartStock = findProductinCart.Product.Total_Stocks.map(
-        (val) => val.stock
+        (val) => val.stock,
       );
 
       let cartTotal = 0;
@@ -103,7 +103,7 @@ module.exports = {
 
       if (totalStockCart === 0 || totalStockCart < quantity) {
         return res.status(400).json({
-          message: "Insufficient product stock",
+          message: 'Insufficient product stock',
         });
       }
 
@@ -112,13 +112,13 @@ module.exports = {
         totalStockCart < cartItemQuantity + quantity
       ) {
         return res.status(400).json({
-          message: "Insufficient product stock",
+          message: 'Insufficient product stock',
         });
       }
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -148,7 +148,7 @@ module.exports = {
       });
 
       const cartStock = findProductinCart.Product.Total_Stocks.map(
-        (val) => val.stock
+        (val) => val.stock,
       );
 
       let cartTotal = 0;
@@ -161,7 +161,7 @@ module.exports = {
 
       if (findProductinCart.quantity + quantity > totalStockCart) {
         return res.status(400).json({
-          message: "Insufficient product stock",
+          message: 'Insufficient product stock',
         });
       }
 
@@ -175,11 +175,11 @@ module.exports = {
             where: {
               id: findProductinCart.id,
             },
-          }
+          },
         );
 
         return res.status(200).json({
-          message: "Cart item added",
+          message: 'Cart item added',
         });
       }
 
@@ -193,11 +193,11 @@ module.exports = {
             where: {
               id: findProductinCart.id,
             },
-          }
+          },
         );
 
         return res.status(200).json({
-          message: "Cart item added",
+          message: 'Cart item added',
         });
       }
     } catch (err) {
@@ -223,17 +223,42 @@ module.exports = {
             ],
           },
         ],
-        order: [["createdAt", "DESC"]],
+        order: [['createdAt', 'DESC']],
       });
 
+      const getAllMyCheckedCartItems = await Cart.findAll({
+        where: {
+          UserId: req.user.id,
+          is_checked: true,
+        },
+        include: [
+          {
+            model: db.Product,
+            include: [
+              {
+                model: db.Image_Url,
+              },
+              {
+                model: db.Total_Stock,
+              },
+            ],
+          },
+        ],
+        order: [['createdAt', 'DESC']],
+      });
+
+      const cartCheckedCount = getAllMyCheckedCartItems.map((val) => val.id);
+      const checkedDataCount = cartCheckedCount.length;
+
       return res.status(200).json({
-        message: "showMyItemCart",
+        message: 'showMyItemCart',
         data: getAllMyCartItems,
+        checkedDataCount: checkedDataCount,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -257,13 +282,13 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Get Cart By Id",
+        message: 'Get Cart By Id',
         data: findCartByid,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -291,13 +316,13 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Cart item added",
+        message: 'Cart item added',
         data: findProductinCart,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -322,7 +347,7 @@ module.exports = {
       });
 
       const cartStock = findCartByid.Product.Total_Stocks.map(
-        (val) => val.stock
+        (val) => val.stock,
       );
 
       let cartTotal = 0;
@@ -335,7 +360,7 @@ module.exports = {
 
       if (findCartByid.quantity + 1 > totalStockCart) {
         return res.status(400).json({
-          message: "Insufficient product stock",
+          message: 'Insufficient product stock',
         });
       }
 
@@ -347,11 +372,11 @@ module.exports = {
           where: {
             id: findCartByid.id,
           },
-        }
+        },
       );
 
       return res.status(200).json({
-        message: "Increment quantity",
+        message: 'Increment quantity',
       });
     } catch (err) {
       console.log(err);
@@ -377,11 +402,11 @@ module.exports = {
           where: {
             id: findCartByid.id,
           },
-        }
+        },
       );
 
       return res.status(200).json({
-        message: "decrement quantity",
+        message: 'decrement quantity',
       });
     } catch (err) {
       console.log(err);
@@ -397,12 +422,12 @@ module.exports = {
         },
       });
       return res.status(200).json({
-        message: "Deleted item from cart",
+        message: 'Deleted item from cart',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -411,15 +436,16 @@ module.exports = {
       await Cart.destroy({
         where: {
           UserId: req.user.id,
+          is_checked: true,
         },
       });
       return res.status(200).json({
-        message: "Deleted All Items From Cart",
+        message: 'Deleted All Items From Cart',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -438,7 +464,7 @@ module.exports = {
             where: {
               id: findCartByid.id,
             },
-          }
+          },
         );
         const cartUncheckedByid = await Cart.findByPk(id, {
           include: [
@@ -450,7 +476,7 @@ module.exports = {
         });
 
         return res.status(200).json({
-          message: "Cart Item Unchecked",
+          message: 'Cart Item Unchecked',
           data: cartUncheckedByid,
         });
       }
@@ -463,7 +489,7 @@ module.exports = {
           where: {
             id: findCartByid.id,
           },
-        }
+        },
       );
       const cartCheckedByid = await Cart.findByPk(id, {
         include: [
@@ -475,13 +501,13 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Cart Item Checked",
+        message: 'Cart Item Checked',
         data: cartCheckedByid,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -510,7 +536,7 @@ module.exports = {
             where: {
               UserId: req.user.id,
             },
-          }
+          },
         );
 
         const findUncheckedCart = await Cart.findAll({
@@ -525,7 +551,7 @@ module.exports = {
           ],
         });
         return res.status(200).json({
-          message: "All Cart Items Unchecked",
+          message: 'All Cart Items Unchecked',
           data: findUncheckedCart,
         });
       }
@@ -538,7 +564,7 @@ module.exports = {
           where: {
             UserId: req.user.id,
           },
-        }
+        },
       );
 
       const findAllCheckedCart = await Cart.findAll({
@@ -554,13 +580,13 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "All Cart Items Checked",
+        message: 'All Cart Items Checked',
         data: findAllCheckedCart,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -572,19 +598,19 @@ module.exports = {
         `select sum(p.price * c.quantity) as totalPrice, sum(c.quantity) as totalQuantity from carts c
                     join products p
                     on c.ProductId = p.id
-                    where is_checked = ${true} && UserId = ${id}`
+                    where is_checked = ${true} && UserId = ${id}`,
       );
 
       const totalPrice = getTotalPrice[0][0];
 
       return res.status(200).json({
-        message: "Get All Cart Items",
+        message: 'Get All Cart Items',
         data: totalPrice,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -601,17 +627,17 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
 
       const updateCartNote = await Cart.findByPk(id);
       return res.status(200).json({
-        message: "Get All Cart Items",
+        message: 'Get All Cart Items',
         data: updateCartNote,
       });
     } catch (err) {
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },

@@ -26,6 +26,7 @@ import Dashboard from './pages/admin/dashboard';
 import ManageUser from './pages/admin/manageuser';
 import ManageAdmin from './pages/admin/manageadmin';
 import ManageWarehouse from './pages/admin/warehousemanagement';
+import ManageCategory from './pages/admin/managecategory';
 
 import NotFound from './components/404Page';
 // roles route
@@ -175,6 +176,14 @@ function App() {
           element={
             <AdminRoute>
               <ManageWarehouse />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/category"
+          element={
+            <AdminRoute>
+              <ManageCategory />
             </AdminRoute>
           }
         />

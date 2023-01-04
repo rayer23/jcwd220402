@@ -28,8 +28,8 @@ import * as Yup from 'yup';
 import { useCallback } from 'react';
 import React, { useEffect, useState } from 'react';
 import { TbSearch } from 'react-icons/tb';
-import { AiOutlineLeftCircle, AiOutlineRightCircle } from 'react-icons/ai';
 import { MdAddToPhotos } from 'react-icons/md';
+import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 
 import Warehouse from '../../components/admin/warehouse';
 import AddWarehouse from '../../components/admin/addwarehouse';
@@ -354,8 +354,10 @@ const WarehouseManagement = () => {
             disabled={pages === 0 ? true : null}
             _hover={false}
             _active={false}
+            color="#0095DA"
+            bgColor={'white'}
           >
-            <AiOutlineLeftCircle fontSize={'20px'} />
+            <BsArrowBarLeft fontSize={'25px'} />
           </Button>
 
           <Box display={'inline'}>{pages + 1}</Box>
@@ -365,8 +367,10 @@ const WarehouseManagement = () => {
             disabled={pages + 1 >= maxPage ? true : null}
             _hover={false}
             _active={false}
+            color="#0095DA"
+            bgColor={'white'}
           >
-            <AiOutlineRightCircle fontSize={'20px'} />
+            <BsArrowBarRight fontSize={'25px'} />
           </Button>
           <Box>
             Page: {pages + 1} of {maxPage}

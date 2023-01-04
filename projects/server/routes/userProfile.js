@@ -16,7 +16,7 @@ router.patch(
   "/pic/:id",
   upload({
     acceptedFileTypes: ["jpg", "jpeg", "png"],
-    filePrefix: "PROFILE",
+    filePrefix: "profil",
     limits: { fileSize: 210 },
   }).single("profile_picture"),
   userProfile.editPhotoProfile

@@ -29,8 +29,7 @@ import { IoIosAlert } from 'react-icons/io';
 import { TbSearch } from 'react-icons/tb';
 import { axiosInstance } from '../../api';
 import AddressUser from '../../components/admin/addressuser';
-import { AiOutlineLeftCircle, AiOutlineRightCircle } from 'react-icons/ai';
-
+import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 
 const ManageUserData = () => {
@@ -213,8 +212,10 @@ const ManageUserData = () => {
             disabled={page === 1 ? true : null}
             _hover={false}
             _active={false}
+            color="#0095DA"
+            bgColor={'white'}
           >
-            <AiOutlineLeftCircle fontSize={'20px'} />
+            <BsArrowBarLeft fontSize={'25px'} />
           </Button>
 
           <Box display={'inline'}>{page}</Box>
@@ -223,9 +224,11 @@ const ManageUserData = () => {
             onClick={nextPage}
             disabled={page >= maxPage ? true : null}
             _hover={false}
+            color="#0095DA"
             _active={false}
+            bgColor={'white'}
           >
-            <AiOutlineRightCircle fontSize={'20px'} />
+            <BsArrowBarRight fontSize={'25px'} />
           </Button>
           <Box>
             Page: {page} of {maxPage}

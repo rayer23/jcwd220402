@@ -1,6 +1,6 @@
-const db = require("../models");
-const bcrypt = require("bcrypt");
-const { Op } = require("sequelize");
+const db = require('../models');
+const bcrypt = require('bcrypt');
+const { Op } = require('sequelize');
 
 const User = db.User;
 
@@ -11,19 +11,19 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
       const {
-        username = "",
-        _sortBy = "id",
-        _sortDir = "ASC",
+        username = '',
+        _sortBy = 'id',
+        _sortDir = 'ASC',
         _limit = 6,
         _page = 1,
       } = req.query;
 
-      if (_sortBy === "username" || _sortBy === "createdAt" || username) {
+      if (_sortBy === 'username' || _sortBy === 'createdAt' || username) {
         const findUser = await User.findAndCountAll({
           limit: Number(_limit),
           offset: (_page - 1) * _limit,
@@ -46,7 +46,7 @@ module.exports = {
           ],
         });
         return res.status(200).json({
-          message: "Find User by Name",
+          message: 'Find User by Name',
           data: findUser.rows,
           dataCount: findUser.count,
         });
@@ -74,14 +74,14 @@ module.exports = {
         ],
       });
       return res.status(200).json({
-        message: "Find All User Data",
+        message: 'Find All User Data',
         data: findUser.rows,
         dataCount: findUser.count,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Sever Error",
+        message: 'Sever Error',
       });
     }
   },
@@ -91,19 +91,19 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
       const {
-        username = "",
-        _sortBy = "id",
-        _sortDir = "ASC",
+        username = '',
+        _sortBy = 'id',
+        _sortDir = 'ASC',
         _limit = 6,
         _page = 1,
       } = req.query;
 
-      if (_sortBy === "username" || _sortBy === "createdAt" || username) {
+      if (_sortBy === 'username' || _sortBy === 'createdAt' || username) {
         const findUser = await User.findAndCountAll({
           limit: Number(_limit),
           offset: (_page - 1) * _limit,
@@ -117,7 +117,7 @@ module.exports = {
           include: [{ model: db.Role }, { model: db.Warehouse }],
         });
         return res.status(200).json({
-          message: "Find Admin by Name",
+          message: 'Find Admin by Name',
           data: findUser.rows,
           dataCount: findUser.count,
         });
@@ -133,14 +133,14 @@ module.exports = {
         include: [{ model: db.Role }, { model: db.Warehouse }],
       });
       return res.status(200).json({
-        message: "Find All Admin Data",
+        message: 'Find All Admin Data',
         data: findUser.rows,
         dataCount: findUser.count,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Sever Error",
+        message: 'Sever Error',
       });
     }
   },
@@ -150,11 +150,11 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
-      const profile_picture = `${req.file.filename}`;
+      const profile_picture = req.file.filename;
       const { email, password, phone_number, username, WarehouseId } = req.body;
 
       const findEmail = await db.User.findOne({
@@ -165,7 +165,7 @@ module.exports = {
 
       if (findEmail) {
         return res.status(400).json({
-          message: "Email has been used",
+          message: 'Email has been used',
         });
       }
       const findPhoneNumber = await db.User.findOne({
@@ -176,7 +176,7 @@ module.exports = {
 
       if (findPhoneNumber) {
         return res.status(400).json({
-          message: "Phone number has been used",
+          message: 'Phone number has been used',
         });
       }
 
@@ -195,13 +195,13 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Admin Registered",
+        message: 'Admin Registered',
         data: newUser,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -211,22 +211,20 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
       if (req.file) {
-        req.body.profile_picture = `http://localhost:8000/public/${req.file.filename}`;
+        req.body.profile_picture = req.file.filename;
       }
 
-      const { branch, phone_number, profile_picture, username, WarehouseId } =
-        req.body;
+      const { phone_number, profile_picture, username, WarehouseId } = req.body;
 
       const { id } = req.params;
 
       await db.User.update(
         {
-          branch,
           phone_number,
           profile_picture,
           username,
@@ -236,17 +234,17 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
       const findData = await db.User.findByPk(id);
       return res.status(200).json({
-        message: "Admin Edited",
+        message: 'Admin Edited',
         data: findData,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -256,7 +254,7 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
@@ -269,12 +267,12 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Admin Deleted",
+        message: 'Admin Deleted',
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -284,20 +282,20 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
       const response = await db.Warehouse.findAll();
 
       return res.status(200).json({
-        message: "Find All Warehouse",
+        message: 'Find All Warehouse',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },

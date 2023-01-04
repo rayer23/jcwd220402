@@ -1,62 +1,10 @@
 const db = require("../models");
 const bcrypt = require("bcrypt");
-const { signToken } = require("../helpers/jwt");
 const { Op } = require("sequelize");
 
 const { Category, User } = db;
 
 module.exports = {
-  adminLogin: async (req, res) => {
-    try {
-      const { email, password } = req.body;
-
-      const findUserByEmail = await User.findOne({
-        where: {
-          email: email,
-        },
-      });
-
-      if (findUserByEmail.role == "user") {
-        return res.status(400).json({
-          message: "User unauthorized",
-        });
-      }
-
-      if (!findUserByEmail) {
-        return res.status(400).json({
-          message: "Email not found",
-        });
-      }
-
-      const passwordValid = bcrypt.compareSync(
-        password,
-        findUserByEmail.password
-      );
-
-      if (!passwordValid) {
-        return res.status(400).json({
-          message: "password invalid",
-        });
-      }
-
-      delete findUserByEmail.dataValues.password;
-
-      const token = signToken({
-        id: findUserByEmail.id,
-      });
-
-      return res.status(201).json({
-        message: "Login Admin",
-        data: findUserByEmail,
-        token: token,
-      });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({
-        message: "Server Error",
-      });
-    }
-  },
   adminCreateCategory: async (req, res) => {
     try {
       const { category_name } = req.body;
@@ -77,13 +25,11 @@ module.exports = {
 
       if (findCategory) {
         return res.status(400).json({
-          message: "Category name already exist",
+          message: "Category name already exists",
         });
       }
 
-      const category_image = `http://localhost:8000/public/${req.file.filename}`;
-
-      // console.log(req.file)
+      const category_image = req.file.filename;
 
       const createNewCategory = await db.Category.create({
         category_name,
@@ -91,7 +37,7 @@ module.exports = {
       });
 
       return res.status(201).json({
-        message: "Create new category",
+        message: "Successfully created new category",
         data: createNewCategory,
       });
     } catch (err) {
@@ -168,7 +114,7 @@ module.exports = {
       }
 
       if (req.file) {
-        req.body.profile_picture = `http://localhost:8000/public/${req.file.filename}`;
+        req.body.category_image = req.file.filename;
       }
 
       const { id } = req.params;
@@ -188,7 +134,7 @@ module.exports = {
       );
 
       return res.status(200).json({
-        message: "Category updated",
+        message: "Successfully edited eategory",
         data: updatedCategory,
       });
     } catch (err) {
