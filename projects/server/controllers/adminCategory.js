@@ -51,11 +51,11 @@ module.exports = {
     try {
       const findAdminById = await User.findByPk(req.user.id);
 
-      if (findAdminById.RoleId !== 3) {
-        return res.status(400).json({
-          message: "User unauthorized",
-        });
-      }
+      // if (findAdminById.RoleId !== 3) {
+      //   return res.status(400).json({
+      //     message: "User unauthorized",
+      //   });
+      // }
 
       const {
         category_name = "",

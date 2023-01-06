@@ -7,7 +7,7 @@ import { MdTableChart } from 'react-icons/md';
 import { ImHome } from 'react-icons/im';
 import { FaChair, FaHouseUser, FaUserCog } from 'react-icons/fa';
 import { BiCategoryAlt } from 'react-icons/bi';
-import { TbSofa } from 'react-icons/tb';
+import { TbSofa,TbBuildingWarehouse } from 'react-icons/tb';
 import { CgLogOut } from 'react-icons/cg';
 import { RiAdminFill, RiUser2Fill, RiMoneyDollarBoxFill } from 'react-icons/ri';
 import { AiOutlineStock } from 'react-icons/ai';
@@ -62,13 +62,6 @@ const Sidebar = () => {
                 <span className="nav-link-name">Home</span>
               </Link>
 
-              <Link to="/admin/warehouse-management" className="nav-link">
-                <i className=" nav-link-icon">
-                  <ImHome />
-                </i>
-                <span className="nav-link-name">Warehouse</span>
-              </Link>
-
               {authSelector.RoleId === 3 ? (
                 <>
                   <Link to="/admin/manage-admin-data" className="nav-link">
@@ -85,21 +78,14 @@ const Sidebar = () => {
                     <span className="nav-link-name">Manage User Data</span>
                   </Link>
 
-                  <Link to="/admin/update-stock" className="nav-link">
+                  <Link to="/admin/warehouse-management" className="nav-link">
                     <i className=" nav-link-icon">
-                      <TbSofa />
+                      <ImHome />
                     </i>
-                    <span className="nav-link-name">Update Product Stock</span>
+                    <span className="nav-link-name">Warehouse</span>
                   </Link>
                 </>
               ) : null}
-
-              <Link to="/admin/product" className="nav-link">
-                <i className="nav-link-icon">
-                  <FaChair />
-                </i>
-                <span className="nav-link-name">Manage Product</span>
-              </Link>
 
               <Link to="/admin/category" className="nav-link">
                 <i className="nav-link-icon">
@@ -108,14 +94,26 @@ const Sidebar = () => {
                 <span className="nav-link-name">Manage Category</span>
               </Link>
 
-              {authSelector.RoleId === 2 ? (
-                <Link to="/admin/update-stock" className="nav-link">
-                  <i className=" nav-link-icon">
-                    <TbSofa />
-                  </i>
-                  <span className="nav-link-name">Update Product Stock</span>
-                </Link>
-              ) : null}
+              <Link to="/admin/product" className="nav-link">
+                <i className="nav-link-icon">
+                  <FaChair />
+                </i>
+                <span className="nav-link-name">Manage Product</span>
+              </Link>
+
+              <Link to="/admin/update-stock" className="nav-link">
+                <i className=" nav-link-icon">
+                  <TbSofa />
+                </i>
+                <span className="nav-link-name">Update Product Stock</span>
+              </Link>
+
+              <Link to="/admin/stock-mutation" className="nav-link">
+                <i className="nav-link-icon">
+                  <TbBuildingWarehouse />
+                </i>
+                <span className="nav-link-name">Stock Mutation</span>
+              </Link>
 
               <Link to="/admin/order" className="nav-link">
                 <i className="nav-link-icon">

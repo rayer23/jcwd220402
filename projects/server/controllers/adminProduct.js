@@ -54,15 +54,16 @@ module.exports = {
 
   addProduct: async (req, res) => {
     try {
-      const { product_name, description, price, CategoryId } = req.body;
+      const { product_name, description, product_weight, price, CategoryId } =
+        req.body;
       const image_url = `http://localhost:8000/public/${req.file.filename}`;
 
       const addProductData = await Product.create({
         product_name,
         description,
         price,
+        product_weight,
         CategoryId,
-        product_weight: 1,
       });
       await db.Image_Url.create({
         image_url,
@@ -131,12 +132,14 @@ module.exports = {
 
   patchProductDetail: async (req, res) => {
     try {
-      const { product_name, description, price, CategoryId } = req.body;
+      const { product_name, description, product_weight, price, CategoryId } =
+        req.body;
 
       await Product.update(
         {
           product_name,
           description,
+          product_weight,
           price,
           CategoryId,
         },
