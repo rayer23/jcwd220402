@@ -1,104 +1,104 @@
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Box,
-  Button,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-
-const ProtectedRoute = ({ children }) => {
-  const authSelector = useSelector((state) => state.auth);
-
-  const location = useLocation();
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const backToLogin = () => {
-    onClose();
-  };
-
-  const openAlert = () => {
-    onOpen();
-  };
-
-  useEffect(() => {
-    if (!authSelector.id) {
-      openAlert();
-    }
-  }, []);
-
-  if (authSelector.id) {
-    return children;
-  } else if (!authSelector.id)
-    return (
-      <>
-        <AlertDialog
-          isCentered
-          closeOnOverlayClick={false}
-          isOpen={isOpen}
-          onClose={backToLogin}
-          size={"sm"}
-          closeOnEsc={false}
-        >
-          <AlertDialogOverlay
-            bg="blackAlpha.400"
-            backdropFilter="blur(50px) hue-rotate(90deg)"
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    Box,
+    Button,
+    Text,
+    useDisclosure,
+  } from "@chakra-ui/react";
+  import { useEffect } from "react";
+  import { useSelector } from "react-redux";
+  import { Link, useLocation } from "react-router-dom";
+  
+  const ProtectedRoute = ({ children }) => {
+    const authSelector = useSelector((state) => state.auth);
+  
+    const location = useLocation();
+  
+    const { isOpen, onOpen, onClose } = useDisclosure();
+  
+    const backToLogin = () => {
+      onClose();
+    };
+  
+    const openAlert = () => {
+      onOpen();
+    };
+  
+    useEffect(() => {
+      if (!authSelector.id) {
+        openAlert();
+      }
+    }, []);
+  
+    if (authSelector.id) {
+      return (children);
+    } else if (!authSelector.id){
+      return (
+        <>
+          <AlertDialog
+            isCentered
+            closeOnOverlayClick={false}
+            isOpen={isOpen}
+            onClose={backToLogin}
+            size={"sm"}
+            closeOnEsc={false}
           >
-            <AlertDialogContent borderRadius={"30px"} mt={"-50px"}>
-              <AlertDialogHeader
-                fontSize="lg"
-                fontWeight="bold"
-                color={"#0e2e97"}
-                pt={"20px"}
-              >
-                Notification!
-              </AlertDialogHeader>
-
-              <AlertDialogBody>
-                <Box
-                  display={"flex"}
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  boxSizing={"border-box"}
+            <AlertDialogOverlay
+            >
+              <AlertDialogContent borderRadius={"25px"} mt={"-120px"} border={"1px solid #0058a3"}>
+                <AlertDialogHeader
+                  fontSize="lg"
+                  fontWeight="bold"
+                  color={"#0058a3"}
+                  pt={"20px"}
                 >
-                  <Text
-                    pb={"10px"}
-                    fontFamily={
-                      "Open Sauce One, Nunito Sans, -apple-system, sans-serif"
-                    }
-                    fontWeight={500}
+                  Caution!
+                </AlertDialogHeader>
+  
+                <AlertDialogBody>
+                  <Box
+                    display={"flex"}
+                    flexDirection={"column"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    boxSizing={"border-box"}
                   >
-                    You must log in first before do any transaction
-                  </Text>
-                  <Link to={"/login"} replace state={{ from: location }}>
-                    <Button
-                      borderRadius={"20px"}
-                      mt={"16px"}
-                      width={"220px"}
-                      colorScheme="blue"
-                      onClick={backToLogin}
+                    <Text
+                      pb={"15px"}
+                      fontFamily={
+                        "Open Sauce One, Nunito Sans, -apple-system, sans-serif"
+                      }
+                      fontWeight={550}
                     >
-                      OK
-                    </Button>
-                  </Link>
-                </Box>
-              </AlertDialogBody>
-
-              <AlertDialogFooter pb={"5px"}></AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
-      </>
-    );
-};
-
-export default ProtectedRoute;
+                      You should login first before doing any sort of transactions
+                    </Text>
+                    <Link to={"/login"} replace state={{ from: location }}>
+                      <Button
+                        borderRadius={"20px"}
+                        mt={"10px"}
+                        width={"190px"}
+                        bgColor="#0058a3"
+                        color="white"
+                        onClick={backToLogin}
+                      >
+                        Alright!
+                      </Button>
+                    </Link>
+                  </Box>
+                </AlertDialogBody>
+  
+                <AlertDialogFooter pb={"7px"}></AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
+        </>
+      );
+    }
+  };
+  
+  export default ProtectedRoute;
