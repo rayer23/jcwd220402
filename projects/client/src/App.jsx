@@ -27,6 +27,8 @@ import ManageUser from './pages/admin/manageuser';
 import ManageAdmin from './pages/admin/manageadmin';
 import ManageWarehouse from './pages/admin/warehousemanagement';
 import ManageCategory from './pages/admin/managecategory';
+import ManageProduct from './pages/admin/manageproduct';
+import ManageProductDetail from './pages/admin/manageproductdetail';
 
 import NotFound from './components/404Page';
 // roles route
@@ -184,6 +186,22 @@ function App() {
           element={
             <AdminRoute>
               <ManageCategory />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/product"
+          element={
+            <AdminRoute>
+              <ManageProduct />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/product/detail/:id"
+          element={
+            <AdminRoute>
+              <ManageProductDetail />
             </AdminRoute>
           }
         />

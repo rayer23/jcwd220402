@@ -56,7 +56,7 @@ module.exports = {
     try {
       const { product_name, description, product_weight, price, CategoryId } =
         req.body;
-      const image_url = `http://localhost:8000/public/${req.file.filename}`;
+      const image_url = `${process.env.REACT_APP_IMAGE_URL}${req.file.filename}`;
 
       const addProductData = await Product.create({
         product_name,
@@ -92,7 +92,7 @@ module.exports = {
   },
   addImages: async (req, res) => {
     try {
-      const image_url = `http://localhost:8000/public/${req.file.filename}`;
+      const image_url = `${process.env.REACT_APP_IMAGE_URL}${req.file.filename}`;
 
       await db.Image_Url.create({
         image_url,

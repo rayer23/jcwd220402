@@ -197,7 +197,7 @@ const AdminCategoryItems = ({
           <Button
             bgColor="#0095DA"
             _hover={false}
-            marginLeft= "15px"
+            marginLeft="15px"
             marginRight="5px"
             _active={false}
             color="white"

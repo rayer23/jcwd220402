@@ -125,8 +125,8 @@ module.exports = {
         await emailer({
           to: email,
           html: htmlResult,
-          subject: 'Welcome to Shopedia',
-          text: 'Welcome to Shopedia',
+          subject: 'Welcome to Delisha',
+          text: 'Welcome to Delisha',
         });
 
         return res.status(201).json({
