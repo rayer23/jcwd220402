@@ -2,7 +2,9 @@ import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import { Box, Button, Image, UnorderedList } from "@chakra-ui/react"
-
+import Banner from "../assets/newCollection.png"
+import Diskon from "../assets/diskon.png"
+import Diskon50 from "../assets/diskon50.png"
 import React from "react"
 
 const CarouselSlider = () => {
@@ -71,7 +73,7 @@ const CarouselSlider = () => {
                 <Slider ref={slider} {...settings}>
                     <Box>
                         <Image
-                            src={"https://images.tokopedia.net/img/cache/1208/NsjrJu/2022/11/8/dee2ede1-2ab3-430e-9bff-fa826996eeae.jpg.webp?ect=4g"}
+                            src={Banner}
                             borderRadius={'15px'}
                             height={'400px'}
                             width={'1400px'}
@@ -79,7 +81,7 @@ const CarouselSlider = () => {
                     </Box>
                     <Box>
                         <Image
-                            src={"https://images.tokopedia.net/img/cache/1208/NsjrJu/2022/11/8/6f1140a6-6d17-437e-aeee-c87fe2a5dc9e.jpg?ect=4g"}
+                            src={Diskon}
                             borderRadius={'15px'}
                             height={'400px'}
                             width={'1400px'}
@@ -87,7 +89,7 @@ const CarouselSlider = () => {
                     </Box>
                     <Box>
                         <Image
-                            src={"https://images.tokopedia.net/img/cache/1208/NsjrJu/2022/11/7/2e00e748-fcaf-4dda-a9c4-5549798f6d2e.jpg.webp?ect=4g"}
+                            src={Diskon50}
                             borderRadius={'15px'}
                             height={'400px'}
                             width={'1400px'}

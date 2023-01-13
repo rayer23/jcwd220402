@@ -15,7 +15,8 @@ import { attach } from './redux/features/resetSlice';
 //route
 import Navbar from './components/navbar';
 import HomePage from './pages/Home';
-import Footer from "./components/footer"
+import Footer from "./components/footer";
+import Product from "./pages/product/product"
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -169,6 +170,8 @@ function App() {
             </AdminRoute>
           }
         />
+        {/* Product Route */}
+        <Route path="/product" element={<Product />} />
       </Routes>
       {location.pathname === "/login" ||
       location.pathname === "/register" ||

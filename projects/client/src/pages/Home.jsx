@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import Carousel from '../components/carousel';
 import HomeCategory from '../components/category/homecategory';
-// import HomeProduct from "../components/product/HomeProduct"
+import HomeProduct from "../components/product/HomeProduct"
 
 const HomePage = () => {
   return (
@@ -15,11 +15,12 @@ const HomePage = () => {
         >
           <Carousel />
           <HomeCategory />
+          
         </Box>
       </Box>
 
       {/* Product Card */}
-      {/* <HomeProduct /> */}
+      <HomeProduct />
     </Box>
   );
 };
