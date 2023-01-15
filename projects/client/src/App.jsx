@@ -29,6 +29,8 @@ import ManageWarehouse from './pages/admin/warehousemanagement';
 import ManageCategory from './pages/admin/managecategory';
 import ManageProduct from './pages/admin/manageproduct';
 import ManageProductDetail from './pages/admin/manageproductdetail';
+import ManageStock from './pages/admin/managestock';
+import ManageStockWarehouse from './pages/admin/managestockwarehouse';
 
 import NotFound from './components/404Page';
 // roles route
@@ -202,6 +204,26 @@ function App() {
           element={
             <AdminRoute>
               <ManageProductDetail />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={authSelector.RoleId === 3 ? '/admin/update-stock' : null}
+          element={
+            <AdminRoute>
+              <ManageStock />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={
+            authSelector.RoleId === 2
+              ? '/admin/update-stock'
+              : '/admin/update-stock/:id'
+          }
+          element={
+            <AdminRoute>
+              <ManageStockWarehouse />
             </AdminRoute>
           }
         />

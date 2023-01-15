@@ -29,6 +29,8 @@ import { Link, useParams } from 'react-router-dom';
 import { axiosInstance } from '../../api/index';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
+
 import CarouselProduct from '../../components/admin/carouselproduct';
 import { RiDeleteBin2Line } from 'react-icons/ri';
 import { TbCameraPlus } from 'react-icons/tb';
@@ -48,8 +50,7 @@ const AdminProductDataDetail = () => {
   const [imageData, setImageData] = useState({});
   const [deleteAlert, setDeleteAlert] = useState(null);
   const [deleteAlertImage, setDeleteAlertImage] = useState(null);
-  console.log(deleteAlertImage);
-  const apiImg = process.env.REACT_APP_IMAGE_URL;
+  const authSelector = useSelector((state) => state.auth);
 
   const {
     isOpen: isOpenAddNewProduct,
@@ -117,6 +118,7 @@ const AdminProductDataDetail = () => {
             <Button
               color={'white'}
               bgColor="red"
+              isDisabled={authSelector.RoleId !== 3 ? true : false}
               onClick={() => setDeleteAlertImage(val)}
             >
               <RiDeleteBin2Line />
@@ -280,6 +282,7 @@ const AdminProductDataDetail = () => {
                 bgColor="#0095DA"
                 _hover={false}
                 mr={5}
+                isDisabled={authSelector.RoleId !== 3 ? true : false}
                 onClick={onOpenAddNewProduct}
               >
                 Add New Picture
@@ -291,6 +294,7 @@ const AdminProductDataDetail = () => {
                 bgColor="#F29500"
                 _hover={false}
                 mr={5}
+                isDisabled={authSelector.RoleId !== 3 ? true : false}
                 onClick={() => setAdminUpdate(true)}
               >
                 Edit Product Details

@@ -43,6 +43,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import gambar from '../../assets/default_image.png';
+import { useSelector } from 'react-redux';
 
 import { CgChevronLeft, CgChevronRight } from 'react-icons/cg';
 import { TbCameraPlus } from 'react-icons/tb';
@@ -58,6 +59,7 @@ const AdminProductData = () => {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const cancelRef = useRef();
+  const authSelector = useSelector((state) => state.auth);
 
   const [openedEdit, setOpenedEdit] = useState(null);
   const [rows, setRows] = useState(0);
@@ -77,8 +79,6 @@ const AdminProductData = () => {
   const [sortBy, setSortBy] = useState('id');
   const [sortDir, setSortDir] = useState('ASC');
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const apiImg = process.env.REACT_APP_IMAGE_URL;
 
   const fetchProductData = async () => {
     try {
@@ -187,6 +187,7 @@ const AdminProductData = () => {
                   bgColor={'#FF0000'}
                   _hover={false}
                   color="white"
+                  isDisabled={authSelector.RoleId !== 3 ? true : false}
                   onClick={() => setDeleteAlert(val)}
                   //   onClick={() => deleteBtnHandler(val)}
                   //   onClick={() => onOpen()}
@@ -315,6 +316,7 @@ const AdminProductData = () => {
             bgColor={'#0095DA'}
             color="white"
             _hover={false}
+            isDisabled={authSelector.RoleId !== 3 ? true : false}
             onClick={onOpenAddNewProduct}
             w="50px"
           >
@@ -414,19 +416,6 @@ const AdminProductData = () => {
               <BsArrowBarRight fontSize={'40px'} />
             </Button>
           </HStack>
-          {/* <HStack justifyContent={'center'} gap={'2px'} paddingLeft="65px">
-            {pages + 1 === 1 ? null : (
-              <BsArrowBarLeft onClick={prevPage} color={'#0095DA'}>
-                {''}
-              </BsArrowBarLeft>
-            )}
-            <Text fontSize={'md'}>{pages + 1}</Text>
-            {pages + 1 >= maxPage ? null : (
-              <BsArrowBarRight onClick={nextPage} color={'#0095DA'}>
-                Next
-              </BsArrowBarRight>
-            )}
-          </HStack> */}
         </GridItem>
         <GridItem />
       </Grid>
