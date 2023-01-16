@@ -17,6 +17,7 @@ import Navbar from './components/navbar';
 import HomePage from './pages/Home';
 import Footer from "./components/footer";
 import Product from "./pages/product/product"
+import ProductDetail from "./pages/product/productDetail"
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -172,6 +173,10 @@ function App() {
         />
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
+        <Route
+                    path="/product/:id/:product_name"
+                    element={<ProductDetail />}
+                />
       </Routes>
       {location.pathname === "/login" ||
       location.pathname === "/register" ||
