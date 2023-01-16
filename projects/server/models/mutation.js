@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Mutation.belongsTo(models.Product)
+      Mutation.belongsTo(models.Journal)
       Mutation.belongsTo(models.Transaction)
       Mutation.belongsTo(models.User)
     }
@@ -35,4 +36,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
   return Mutation
+
 }

@@ -1,15 +1,15 @@
-const db = require("../models");
+const db = require('../models');
 const User = db.User;
-const fs = require("fs");
-const handlebars = require("handlebars");
-const emailer = require("../helpers/emailer");
-const { sign } = require("../helpers/verification");
-const { signToken, decode } = require("../helpers/jwt");
-const bcrypt = require("bcrypt");
+const fs = require('fs');
+const handlebars = require('handlebars');
+const emailer = require('../helpers/emailer');
+const { sign } = require('../helpers/verification');
+const { signToken, decode } = require('../helpers/jwt');
+const bcrypt = require('bcrypt');
 const {
   createVerificationToken,
   validateVerificationToken,
-} = require("../helpers/verification");
+} = require('../helpers/verification');
 
 module.exports = {
   sendEmailRegister: async (req, res) => {
@@ -24,7 +24,7 @@ module.exports = {
 
       if (findUserByEmail) {
         return res.status(400).json({
-          message: "Email already registered",
+          message: 'Email already registered',
         });
       }
 
@@ -43,9 +43,9 @@ module.exports = {
         id: newUser.id,
       });
 
-      const verificationLink = ` ${process.env.BASE_URL_FE}register/verification?verification_token=${verification_token}`
+      const verificationLink = ` ${process.env.BASE_URL_FE}register/verification?verification_token=${verification_token}`;
 
-      const rawHTML = fs.readFileSync("templates/verification.html", "utf-8");
+      const rawHTML = fs.readFileSync('templates/verification.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -57,18 +57,18 @@ module.exports = {
       await emailer({
         to: email,
         html: htmlResult,
-        subject: "Activate your account",
-        text: "please verify your account",
+        subject: 'Activate your account',
+        text: 'please verify your account',
       });
 
       return res.status(201).json({
-        message: "We send you an email verification",
+        message: 'We send you an email verification',
         data: newUser,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -87,7 +87,7 @@ module.exports = {
 
       if (findUserByEmail) {
         return res.status(400).json({
-          message: "User has been verified",
+          message: 'User has been verified',
         });
       }
 
@@ -103,16 +103,16 @@ module.exports = {
           where: {
             id: decodedToken.id,
           },
-        }
+        },
       );
 
       return res.status(201).json({
-        message: "User Registered ",
+        message: 'User Registered ',
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
         console: error,
       });
     }
@@ -130,7 +130,7 @@ module.exports = {
       if (!findUserByEmail) {
         if (findUserByEmail) {
           return res.status(400).json({
-            message: "Email already registered",
+            message: 'Email already registered',
           });
         }
 
@@ -151,9 +151,9 @@ module.exports = {
           id: newUser.id,
         });
 
-        const link = process.env.BASE_URL_FE
+        const link = process.env.BASE_URL_FE;
 
-        const rawHTML = fs.readFileSync("templates/welcome.html", "utf-8");
+        const rawHTML = fs.readFileSync('templates/welcome.html', 'utf-8');
 
         const compiledHTML = handlebars.compile(rawHTML);
 
@@ -165,12 +165,12 @@ module.exports = {
         await emailer({
           to: email,
           html: htmlResult,
-          subject: "Welcome to Delisha",
-          text: "Welcome to Delisha",
+          subject: 'Welcome to Delisha',
+          text: 'Welcome to Delisha',
         });
 
         return res.status(201).json({
-          message: "User registered",
+          message: 'User registered',
           data: newUser,
         });
       }
@@ -180,14 +180,14 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Login Success",
+        message: 'Login Success',
         data: findUserByEmail,
         token: token,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },

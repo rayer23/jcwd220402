@@ -1,10 +1,10 @@
-const db = require("../models");
-const { Op } = require("sequelize");
-const fs = require("fs");
-const handlebars = require("handlebars");
-const emailer = require("../helpers/emailer");
-const { signToken } = require("../helpers/jwt");
-const bcrypt = require("bcrypt");
+const db = require('../models');
+const { Op } = require('sequelize');
+const fs = require('fs');
+const handlebars = require('handlebars');
+const emailer = require('../helpers/emailer');
+const { signToken } = require('../helpers/jwt');
+const bcrypt = require('bcrypt');
 
 const User = db.User;
 
@@ -13,13 +13,13 @@ module.exports = {
     try {
       const UserData = await User.findAll();
       return res.status(200).json({
-        message: "Successfully getting user data!",
+        message: 'Successfully getting user data!',
         data: UserData,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server Error Getting User Data",
+        message: 'Server Error Getting User Data',
       });
     }
   },
@@ -40,7 +40,7 @@ module.exports = {
         id: newUserData.id,
       });
       const verificationLink = ` ${process.env.BASE_URL_FE}register/verification?verification_token=${verification_token}`;
-      const rawHTML = fs.readFileSync("templates/verification.html", "utf-8");
+      const rawHTML = fs.readFileSync('templates/verification.html', 'utf-8');
       const compiledHTML = handlebars.compile(rawHTML);
       const htmlResult = compiledHTML({
         email,
@@ -50,18 +50,18 @@ module.exports = {
       await emailer({
         to: email,
         html: htmlResult,
-        subject: "Activate your account",
-        text: "please verify your account",
+        subject: 'Activate your account',
+        text: 'please verify your account',
       });
 
       return res.status(200).json({
-        message: "User data has been created manually!",
+        message: 'User data has been created manually!',
         data: newUserData,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server Error Creating User",
+        message: 'Server Error Creating User',
       });
     }
   },
@@ -73,12 +73,12 @@ module.exports = {
         },
       });
       return res.status(200).json({
-        message: "Successfully deleted user!",
+        message: 'Successfully deleted user!',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server Error Deleting User",
+        message: 'Server Error Deleting User',
       });
     }
   },
@@ -89,13 +89,13 @@ module.exports = {
       const findUserById = await User.findByPk(id);
 
       return res.status(200).json({
-        message: "Get user by id",
+        message: 'Get user by id',
         data: findUserById,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -103,22 +103,22 @@ module.exports = {
   editUserProfile: async (req, res) => {
     try {
       if (req.file) {
-        req.body.profile_picture = `http://localhost:8000/public/${req.file.filename}`;
+        req.body.profile_picture = `${process.env.REACT_APP_IMAGE_URL}${req.file.filename}`
       }
 
       const findUserByUser = await User.findOne({
         where: {
           [Op.or]: {
-            username: req.body.username || "",
+            username: req.body.username || '',
             phone_number: req.body.phone_number || 0,
-            password: req.body.password || "",
+            password: req.body.password || '',
           },
         },
       });
 
       if (findUserByUser) {
         return res.status(400).json({
-          message: "Username or password same as previous",
+          message: 'Username or password same as previous',
         });
       }
       const { id } = req.params;
@@ -126,13 +126,13 @@ module.exports = {
       const findUserById = await User.findByPk(id);
 
       return res.status(200).json({
-        message: "Edited user data",
+        message: 'Edited user data',
         data: findUserById,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },

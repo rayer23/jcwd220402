@@ -74,7 +74,7 @@ main {
   display: grid;
   grid-template-columns: max-content max-content;
   column-gap: 2rem;
-  padding: 0.5rem 0 0.3rem 1.5rem;
+  padding: 0.5rem 0 0 1.5rem;
 }
 
 .nav-logo {

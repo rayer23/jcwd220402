@@ -9,23 +9,29 @@ const fs = require('fs');
 
 // Import Routes
 const {
-  admin,
+  address,
+  adminProduct,
+  adminWarehouse,
   auth,
   product,
   profile,
-  userdata,
-  userProfile,
-  address,
-  addressCheckout,
-  adminProduct,
-  adminWarehouse,
-  cart,
-  category,
   shipment,
   stock,
+  userdata,
+  cart,
+  addressCheckout,
+  category,
+  userProfile,
+  transactions,
+  adminOrder,
+  exports1,
+  adminOrderHistory,
+  stockMutation,
+  salesReport,
+  adminCategory,
 } = require('../routes');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(
   cors(),
@@ -43,21 +49,27 @@ app.use(express.json());
 
 // ===========================
 // NOTE : Add your routes here
-app.use('/public', express.static('public'));
-app.use('/admin', admin);
+app.use('/admin', verifyToken, adminCategory);
 app.use('/userData', userdata);
 app.use('/product', product);
+app.use('/categories', category);
 app.use('/auth', auth);
+app.use('/shipment', shipment);
 app.use('/profile', verifyToken, profile);
-app.use('/user-profile', verifyToken, userProfile);
-app.use('/address', address);
-app.use('/checkoutAddress', addressCheckout);
 app.use('/admin/product', verifyToken, adminProduct);
 app.use('/warehouse', verifyToken, adminWarehouse);
-app.use('/carts', cart);
-app.use('/categories', category);
-app.use('/shipment', shipment);
+app.use('/public', express.static('public'));
+app.use('/address', address);
 app.use('/stock', stock);
+app.use('/carts', cart);
+app.use('/checkoutAddress', addressCheckout);
+app.use('/user-profile', verifyToken, userProfile);
+app.use('/transactions', verifyToken, transactions);
+app.use('/adminOrder', verifyToken, adminOrder);
+app.use('/export', verifyToken, exports1);
+app.use('/admin/order-history', adminOrderHistory);
+app.use('/stock-mutation', verifyToken, stockMutation);
+app.use('/admin/sales-report', salesReport);
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`);

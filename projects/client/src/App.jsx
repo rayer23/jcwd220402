@@ -27,6 +27,12 @@ import NavbarAdmin from './components/navbaradmin';
 import Dashboard from './pages/admin/dashboard';
 import ManageUser from './pages/admin/manageuser';
 import ManageAdmin from './pages/admin/manageadmin';
+import ManageWarehouse from './pages/admin/warehousemanagement';
+import ManageCategory from './pages/admin/managecategory';
+import ManageProduct from './pages/admin/manageproduct';
+import ManageProductDetail from './pages/admin/manageproductdetail';
+import ManageStock from './pages/admin/managestock';
+import ManageStockWarehouse from './pages/admin/managestockwarehouse';
 
 import NotFound from './components/404Page';
 // roles route
@@ -177,17 +183,69 @@ function App() {
                     path="/product/:id/:product_name"
                     element={<ProductDetail />}
                 />
+        <Route
+          path="/admin/warehouse-management"
+          element={
+            <AdminRoute>
+              <ManageWarehouse />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/category"
+          element={
+            <AdminRoute>
+              <ManageCategory />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/product"
+          element={
+            <AdminRoute>
+              <ManageProduct />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/product/detail/:id"
+          element={
+            <AdminRoute>
+              <ManageProductDetail />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={authSelector.RoleId === 3 ? '/admin/update-stock' : null}
+          element={
+            <AdminRoute>
+              <ManageStock />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={
+            authSelector.RoleId === 2
+              ? '/admin/update-stock'
+              : '/admin/update-stock/:id'
+          }
+          element={
+            <AdminRoute>
+              <ManageStockWarehouse />
+            </AdminRoute>
+          }
+        />
       </Routes>
-      {location.pathname === "/login" ||
-      location.pathname === "/register" ||
+      {location.pathname === '/login' ||
+      location.pathname === '/register' ||
       location.pathname === '/register/verification' ||
-      location.pathname === "/reset-password" ||
-      location.pathname === "/reset-confirm" ||
+      location.pathname === '/reset-password' ||
+      location.pathname === '/reset-confirm' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
           <Footer />
-        </Box> 
+        </Box>
       )}
     </>
   );

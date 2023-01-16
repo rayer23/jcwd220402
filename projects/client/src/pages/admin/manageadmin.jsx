@@ -18,27 +18,31 @@ import {
   useDisclosure,
   useToast,
   Center,
-} from "@chakra-ui/react";
-import { useFormik } from "formik";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { axiosInstance } from "../../api";
-import * as Yup from "yup";
-import AddAdmin from "../../components/admin/addadmin";
-import Alert from "../../components/alert";
-import EditAdmin from "../../components/admin/editadmin";
-import { RiUserAddFill, RiUserSettingsFill ,RiUserUnfollowFill} from "react-icons/ri";
-import { TbSearch } from "react-icons/tb";
-import { IoIosAlert } from "react-icons/io";
-import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai"
+} from '@chakra-ui/react';
+import { useFormik } from 'formik';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { axiosInstance } from '../../api';
+import * as Yup from 'yup';
+import AddAdmin from '../../components/admin/addadmin';
+import Alert from '../../components/alert';
+import EditAdmin from '../../components/admin/editadmin';
+import {
+  RiUserAddFill,
+  RiUserSettingsFill,
+  RiUserUnfollowFill,
+} from 'react-icons/ri';
+import { TbSearch } from 'react-icons/tb';
+import { IoIosAlert } from 'react-icons/io';
+import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 
 const ManageAdminData = () => {
   const [userData, setUserData] = useState([]);
   const cancelRef = React.useRef();
-  const [currentSearch, setCurrentSearch] = useState("");
+  const [currentSearch, setCurrentSearch] = useState('');
   const [totalCount, setTotalCount] = useState(0);
-  const [sortBy, setSortBy] = useState("username");
-  const [sortDir, setSortDir] = useState("ASC");
+  const [sortBy, setSortBy] = useState('username');
+  const [sortDir, setSortDir] = useState('ASC');
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
 
@@ -65,7 +69,7 @@ const ManageAdminData = () => {
   const fetchAdminData = async () => {
     const maxItemsPerPage = 6;
     try {
-      const response = await axiosInstance.get("/userData/AllWarehouseAdmin", {
+      const response = await axiosInstance.get('/userData/AllWarehouseAdmin', {
         params: {
           _page: page,
           _limit: maxItemsPerPage,
@@ -97,42 +101,40 @@ const ManageAdminData = () => {
           <Td>{val.username}</Td>
           <Td w="100px">
             <Avatar
-              size={"lg"}
-              borderRadius={"0"}
+              size={'lg'}
+              borderRadius={'0'}
               name={val.username}
               src={`${apiImg}/${val.profile_picture}`}
             />
           </Td>
           <Td w="240px">{val.email}</Td>
-          <Td w="160px">{val.phone_number || "null"}</Td>
-          <Td>{val.Role.role_name || "null"}</Td>
-          <Td>{val.Warehouse?.warehouse_name || "null "}</Td>
+          <Td w="160px">{val.phone_number || 'null'}</Td>
+          <Td>{val.Role.role_name || 'null'}</Td>
+          <Td>{val.Warehouse?.warehouse_name || 'null '}</Td>
           <Td>
             <Box>
-              <Box mb={"2"}>
+              <Box mb={'2'}>
                 <Button
-                  width={"60px"}
-                  bgColor={"#0095DA"}
+                  width={'60px'}
+                  bgColor={'#0095DA'}
                   _hover={false}
                   color="white"
-                  marginRight={"10px"}
+                  marginRight={'10px'}
                   onClick={() => setOpenedEdit(val)}
                 >
-                  <RiUserSettingsFill size={"25"}/> 
+                  <RiUserSettingsFill size={'25'} />
                 </Button>
                 <Button
-                  width={"60px"}
-                  colorScheme='black' variant='outline'
+                  width={'60px'}
+                  bgColor="#FF0000"
                   _hover={false}
-                  // color="white"
+                  color="white"
                   onClick={() => setDeleteAlert(val)}
                 >
-                  <RiUserUnfollowFill size={"25"} />
+                  <RiUserUnfollowFill size={'25'} />
                 </Button>
               </Box>
-              <Box>
-                
-              </Box>
+              <Box></Box>
             </Box>
           </Td>
         </Tr>
@@ -150,11 +152,11 @@ const ManageAdminData = () => {
 
   const formikAddNewAdmin = useFormik({
     initialValues: {
-      email: "",
-      password: "",
-      phone_number: "",
-      username: "",
-      WarehouseId: "",
+      email: '',
+      password: '',
+      phone_number: '',
+      username: '',
+      WarehouseId: '',
     },
     onSubmit: async ({
       email,
@@ -169,51 +171,51 @@ const ManageAdminData = () => {
         const adminData = new FormData();
 
         if (email) {
-          adminData.append("email", email);
+          adminData.append('email', email);
         }
 
         if (password) {
-          adminData.append("password", password);
+          adminData.append('password', password);
         }
 
         if (phone_number) {
-          adminData.append("phone_number", phone_number);
+          adminData.append('phone_number', phone_number);
         }
 
         if (profile_picture) {
-          adminData.append("profile_picture", profile_picture);
+          adminData.append('profile_picture', profile_picture);
         }
 
         if (username) {
-          adminData.append("username", username);
+          adminData.append('username', username);
         }
 
         if (WarehouseId) {
-          adminData.append("WarehouseId", WarehouseId);
+          adminData.append('WarehouseId', WarehouseId);
         }
 
         const response = await axiosInstance.post(
-          "/userData/addNewAdmin",
-          adminData
+          '/userData/addNewAdmin',
+          adminData,
         );
 
         toast({
-          title: "Registration Success",
+          title: 'Registration Success',
           description: response.data.message,
-          status: "success",
+          status: 'success',
         });
-        formikAddNewAdmin.setFieldValue("email", "");
-        formikAddNewAdmin.setFieldValue("password", "");
-        formikAddNewAdmin.setFieldValue("phone_number", "");
-        formikAddNewAdmin.setFieldValue("username", "");
-        formikAddNewAdmin.setFieldValue("WarehouseId", "");
+        formikAddNewAdmin.setFieldValue('email', '');
+        formikAddNewAdmin.setFieldValue('password', '');
+        formikAddNewAdmin.setFieldValue('phone_number', '');
+        formikAddNewAdmin.setFieldValue('username', '');
+        formikAddNewAdmin.setFieldValue('WarehouseId', '');
         fetchAdminData();
       } catch (error) {
         console.log(error.response);
         toast({
-          title: "Registration Failed",
+          title: 'Registration Failed',
           description: error.response.data.message,
-          status: "error",
+          status: 'error',
         });
       }
     },
@@ -223,7 +225,7 @@ const ManageAdminData = () => {
         .required(8)
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character',
         ),
       phone_number: Yup.number().required(9),
       profile_picture: Yup.string().required(),
@@ -234,10 +236,10 @@ const ManageAdminData = () => {
 
   const editFormik = useFormik({
     initialValues: {
-      phone_number: "",
-      profile_picture: "",
-      username: "",
-      WarehouseId: "",
+      phone_number: '',
+      profile_picture: '',
+      username: '',
+      WarehouseId: '',
     },
     onSubmit: async ({
       email,
@@ -250,54 +252,54 @@ const ManageAdminData = () => {
         const adminData = new FormData();
 
         if (email) {
-          adminData.append("email", email);
+          adminData.append('email', email);
         }
 
         if (phone_number) {
-          adminData.append("phone_number", phone_number);
+          adminData.append('phone_number', phone_number);
         }
 
         if (profile_picture) {
-          adminData.append("profile_picture", profile_picture);
+          adminData.append('profile_picture', profile_picture);
         }
 
         if (username) {
-          adminData.append("username", username);
+          adminData.append('username', username);
         }
 
         if (WarehouseId) {
-          adminData.append("WarehouseId", WarehouseId);
+          adminData.append('WarehouseId', WarehouseId);
         }
 
         const response = await axiosInstance.patch(
           `/userData/editAdmin/${openedEdit.id}`,
-          adminData
+          adminData,
         );
         toast({
-          title: "Admin Edited",
+          title: 'Admin Edited',
           description: response.data.message,
-          status: "success",
+          status: 'success',
         });
 
-        editFormik.setFieldValue("phone_number", "");
-        editFormik.setFieldValue("profile_picture", "");
-        editFormik.setFieldValue("username", "");
-        editFormik.setFieldValue("WarehouseId", "");
+        editFormik.setFieldValue('phone_number', '');
+        editFormik.setFieldValue('profile_picture', '');
+        editFormik.setFieldValue('username', '');
+        editFormik.setFieldValue('WarehouseId', '');
         fetchAdminData();
         setOpenedEdit(null);
       } catch (error) {
         console.log(error);
         toast({
-          title: "Failed Edit Admin",
+          title: 'Failed Edit Admin',
           description: error.response.data.message,
-          status: "error",
+          status: 'error',
         });
       }
     },
     validationSchema: Yup.object({
       password: Yup.string().matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character',
       ),
       phone_number: Yup.number(),
       username: Yup.string(),
@@ -312,22 +314,22 @@ const ManageAdminData = () => {
       fetchAdminData();
 
       toast({
-        title: "Admin Deleted",
-        status: "info",
+        title: 'Admin Deleted',
+        status: 'info',
       });
     } catch (error) {
       console.log(error);
       toast({
-        title: "Failed Delete Admin",
+        title: 'Failed Delete Admin',
         description: error.response.data.message,
-        status: "error",
+        status: 'error',
       });
     }
   };
 
   const formikSearch = useFormik({
     initialValues: {
-      search: "",
+      search: '',
     },
     onSubmit: ({ search }) => {
       setCurrentSearch(search);
@@ -341,8 +343,8 @@ const ManageAdminData = () => {
   };
   const sortCategoryHandler = ({ target }) => {
     const { value } = target;
-    setSortBy(value.split(" ")[0]);
-    setSortDir(value.split(" ")[1]);
+    setSortBy(value.split(' ')[0]);
+    setSortDir(value.split(' ')[1]);
   };
   const doubleOnClick = () => {
     onClose();
@@ -375,40 +377,39 @@ const ManageAdminData = () => {
 
   useEffect(() => {
     if (openedEdit) {
-      editFormik.setFieldValue("email", openedEdit.email);
-      editFormik.setFieldValue("phone_number", openedEdit.phone_number);
-      editFormik.setFieldValue("profile_picture", openedEdit.profile_picture);
-      editFormik.setFieldValue("username", openedEdit.username);
-      editFormik.setFieldValue("WarehouseId", openedEdit.WarehouseId);
+      editFormik.setFieldValue('email', openedEdit.email);
+      editFormik.setFieldValue('phone_number', openedEdit.phone_number);
+      editFormik.setFieldValue('profile_picture', openedEdit.profile_picture);
+      editFormik.setFieldValue('username', openedEdit.username);
+      editFormik.setFieldValue('WarehouseId', openedEdit.WarehouseId);
     }
   }, [openedEdit]);
   return (
-    <Box marginLeft={"90px"}>
-      <Box p="20px 0" display={"flex"} justifyContent="space-between" mr="2">
-        <Box display={"flex"} gap="4" my={"auto"}>
-          <Text fontSize={"2xl"} fontWeight="bold">
+    <Box marginLeft={'90px'}>
+      <Box p="20px 0" display={'flex'} justifyContent="space-between" mr="8">
+        <Box display={'flex'} gap="4" my={'auto'}>
+          <Text fontSize={'2xl'} fontWeight="bold">
             Admin Data Management
           </Text>
         </Box>
 
-        <Box gap="4" display={"flex"}>
+        <Box gap="4" display={'flex'}>
           <Button
-            w={"50px"}
-            bgColor={"#0095DA"}
+            w={'50px'}
+            bgColor={'#0095DA'}
             color="white"
             _hover={false}
             onClick={onOpenAddNewAdmin}
-            
           >
-            <RiUserAddFill size={"25"}/>
+            <RiUserAddFill size={'25'} />
           </Button>
           <Select
             onChange={sortCategoryHandler}
             variant="filled"
-            fontSize={"15px"}
+            fontSize={'15px'}
             fontWeight="normal"
-            width={"90px"}
-            color={"#6D6D6F"}
+            width={'90px'}
+            color={'#6D6D6F'}
             _placeholder="Sort By"
           >
             <option value="username ASC" selected>
@@ -421,23 +422,20 @@ const ManageAdminData = () => {
 
           <form onSubmit={formikSearch.handleSubmit}>
             <FormControl>
-            
-              <InputGroup textAlign={"right"}>
-              <Button borderRightRadius={"0"} type="submit">
+              <InputGroup textAlign={'right'}>
+                <Button borderRightRadius={'0'} type="submit">
                   <TbSearch />
                 </Button>
                 <Input
-                  type={"text"}
+                  type={'text'}
                   placeholder="Search by username"
                   name="search"
                   w="200px"
                   onChange={searchAdminHandler}
-                  _placeholder={"halo"}
+                  _placeholder={'halo'}
                   borderLeftRadius="0"
                   value={formikSearch.values.search}
                 />
-
-                
               </InputGroup>
             </FormControl>
           </form>
@@ -459,10 +457,10 @@ const ManageAdminData = () => {
         <Tbody>{renderUser()}</Tbody>
       </Table>
       {!userData.length ? (
-        <Box p="10px" bgColor={"#E5F9F6"}>
+        <Box p="10px" bgColor={'#E5F9F6'}>
           <Box mx="auto">
-            <Box display={"flex"} mx="auto" w="170px">
-              <IoIosAlert fontSize={"25px"} color="#0095DA" />
+            <Box display={'flex'} mx="auto" w="170px">
+              <IoIosAlert fontSize={'25px'} color="#0095DA" />
               <Text fontWeight="medium" ml="2">
                 No admin found
               </Text>
@@ -475,16 +473,16 @@ const ManageAdminData = () => {
       <Alert
         body={`Are you sure to delete "${deleteAlert?.username}"`}
         cancelRef={cancelRef}
-        color={"#0095DA"}
-        header={"Delete Admin"}
+        color={'#0095DA'}
+        header={'Delete Admin'}
         isOpen={deleteAlert}
-        leftButton={"Cancel"}
+        leftButton={'Cancel'}
         onClose={() => setDeleteAlert(null)}
         onSubmit={() => doubleOnClick2()}
-        rightButton={"Delete"}
+        rightButton={'Delete'}
       />
 
-      {/* Modal Add New Admin */}
+      {/* Modal Add Admin */}
 
       <AddAdmin
         formikAddNewAdmin={formikAddNewAdmin}
@@ -497,65 +495,69 @@ const ManageAdminData = () => {
 
       {/* Alert Add New Admin */}
       <Alert
-        header={"Add New Admin"}
-        body={"Is data that you entered is correct"}
+        header={'Add New Admin'}
+        body={'Is data that you entered is correct'}
         cancelRef={cancelRef}
         isOpen={isOpen}
-        leftButton={"Cancel"}
+        leftButton={'Cancel'}
         onClose={onClose}
-        rightButton={"Add New Admin"}
+        rightButton={'Add New Admin'}
         onSubmit={() => doubleOnClick()}
-        color={"#0095DA"}
+        color={'#0095DA'}
       />
 
       {/* Modal Edit Admin */}
       <EditAdmin
         editFormik={editFormik}
         isOpen={openedEdit}
-        header={"Edit Admin"}
+        header={'Edit Admin'}
         onClose={() => setOpenedEdit(null)}
-        color={"#0095DA"}
+        color={'#0095DA'}
         onOpen={onOpenAlert}
         onCloseMod={() => setOpenedEdit(null)}
       />
 
       {/* Alert Edit admin */}
       <Alert
-        body={"Is data that you entered correct?"}
+        body={'Is data that you entered correct?'}
         cancelRef={cancelRef}
-        color={"#0095DA"}
-        header={"Edit Admin"}
+        color={'#0095DA'}
+        header={'Edit Admin'}
         isOpen={isOpenAlert}
-        leftButton={"Cancel"}
+        leftButton={'Cancel'}
         onClose={onCloseAlert}
         onSubmit={doubleOnClick1}
-        rightButton={"Edit Admin"}
+        rightButton={'Edit Admin'}
       />
-      
-        <Text fontSize={"2xl"} fontWeight="bold" color={"#0095DA"}>
-          Total Admin: {totalCount}
-        </Text>
-     
-        <Box p="20px">
-        <Box textAlign={"center"}>
+
+      <Text fontSize={'2xl'} fontWeight="bold" color={'#0095DA'}>
+        Total Admin: {totalCount}
+      </Text>
+
+      <Box p="20px">
+        <Box textAlign={'center'}>
           <Button
             onClick={previousPage}
             disabled={page === 1 ? true : null}
             _hover={false}
             _active={false}
+            color="#0095DA"
+            bgColor={'white'}
           >
-            <AiOutlineLeftCircle fontSize={"20px"} />
+            <BsArrowBarLeft fontSize={'25px'} />
           </Button>
 
-          <Box display={"inline"}>{page}</Box>
+          <Box display={'inline'}>{page}</Box>
 
           <Button
             onClick={nextPage}
             disabled={page >= maxPage ? true : null}
             _hover={false}
             _active={false}
+            color="#0095DA"
+            bgColor={'white'}
           >
-            <AiOutlineRightCircle fontSize={"20px"} />
+            <BsArrowBarRight fontSize={'25px'} />
           </Button>
           <Box>
             Page: {page} of {maxPage}
