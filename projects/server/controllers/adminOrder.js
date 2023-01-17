@@ -1,22 +1,23 @@
-const db = require("../models");
-const emailer = require("../helpers/emailer");
-const fs = require("fs");
-const handlebars = require("handlebars");
-const { Op } = require("sequelize");
-const moment = require("moment");
+const db = require('../models');
+const emailer = require('../helpers/emailer');
+const fs = require('fs');
+const handlebars = require('handlebars');
+const { Op } = require('sequelize');
+const moment = require('moment');
+const schedule = require('node-schedule');
 
 module.exports = {
   waitingConfirmation: async (req, res) => {
     try {
       const {
-        username = "",
-        transaction_name = "",
-        PaymentStatusId = "",
-        OrderStatusId = "",
-        WarehouseId = "",
-        payment_method = "",
-        _sortBy = "id",
-        _sortDir = "ASC",
+        username = '',
+        transaction_name = '',
+        PaymentStatusId = '',
+        OrderStatusId = '',
+        WarehouseId = '',
+        payment_method = '',
+        _sortBy = 'id',
+        _sortDir = 'ASC',
         _limit = 6,
         _page = 1,
       } = req.query;
@@ -28,7 +29,7 @@ module.exports = {
       });
 
       if (
-        _sortBy === "createdAt" ||
+        _sortBy === 'createdAt' ||
         username ||
         transaction_name ||
         payment_method ||
@@ -46,28 +47,29 @@ module.exports = {
             limit: Number(_limit),
             offset: (_page - 1) * _limit,
             order: [[_sortBy, _sortDir]],
-            where: {
-              transaction_name: {
-                [Op.like]: `%${transaction_name}%`,
-              },
-            },
             include: [
               {
                 model: db.User,
-                where: {
-                  username: {
-                    [Op.like]: `%${username}%`,
-                  },
-                },
+                require: true,
               },
               { model: db.Order_status },
               { model: db.Payment_status },
               { model: db.Warehouse },
             ],
+            where: {
+              [Op.or]: {
+                transaction_name: {
+                  [Op.like]: `%${transaction_name}%`,
+                },
+                '$User.username$': {
+                  [Op.like]: `%${username}%`,
+                },
+              },
+            },
           });
 
           return res.status(200).json({
-            message: "Waiting Confrimation By Search",
+            message: 'Waiting Confrimation By Search',
             data: response.rows,
             dataCount: response.count,
           });
@@ -231,7 +233,7 @@ module.exports = {
         });
 
         return res.status(200).json({
-          message: "Waiting Confrimation Or",
+          message: 'Waiting Confrimation Or',
           data: response.rows,
           dataCount: response.count,
         });
@@ -250,14 +252,14 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Waiting Confrimation",
+        message: 'Waiting Confrimation',
         data: response.rows,
         dataCount: response.count,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -266,13 +268,13 @@ module.exports = {
       const response = await db.Order_status.findAll();
 
       return res.status(200).json({
-        message: "Find all order status",
+        message: 'Find all order status',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -281,13 +283,13 @@ module.exports = {
       const response = await db.Payment_status.findAll();
 
       return res.status(200).json({
-        message: "Find all payment status",
+        message: 'Find all payment status',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -296,13 +298,13 @@ module.exports = {
       const response = await db.Warehouse.findAll();
 
       return res.status(200).json({
-        message: "Find all warehouse",
+        message: 'Find all warehouse',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -318,13 +320,13 @@ module.exports = {
 
       if (!findTransaction) {
         return res.status(400).json({
-          message: "Transaction not found",
+          message: 'Transaction not found',
         });
       }
 
       if (!findTransaction.payment_proof) {
         return res.status(400).json({
-          message: "Payment Proof not found",
+          message: 'Payment Proof not found',
         });
       }
 
@@ -347,7 +349,7 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
 
       // Cari semua item dari 1 transaksi
@@ -413,7 +415,7 @@ module.exports = {
 
       // ambil id transaction item
       const findTransactionItem = stockMutation.map(
-        (val) => val.transactionItemId
+        (val) => val.transactionItemId,
       );
 
       // mencari warehouse terdekat
@@ -447,7 +449,7 @@ module.exports = {
           findTransaction.Warehouse.latitude,
           findTransaction.Warehouse.longitude,
           findClosestWarehouse[i].latitude,
-          findClosestWarehouse[i].longitude
+          findClosestWarehouse[i].longitude,
         );
 
         if (findClosestWarehouse[i].id === findTransaction.Warehouse.id) {
@@ -482,7 +484,7 @@ module.exports = {
         }
 
         minusStock.push(
-          findTotalStockProduct.map((val, idx) => val.stock - difference[idx])
+          findTotalStockProduct.map((val, idx) => val.stock - difference[idx]),
         );
         closesStock.push(findTotalStockProduct.map((val) => val.stock));
       }
@@ -499,7 +501,7 @@ module.exports = {
         });
 
         plushStock.push(
-          findTotalStockProduct.map((val) => val.stock + difference[i])
+          findTotalStockProduct.map((val) => val.stock + difference[i]),
         );
         beforeMut.push(findTotalStockProduct.map((val) => val.stock));
       }
@@ -509,7 +511,7 @@ module.exports = {
           from_warehouse: findTransaction.WarehouseId,
           to_warehouse: warehouseSort[0],
           quantity: difference[i],
-          mutation_status: "Approve",
+          mutation_status: 'Approve',
           ProductId: ProductMutationId[i],
           TransactionId: id,
         });
@@ -522,10 +524,10 @@ module.exports = {
               WarehouseId: warehouseSort[0],
               ProductId: ProductMutationId[i],
             },
-          }
+          },
         );
         const journal = await db.Type_Journal.create({
-          name: "Mutation Stock",
+          name: 'Mutation Stock',
           type: addOrAdd(closesStock[i], minusStock[i]),
           stock_after: minusStock[i],
           ProductId: productId[i],
@@ -551,10 +553,10 @@ module.exports = {
               WarehouseId: findTransaction.WarehouseId,
               ProductId: ProductMutationId[i],
             },
-          }
+          },
         );
         const journal = await db.Type_Journal.create({
-          name: "Mutation Stock",
+          name: 'Mutation Stock',
           type: addOrAdd(beforeMut[i], plushStock[i]),
           stock_after: plushStock[i],
           ProductId: productId[i],
@@ -582,7 +584,7 @@ module.exports = {
         });
 
         finalStock.push(
-          findTotalStockProduct.map((val) => val.stock - quantity[i])
+          findTotalStockProduct.map((val) => val.stock - quantity[i]),
         );
         stockBefore.push(findTotalStockProduct.map((val) => val.stock));
       }
@@ -597,11 +599,11 @@ module.exports = {
               ProductId: productId[i],
               WarehouseId: findTransaction.WarehouseId,
             },
-          }
+          },
         );
 
         const journal = await db.Type_Journal.create({
-          name: "Order Stock",
+          name: 'Order Stock',
           type: addOrAdd(stockBefore[i], finalStock[i]),
           stock_after: finalStock[i],
           ProductId: productId[i],
@@ -626,11 +628,11 @@ module.exports = {
 
       const totalBill = findApproveTrasanction.total_price;
       const paymentDate = moment(findApproveTrasanction.payment_date).format(
-        "dddd, DD MMMM YYYY, HH:mm:ss"
+        'dddd, DD MMMM YYYY, HH:mm:ss',
       );
       const transactionLink = `${process.env.BASE_URL_FE}transaction-list`;
 
-      const rawHTML = fs.readFileSync("templates/approved.html", "utf-8");
+      const rawHTML = fs.readFileSync('templates/approved.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -640,24 +642,24 @@ module.exports = {
         paymentMethod: findApproveTrasanction.payment_method,
         dateAndTime: `${paymentDate} WIB`,
         transactionListLink: transactionLink,
-        shopediaLink: process.env.BASE_URL_FE,
+        Link: process.env.BASE_URL_FE,
       });
 
       await emailer({
         to: findApproveTrasanction.User.email,
         html: htmlResult,
-        subject: "Payment Verified",
-        text: "Thank You",
+        subject: 'Payment Verified',
+        text: 'Thank You',
       });
 
       return res.status(200).json({
-        message: "Payment Approved",
+        message: 'Payment Approved',
         data: findApproveTrasanction,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -675,7 +677,7 @@ module.exports = {
 
       if (!findTransaction) {
         return res.status(400).json({
-          message: "Transaction not found",
+          message: 'Transaction not found',
         });
       }
 
@@ -688,12 +690,12 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
 
-      const uploadLink = `${process.env.BASE_URL_FE}payment/thank-you/delisha/${findTransaction.transaction_name}`;
+      const uploadLink = `${process.env.BASE_URL_FE}payment/${findTransaction.transaction_name}`;
 
-      const rawHTML = fs.readFileSync("templates/rejected.html", "utf-8");
+      const rawHTML = fs.readFileSync('templates/rejected.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -706,18 +708,18 @@ module.exports = {
       await emailer({
         to: findTransaction.User.email,
         html: htmlResult,
-        subject: "Reject Payment",
-        text: "Please reupload your payment proof",
+        subject: 'Reject Payment',
+        text: 'Please reupload your payment proof',
       });
 
       return res.status(200).json({
-        message: "Payment Rejected",
+        message: 'Payment Rejected',
         data: findTransaction,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -734,7 +736,7 @@ module.exports = {
 
       if (!findTransaction) {
         return res.status(400).json({
-          message: "Transaction not found",
+          message: 'Transaction not found',
         });
       }
 
@@ -746,12 +748,12 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
 
       const dueDateConfirm = moment()
-        .add(7, "days")
-        .format("YYYY-MM-DD HH:mm:ss");
+        .add(7, 'days')
+        .format('YYYY-MM-DD HH:mm:ss');
 
       schedule.scheduleJob(
         dueDateConfirm,
@@ -764,33 +766,33 @@ module.exports = {
               where: {
                 id: id,
               },
-            }
-          )
+            },
+          ),
       );
 
-      const rawHTML = fs.readFileSync("templates/orderSend.html", "utf-8");
+      const rawHTML = fs.readFileSync('templates/orderSend.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
       const htmlResult = compiledHTML({
         username: findTransaction.User.username,
-        shopediaLink: process.env.BASE_URL_FE,
+        Link: process.env.BASE_URL_FE,
       });
 
       await emailer({
         to: findTransaction.User.email,
         html: htmlResult,
-        subject: "Order Send",
-        text: "Please make your new order",
+        subject: 'Order Send',
+        text: 'Please make your new order',
       });
 
       return res.status(200).json({
-        message: "Order Send",
+        message: 'Order Send',
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -808,7 +810,7 @@ module.exports = {
 
       if (!findTransaction) {
         return res.status(400).json({
-          message: "Transaction invalid",
+          message: 'Transaction invalid',
         });
       }
 
@@ -820,15 +822,15 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
 
       const quantity = findTransaction.TransactionItems.map(
-        (val) => val.quantity
+        (val) => val.quantity,
       );
 
       const ProductId = findTransaction.TransactionItems.map(
-        (val) => val.ProductId
+        (val) => val.ProductId,
       );
 
       const returnStock = [];
@@ -855,7 +857,7 @@ module.exports = {
               WarehouseId: findTransaction.WarehouseId,
               ProductId: ProductId[i],
             },
-          }
+          },
         );
       }
 
@@ -881,7 +883,7 @@ module.exports = {
 
       for (let i = 0; i < ProductId.length; i++) {
         const journal = await db.Type_Journal.create({
-          name: "Cancel Stock",
+          name: 'Cancel Stock',
           type: addOrAdd(stock_before[i], stock_after[i]),
           stock_after: stock_after[i],
           ProductId: ProductId[i],
@@ -897,36 +899,36 @@ module.exports = {
         });
       }
 
-      const rawHTML = fs.readFileSync("templates/orderCancel.html", "utf-8");
+      const rawHTML = fs.readFileSync('templates/orderCancel.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
       const htmlResult = compiledHTML({
         username: findTransaction.User.username,
-        shopediaLink: process.env.BASE_URL_FE,
+        Link: process.env.BASE_URL_FE,
       });
 
       await emailer({
         to: findTransaction.User.email,
         html: htmlResult,
-        subject: "Cancel Order",
-        text: "Please make your new order",
+        subject: 'Cancel Order',
+        text: 'Please make your new order',
       });
 
       return res.status(200).json({
-        message: "Order Canceled",
+        message: 'Order Canceled',
         data: findTransaction,
       });
     } catch (error) {
       console.log(error);
       return res.status(200).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
   deliverOrder: async (req, res) => {
     try {
-      const { id } = req.params
+      const { id } = req.params;
 
       const findTransaction = await db.Transaction.findOne({
         where: {
@@ -934,12 +936,12 @@ module.exports = {
           OrderStatusId: 3,
         },
         include: [{ model: db.User }],
-      })
+      });
 
       if (!findTransaction) {
         return res.status(400).json({
-          message: "Transaction not found",
-        })
+          message: 'Transaction not found',
+        });
       }
 
       await db.Transaction.update(
@@ -950,33 +952,32 @@ module.exports = {
           where: {
             id: id,
           },
-        }
-      )
+        },
+      );
+      const rawHTML = fs.readFileSync('templates/orderDelivered.html', 'utf-8');
 
-      const rawHTML = fs.readFileSync("templates/orderDelivered.html", "utf-8")
-
-      const compiledHTML = handlebars.compile(rawHTML)
+      const compiledHTML = handlebars.compile(rawHTML);
 
       const htmlResult = compiledHTML({
         username: findTransaction.User.username,
-        shopediaLink: process.env.BASE_URL_FE,
-      })
+        Link: process.env.BASE_URL_FE,
+      });
 
       await emailer({
         to: findTransaction.User.email,
         html: htmlResult,
-        subject: "Delivere Order",
-        text: "Your order is delivered",
-      })
+        subject: 'Delivered Order',
+        text: 'Your order is delivered',
+      });
 
       return res.status(200).json({
-        message: "Order Delivered",
-      })
+        message: 'Order Delivered',
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(200).json({
-        message: "Server Error",
-      })
+        message: 'Server Error',
+      });
     }
   },
 };

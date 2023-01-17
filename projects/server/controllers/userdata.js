@@ -7,7 +7,7 @@ const User = db.User;
 module.exports = {
   getAllUser: async (req, res) => {
     try {
-      const findAdminById = await User.findByPk(req.user.id);
+      const findAdminById = await db.User.findByPk(req.user.id);
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
@@ -17,14 +17,14 @@ module.exports = {
 
       const {
         username = '',
-        _sortBy = 'id',
+        _sortBy = 'username',
         _sortDir = 'ASC',
         _limit = 6,
         _page = 1,
       } = req.query;
 
       if (_sortBy === 'username' || _sortBy === 'createdAt' || username) {
-        const findUser = await User.findAndCountAll({
+        const findUser = await db.User.findAndCountAll({
           limit: Number(_limit),
           offset: (_page - 1) * _limit,
           order: [[_sortBy, _sortDir]],
@@ -39,9 +39,6 @@ module.exports = {
             { model: db.Role },
             {
               model: db.Address,
-              // where: {
-              //   is_default: 1,
-              // },
             },
           ],
         });
@@ -52,7 +49,7 @@ module.exports = {
         });
       }
 
-      const findUser = await User.findAndCountAll({
+      const findUser = await db.User.findAndCountAll({
         limit: Number(_limit),
         offset: (_page - 1) * _limit,
         order: [[_sortBy, _sortDir]],
@@ -67,9 +64,6 @@ module.exports = {
           { model: db.Role },
           {
             model: db.Address,
-            // where: {
-            //   is_default: 1,
-            // },
           },
         ],
       });
@@ -87,7 +81,7 @@ module.exports = {
   },
   getAllWarehouseAdmin: async (req, res) => {
     try {
-      const findAdminById = await User.findByPk(req.user.id);
+      const findAdminById = await db.User.findByPk(req.user.id);
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
@@ -97,14 +91,14 @@ module.exports = {
 
       const {
         username = '',
-        _sortBy = 'id',
+        _sortBy = 'username',
         _sortDir = 'ASC',
         _limit = 6,
         _page = 1,
       } = req.query;
 
       if (_sortBy === 'username' || _sortBy === 'createdAt' || username) {
-        const findUser = await User.findAndCountAll({
+        const findUser = await db.User.findAndCountAll({
           limit: Number(_limit),
           offset: (_page - 1) * _limit,
           order: [[_sortBy, _sortDir]],
@@ -123,7 +117,7 @@ module.exports = {
         });
       }
 
-      const findUser = await User.findAndCountAll({
+      const findUser = await db.User.findAndCountAll({
         offset: (_page - 1) * _limit,
         limit: Number(_limit),
         order: [[_sortBy, _sortDir]],
@@ -146,7 +140,7 @@ module.exports = {
   },
   addNewAdmin: async (req, res) => {
     try {
-      const findAdminById = await User.findByPk(req.user.id);
+      const findAdminById = await db.User.findByPk(req.user.id);
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
@@ -207,7 +201,7 @@ module.exports = {
   },
   updateAdmin: async (req, res) => {
     try {
-      const findAdminById = await User.findByPk(req.user.id);
+      const findAdminById = await db.User.findByPk(req.user.id);
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
@@ -250,7 +244,7 @@ module.exports = {
   },
   deleteAdmin: async (req, res) => {
     try {
-      const findAdminById = await User.findByPk(req.user.id);
+      const findAdminById = await db.User.findByPk(req.user.id);
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
@@ -278,7 +272,7 @@ module.exports = {
   },
   findAllWarehouse: async (req, res) => {
     try {
-      const findAdminById = await User.findByPk(req.user.id);
+      const findAdminById = await db.User.findByPk(req.user.id);
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
@@ -286,7 +280,9 @@ module.exports = {
         });
       }
 
-      const response = await db.Warehouse.findAll();
+      const response = await db.Warehouse.findAll({
+        // include: [{ model: db.User }],
+      });
 
       return res.status(200).json({
         message: 'Find All Warehouse',

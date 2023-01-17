@@ -23,11 +23,13 @@ module.exports = {
           message: 'Email not found',
         });
       }
+
       if (findUserByEmail.is_verify === false) {
         return res.status(400).json({
           message: 'Unverified user',
         });
       }
+
       const passwordValid = bcrypt.compareSync(
         password,
         findUserByEmail.password,
@@ -35,7 +37,7 @@ module.exports = {
 
       if (!passwordValid) {
         return res.status(400).json({
-          message: 'password invalid',
+          message: 'Password invalid',
         });
       }
 
@@ -46,7 +48,7 @@ module.exports = {
       });
 
       return res.status(201).json({
-        message: 'Login user',
+        message: 'User logged in',
         data: findUserByEmail,
         token: token,
       });
@@ -166,11 +168,13 @@ module.exports = {
           message: 'Email not found',
         });
       }
+
       if (findUserByEmail.is_verify === false) {
         return res.status(400).json({
           message: 'Unverified user',
         });
       }
+
       const reset_token = signToken({
         id: findUserByEmail.id,
       });
@@ -229,6 +233,13 @@ module.exports = {
           id: decodedToken.id,
         },
       });
+
+      if (!newPassword.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/)) {
+        return res.status(500).json({
+          message:
+            'Password Must Contain 8 Characters, 1 Uppercase, 1 Lowercase, and 1 Number ',
+        });
+      }
 
       if (newPassword !== confirmNewPassword) {
         return res.status(500).json({

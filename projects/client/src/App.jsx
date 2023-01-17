@@ -13,11 +13,11 @@ import { login } from './redux/features/authSlice';
 import { attach } from './redux/features/resetSlice';
 
 //route
-import Navbar from './components/navbar';
+import Navbar from './components/navbar/navbar';
 import HomePage from './pages/Home';
-import Footer from "./components/footer";
-import Product from "./pages/product/product"
-import ProductDetail from "./pages/product/productDetail"
+import Footer from './components/footer';
+import Product from './pages/product/product';
+import ProductDetail from './pages/product/productDetail';
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -120,6 +120,7 @@ function App() {
       location.pathname === '/register/verification' ||
       location.pathname === '/reset-password' ||
       location.pathname === '/reset-confirm' ||
+      location.pathname === '/cart/shipment' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
@@ -179,10 +180,7 @@ function App() {
         />
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
-        <Route
-                    path="/product/:id/:product_name"
-                    element={<ProductDetail />}
-                />
+        <Route path="/product/:id/:product_name" element={<ProductDetail />} />
         <Route
           path="/admin/warehouse-management"
           element={
@@ -241,6 +239,7 @@ function App() {
       location.pathname === '/register/verification' ||
       location.pathname === '/reset-password' ||
       location.pathname === '/reset-confirm' ||
+      location.pathname === '/cart/shipment' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>

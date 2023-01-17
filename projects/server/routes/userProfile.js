@@ -2,12 +2,6 @@ const router = require("express").Router();
 const { userProfile } = require("../controllers/index");
 const { upload } = require("../helpers/uploader");
 
-const { check, oneOf } = require("express-validator");
-const {
-  editUsernameOrPassword,
-  editUsernameOrPhone,
-  infoSchema,
-} = require("../middlewares/profileValidator");
 
 router.get("/get/:id", userProfile.getUserProfileById);
 

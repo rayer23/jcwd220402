@@ -8,6 +8,7 @@ module.exports = {
       const findProductinCart = await Cart.findOne({
         where: {
           ProductId,
+          UserId: req.user.id,
         },
         include: [
           {
@@ -122,7 +123,7 @@ module.exports = {
       });
     }
   },
-  addToCart2: async (req, res) => {
+  addToExistingCart: async (req, res) => {
     try {
       const { ProductId } = req.params;
 
@@ -131,6 +132,7 @@ module.exports = {
       const findProductinCart = await Cart.findOne({
         where: {
           ProductId: ProductId,
+          UserId: req.user.id,
         },
         include: [
           {
@@ -174,6 +176,7 @@ module.exports = {
           {
             where: {
               id: findProductinCart.id,
+              UserId: req.user.id,
             },
           },
         );
@@ -192,6 +195,7 @@ module.exports = {
           {
             where: {
               id: findProductinCart.id,
+              UserId: req.user.id,
             },
           },
         );
@@ -206,6 +210,17 @@ module.exports = {
   },
   ShowAllMyCartItems: async (req, res) => {
     try {
+      const getSelectedCart = await db.sequelize.query(
+        `select sum(stock) TotalStock, ts.ProductId, c.id CartId , c.is_checked is_checked, c.UserId from total_stocks ts
+            join carts c
+            on c.ProductId = ts.ProductId
+            -- where TotakStock 
+            group by c.id
+            having TotalStock > 0 and c.UserId=${req.user.id};`,
+      );
+
+      const cartChecked = getSelectedCart[0].map((val) => val.is_checked);
+
       const getAllMyCartItems = await Cart.findAll({
         where: {
           UserId: req.user.id,
@@ -253,37 +268,8 @@ module.exports = {
       return res.status(200).json({
         message: 'showMyItemCart',
         data: getAllMyCartItems,
+        cartChecked: cartChecked,
         checkedDataCount: checkedDataCount,
-      });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({
-        message: 'Server error',
-      });
-    }
-  },
-  getCartItemById: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const findCartByid = await Cart.findByPk(id, {
-        include: [
-          {
-            model: db.Product,
-            include: [
-              {
-                model: db.Image_Url,
-              },
-              {
-                model: db.Total_Stock,
-              },
-            ],
-          },
-        ],
-      });
-
-      return res.status(200).json({
-        message: 'Get Cart By Id',
-        data: findCartByid,
       });
     } catch (err) {
       console.log(err);
@@ -299,6 +285,7 @@ module.exports = {
       const findProductinCart = await Cart.findOne({
         where: {
           ProductId,
+          UserId: req.user.id,
         },
         include: [
           {
@@ -371,6 +358,7 @@ module.exports = {
         {
           where: {
             id: findCartByid.id,
+            UserId: req.user.id,
           },
         },
       );
@@ -401,6 +389,7 @@ module.exports = {
         {
           where: {
             id: findCartByid.id,
+            UserId: req.user.id,
           },
         },
       );
@@ -419,6 +408,7 @@ module.exports = {
       await Cart.destroy({
         where: {
           id: id,
+          UserId: req.user.id,
         },
       });
       return res.status(200).json({
@@ -463,6 +453,7 @@ module.exports = {
           {
             where: {
               id: findCartByid.id,
+              UserId: req.user.id,
             },
           },
         );
@@ -488,6 +479,7 @@ module.exports = {
         {
           where: {
             id: findCartByid.id,
+            UserId: req.user.id,
           },
         },
       );
@@ -513,27 +505,27 @@ module.exports = {
   },
   checkAllCartItems: async (req, res) => {
     try {
-      const findCartByUserId = await Cart.findAll({
-        where: {
-          UserId: req.user.id,
-        },
-        include: [
-          {
-            model: db.Product,
-            include: [{ model: db.Image_Url }],
-          },
-        ],
-      });
+      const getSelectedCart = await db.sequelize.query(
+        `select sum(stock) TotalStock, ts.ProductId, c.id CartId , c.is_checked is_checked, c.UserId from total_stocks ts
+            join carts c
+            on c.ProductId = ts.ProductId
+            -- where TotakStock 
+            group by c.id
+            having TotalStock > 0 and c.UserId=${req.user.id};`,
+      );
 
-      const cartChecked = findCartByUserId.map((val) => val.is_checked);
+      const cartIdArr = getSelectedCart[0].map((val) => val.CartId);
 
-      if (!cartChecked.includes(false)) {
+      const cartChecked = getSelectedCart[0].map((val) => val.is_checked);
+
+      if (!cartChecked.includes(0)) {
         await Cart.update(
           {
             is_checked: false,
           },
           {
             where: {
+              id: cartIdArr,
               UserId: req.user.id,
             },
           },
@@ -541,6 +533,7 @@ module.exports = {
 
         const findUncheckedCart = await Cart.findAll({
           where: {
+            id: cartIdArr,
             UserId: req.user.id,
           },
           include: [
@@ -562,6 +555,7 @@ module.exports = {
         },
         {
           where: {
+            id: cartIdArr,
             UserId: req.user.id,
           },
         },
@@ -569,6 +563,7 @@ module.exports = {
 
       const findAllCheckedCart = await Cart.findAll({
         where: {
+          id: cartIdArr,
           UserId: req.user.id,
         },
         include: [
@@ -596,9 +591,9 @@ module.exports = {
 
       const getTotalPrice = await db.sequelize.query(
         `select sum(p.price * c.quantity) as totalPrice, sum(c.quantity) as totalQuantity from carts c
-                    join products p
-                    on c.ProductId = p.id
-                    where is_checked = ${true} && UserId = ${id}`,
+                join products p
+                on c.ProductId = p.id
+                where is_checked = ${true} && UserId = ${id}`,
       );
 
       const totalPrice = getTotalPrice[0][0];
@@ -626,6 +621,7 @@ module.exports = {
         {
           where: {
             id: id,
+            UserId: req.user.id,
           },
         },
       );

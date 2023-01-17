@@ -1,7 +1,6 @@
-const router = require("express").Router();
-const { adminOrderHistory } = require("../controllers/index");
+const router = require('express').Router();
+const { adminOrderHistory } = require('../controllers/index');
 
-router.get("/get", adminOrderHistory.getOrder);
-router.get("/get2", adminOrderHistory.getByWarehouseId);
-
+router.get('/getOrder', adminOrderHistory.getAllOrderHistory);
+router.get('/findWarehouse', adminOrderHistory.findWarehouse);
 module.exports = router;

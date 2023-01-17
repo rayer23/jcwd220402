@@ -98,8 +98,8 @@ const ResetPasswordConfirmation = () => {
       newPassword: Yup.string()
         .required(8)
         .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-          'Minimum eight characters, at least one uppercase letter, one lowercase letter and one number',
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character',
         ),
     }),
     validateOnChange: false,
@@ -112,7 +112,7 @@ const ResetPasswordConfirmation = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('reset_token')) {
-      navigate('/reset-confirm');
+      navigate('/reset-password');
     }
   }, []);
 
