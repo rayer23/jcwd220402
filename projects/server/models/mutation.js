@@ -29,10 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       mutation_status: {
         type: DataTypes.STRING,
       },
-      mutation_status: {
-        type: DataTypes.STRING,
-      },
-
     },
     {
       sequelize,

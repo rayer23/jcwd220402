@@ -33,6 +33,7 @@ import ManageProduct from './pages/admin/manageproduct';
 import ManageProductDetail from './pages/admin/manageproductdetail';
 import ManageStock from './pages/admin/managestock';
 import ManageStockWarehouse from './pages/admin/managestockwarehouse';
+import ManageMutation from './pages/admin/managemutation';
 
 import NotFound from './components/404Page';
 // roles route
@@ -230,6 +231,14 @@ function App() {
           element={
             <AdminRoute>
               <ManageStockWarehouse />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/stock-mutation"
+          element={
+            <AdminRoute>
+              <ManageMutation />
             </AdminRoute>
           }
         />

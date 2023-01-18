@@ -101,7 +101,7 @@ const UpdateStock = () => {
   }, [currentSearch, page, sortDir, sortBy]);
   return (
     <Box ml="60px" p="24px" h="100vh">
-      <Box mb="16px">
+      <Box>
         <Text fontSize={'2xl'} fontWeight="bold">
           Update Stock Management
         </Text>

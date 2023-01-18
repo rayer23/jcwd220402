@@ -302,7 +302,7 @@ const AdminProductData = () => {
 
   return (
     <>
-      <Box marginLeft="100px" marginTop="25px">
+      <Box marginLeft="100px">
         <HStack justifyContent="space-between">
           <Box>
             <Text fontSize={'2xl'} fontWeight="bold">
