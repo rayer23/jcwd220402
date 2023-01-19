@@ -34,6 +34,7 @@ import ManageProductDetail from './pages/admin/manageproductdetail';
 import ManageStock from './pages/admin/managestock';
 import ManageStockWarehouse from './pages/admin/managestockwarehouse';
 import ManageMutation from './pages/admin/managemutation';
+import OrderHistory from './pages/admin/orderhistory';
 
 import NotFound from './components/404Page';
 // roles route
@@ -239,6 +240,14 @@ function App() {
           element={
             <AdminRoute>
               <ManageMutation />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/order-history"
+          element={
+            <AdminRoute>
+              <OrderHistory />
             </AdminRoute>
           }
         />

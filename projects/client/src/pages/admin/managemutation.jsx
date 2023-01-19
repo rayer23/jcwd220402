@@ -51,7 +51,7 @@ const AdminMutationStock = () => {
   const toast = useToast();
 
   const fetchAdminData = async () => {
-    const maxItemsPerPage = 10;
+    const maxItemsPerPage = 8;
     try {
       const response = await axiosInstance.get(
         '/stock-mutation/getAllStockMutation',
@@ -217,11 +217,11 @@ const AdminMutationStock = () => {
   }, [currentSearch, page, sortDir, sortBy, isLoading]);
 
   return (
-    <Box marginLeft={'90px'}>
+    <Box marginLeft={'90px'} mt={90}>
       <HStack justifyContent="space-between">
         <Box>
           <Text fontSize={'2xl'} fontWeight="bold">
-            Manage Stock Mutation
+            Stock Mutation
           </Text>
         </Box>
       </HStack>
