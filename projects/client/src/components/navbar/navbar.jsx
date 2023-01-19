@@ -29,9 +29,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/features/authSlice';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { fillCart } from '../../redux/features/cartSlice';
 import { axiosInstance } from '../../api';
-import { fillTrans } from '../../redux/features/transSlice';
+import { fillTrans, fillUnpaidTrans } from '../../redux/features/transSlice';
+import { fillCart, getTotalCartQuantity } from '../../redux/features/cartSlice';
 
 import { CgRemote } from 'react-icons/cg';
 import { RiSearchEyeFill } from 'react-icons/ri';
@@ -48,21 +48,19 @@ const Navbar = ({ onChange, onKeyDown }) => {
   const [searchParam, setSearchParam] = useSearchParams();
   const [showCategory, setShowCategory] = useState([]);
   const [totalCartQuantity, setTotalCartQuantity] = useState(0);
-  const [cartData, setCartData] = useState([]);
-  const [transData, setTransData] = useState([]);
   const [unpaidTransaction, setUnpaidTransaction] = useState([]);
 
   const location = useLocation();
   const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
+
   const apiImg = process.env.REACT_APP_IMAGE_URL;
 
   const fetchMyCart = async () => {
     try {
       const response = await axiosInstance.get('/carts/me');
       dispatch(fillCart(response.data.data));
-      setCartData(response.data.data);
 
       const cartQuantity = response.data.data.map((val) => val.quantity);
 
@@ -73,6 +71,8 @@ const Navbar = ({ onChange, onKeyDown }) => {
       }
 
       setTotalCartQuantity(Total);
+
+      dispatch(getTotalCartQuantity(Total));
     } catch (err) {
       console.log(err);
     }
@@ -84,7 +84,6 @@ const Navbar = ({ onChange, onKeyDown }) => {
         '/transactions/all-transaction-list',
       );
       dispatch(fillTrans(response.data.data));
-      setTransData(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -96,15 +95,23 @@ const Navbar = ({ onChange, onKeyDown }) => {
         '/transactions/unpaid-transaction',
       );
 
+      dispatch(fillUnpaidTrans(response.data.data));
       setUnpaidTransaction(response.data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const refreshPage = () => {
-    window.location.reload(false);
+  const fetchCategory = async () => {
+    try {
+      const response = await axiosInstance.get('/categories');
+      setShowCategory(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  
 
   const logoutBtnHandler = () => {
     localStorage.removeItem('auth_token');
@@ -165,14 +172,16 @@ const Navbar = ({ onChange, onKeyDown }) => {
 
   useEffect(() => {
     fetchMyCart();
-    // fetchCategory();
-  }, [cartData]);
+    fetchCategory();
+  }, []);
+
+  useEffect(() => {
+    fetchAllTransaction();
+  }, []);
 
   useEffect(() => {
     fetchUnpaidTransaction();
-    fetchAllTransaction();
-  }, [transData]);
-
+  }, []);
   return (
     <>
       <Box
@@ -244,7 +253,6 @@ const Navbar = ({ onChange, onKeyDown }) => {
             <Cart
               authSelector={authSelector}
               totalCartQuantity={totalCartQuantity}
-              cartData={cartData}
             />
 
             {/* navbar user logged in */}

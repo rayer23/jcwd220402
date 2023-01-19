@@ -15,18 +15,17 @@ import { MdShoppingCart, MdOutlineAddShoppingCart } from 'react-icons/md';
 
 import CartItem from './cartitem';
 
-const CartTab = ({ authSelector, totalCartQuantity, cartData }) => {
+const CartTab = ({ authSelector, totalCartQuantity }) => {
   const cartSelector = useSelector((state) => state.cart);
-
   const renderCartNavbar = () => {
-    return cartData.map((val) => {
+    return cartSelector.cart.map((val) => {
       return (
         <CartItem
-          product_name={val.Product.product_name}
-          quantity={val.quantity}
-          product_weight={val.Product.product_weight}
-          price={val.Product.price}
-          image_urls={val.Product.Image_Urls[0].image_url}
+          product_name={val?.Product.product_name}
+          quantity={val?.quantity}
+          product_weight={val?.Product.product_weight}
+          price={val?.Product.price}
+          image_urls={val?.Product.Image_Urls[0].image_url}
         />
       );
     });
@@ -68,7 +67,7 @@ const CartTab = ({ authSelector, totalCartQuantity, cartData }) => {
                           color={'white'}
                           fontWeight={700}
                         >
-                          {totalCartQuantity}
+                          {cartSelector.totalCartQuantity}
                         </Box>
                       </sup>
                     ) : null}
