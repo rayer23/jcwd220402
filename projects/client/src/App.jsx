@@ -16,6 +16,8 @@ import { attach } from './redux/features/resetSlice';
 import Navbar from './components/navbar';
 import HomePage from './pages/Home';
 import Footer from "./components/footer";
+import Profile from "./pages/profile/Profile"
+import ChangePassword from "./pages/profile/ChangePassword"
 import Product from "./pages/product/product"
 import ProductDetail from "./pages/product/productDetail"
 
@@ -177,6 +179,26 @@ function App() {
             </AdminRoute>
           }
         />
+
+        {/* Profile Route */}
+        <Route
+                    path="/user/profile"
+                    element={
+                        <ProtectedRoute>
+                            <Profile />
+                        </ProtectedRoute>
+                    }
+                />
+         <Route
+                    path="/user/profile/change-password"
+                    element={
+                        <ProtectedRoute>
+                            <ChangePassword />
+                        </ProtectedRoute>
+                    }
+                />
+
+
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
         <Route
