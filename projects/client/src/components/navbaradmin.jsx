@@ -15,7 +15,7 @@ import { TfiShoppingCartFull } from 'react-icons/tfi';
 import { HiClipboardDocument } from 'react-icons/hi2';
 import './navbaradmin.css';
 
-const Sidebar = () => {
+const NavbarAdmin = () => {
   const authSelector = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -154,4 +154,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default NavbarAdmin;

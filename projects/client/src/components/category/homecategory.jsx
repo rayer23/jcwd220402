@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { axiosInstance } from '../../api';
 import HomeItems from './homeitem';
 
-const HomePageCategory = ({ filter }) => {
+const HomeCategory = ({ filter }) => {
   const [showCategory, setShowCategory] = useState([]);
   const [showCategoryMobile, setShowCategoryMobile] = useState([]);
   const [isLoading, setIsloading] = useState(false);
@@ -195,4 +195,4 @@ const HomePageCategory = ({ filter }) => {
     </>
   );
 };
-export default HomePageCategory;
+export default HomeCategory;

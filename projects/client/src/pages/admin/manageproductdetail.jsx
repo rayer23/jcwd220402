@@ -37,7 +37,7 @@ import { TbCameraPlus } from 'react-icons/tb';
 import gambar from '../../assets/default_image.png';
 import Alert from '../../components/alert';
 
-const AdminProductDataDetail = () => {
+const ManageProductDetail = () => {
   const [dataDetail, setDataDetail] = useState({});
   const toast = useToast();
   const params = useParams();
@@ -487,4 +487,4 @@ const AdminProductDataDetail = () => {
   );
 };
 
-export default AdminProductDataDetail;
+export default ManageProductDetail;

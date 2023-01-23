@@ -32,7 +32,7 @@ import AddressUser from '../../components/admin/addressuser';
 import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 import { FcHome } from 'react-icons/fc';
 
-const ManageUserData = () => {
+const ManageUser = () => {
   const [userData, setUserData] = useState([]);
   const [currentSearch, setCurrentSearch] = useState('');
   const [totalCount, setTotalCount] = useState(0);
@@ -245,4 +245,4 @@ const ManageUserData = () => {
     </Box>
   );
 };
-export default ManageUserData;
+export default ManageUser;

@@ -25,7 +25,7 @@ import { RiDeleteBin2Line } from 'react-icons/ri';
 import AddNewCategory from '../../components/admin/addcategory';
 import EditCategory from '../../components/admin/editcategory';
 
-const AdminCategoryItems = ({
+const CategoryItems = ({
   CategoryId,
   fetchCategory,
   category_name,
@@ -296,4 +296,4 @@ const AdminCategoryItems = ({
   );
 };
 
-export default AdminCategoryItems;
+export default CategoryItems;

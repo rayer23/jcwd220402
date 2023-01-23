@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from 'react';
 import { axiosInstance } from '../../api';
 
-const WarehouseAddress = ({
+const Mutation = ({
   isOpen,
   onClose,
   onSubmit,
@@ -208,4 +208,4 @@ const WarehouseAddress = ({
   );
 };
 
-export default WarehouseAddress;
+export default Mutation;

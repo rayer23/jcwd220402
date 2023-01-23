@@ -35,7 +35,7 @@ import { TbSearch } from 'react-icons/tb';
 import { MdAddToPhotos } from 'react-icons/md';
 
 
-const AdminCategory = () => {
+const ManageCategory = () => {
   const authSelector = useSelector((state) => state.auth);
 
   const [showCategory, setShowCategory] = useState([]);
@@ -403,4 +403,4 @@ const AdminCategory = () => {
   );
 };
 
-export default AdminCategory;
+export default ManageCategory;

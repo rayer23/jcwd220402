@@ -12,7 +12,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 
-const AddressModal = ({ header, isOpen, onClose, val }) => {
+const AddressUser = ({ header, isOpen, onClose, val }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -185,4 +185,4 @@ const AddressModal = ({ header, isOpen, onClose, val }) => {
   );
 };
 
-export default AddressModal;
+export default AddressUser;

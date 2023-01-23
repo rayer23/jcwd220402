@@ -20,7 +20,7 @@ import { IoIosAlert } from 'react-icons/io';
 import Search from '../../components/search';
 import Pagination from '../../components/pagination';
 
-const UpdateStock = () => {
+const ManageStock = () => {
   const [warehouse, setWarehouse] = useState([]);
   const [maxPage, setMaxPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
@@ -218,4 +218,4 @@ const UpdateStock = () => {
   );
 };
 
-export default UpdateStock;
+export default ManageStock;

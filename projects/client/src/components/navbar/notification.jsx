@@ -21,7 +21,7 @@ import { FcProcess } from 'react-icons/fc';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { BsBagCheckFill } from 'react-icons/bs';
 
-const NotificationTab = ({ authSelector, navigate, unpaidTransaction }) => {
+const Notification = ({ authSelector, navigate, unpaidTransaction }) => {
   const transSelector = useSelector((state) => state.trans);
   const statusOrder = transSelector.trans.map((val) => val.OrderStatusId);
 
@@ -377,4 +377,4 @@ const NotificationTab = ({ authSelector, navigate, unpaidTransaction }) => {
     </Box>
   );
 };
-export default NotificationTab;
+export default Notification;

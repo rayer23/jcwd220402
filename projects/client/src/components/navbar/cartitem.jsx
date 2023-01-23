@@ -1,7 +1,7 @@
 import { Box, Image, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const CartItemsNavbar = ({
+const CartItem = ({
   product_name,
   quantity,
   product_weight,
@@ -69,4 +69,4 @@ const CartItemsNavbar = ({
   );
 };
 
-export default CartItemsNavbar;
+export default CartItem;

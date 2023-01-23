@@ -27,7 +27,7 @@ import { TbSearch } from 'react-icons/tb';
 import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 import OrderList from '../../components/admin/orderlist';
 
-const AdminOrderHistory = () => {
+const OrderHistory = () => {
   const [transactionData, setTransactionData] = useState([]);
   const [warehouseData, setWarehouseData] = useState([]);
   const [page, setPage] = useState(1);
@@ -40,6 +40,7 @@ const AdminOrderHistory = () => {
   const [sortDir, setSortDir] = useState('DESC');
   const [searchValue, setSearchValue] = useState('');
   const [searchInput, setSearchInput] = useState('');
+  const [totalCount, setTotalCount] = useState(0);
 
   const maxItemsPerPage = 8;
   const fetchData = async () => {
@@ -61,6 +62,7 @@ const AdminOrderHistory = () => {
           transaction_name: searchValue,
         },
       });
+      setTotalCount(response.data.dataCount);
       setMaxPage(Math.ceil(response.data.dataCount / maxItemsPerPage));
       if (page === 1) {
         setTransactionData(response.data.data);
@@ -384,7 +386,9 @@ const AdminOrderHistory = () => {
             ) : null}
           </Tbody>
         </Table>
-
+        <Text fontSize={'2xl'} fontWeight="bold" color={'#0095DA'}>
+          Total Order :{totalCount}
+        </Text>
         {/* Page */}
         <HStack justifyContent={'center'} mt={'20px'} mb={'50px'} ml={'50px'}>
           <Button
@@ -414,4 +418,4 @@ const AdminOrderHistory = () => {
   );
 };
 
-export default AdminOrderHistory;
+export default OrderHistory;

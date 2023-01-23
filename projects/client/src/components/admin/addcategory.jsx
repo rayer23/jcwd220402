@@ -14,7 +14,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-const ModalAddNewCategory = ({
+const AddCategory = ({
   addNewCategory,
   inputFileRef,
   closeAddNewModal,
@@ -164,4 +164,4 @@ const ModalAddNewCategory = ({
     </Modal>
   );
 };
-export default ModalAddNewCategory;
+export default AddCategory;

@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import OrderRender from './orderrender';
 
-const ModalOrderHistory = ({ transactionItems, isOpen, onClose }) => {
+const OrderHistory = ({ transactionItems, isOpen, onClose }) => {
   const renderOrder = () => {
     return transactionItems.map((val) => {
       return (
@@ -41,4 +41,4 @@ const ModalOrderHistory = ({ transactionItems, isOpen, onClose }) => {
   );
 };
 
-export default ModalOrderHistory;
+export default OrderHistory;

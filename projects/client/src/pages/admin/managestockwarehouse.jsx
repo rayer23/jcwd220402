@@ -32,7 +32,7 @@ import Alert from '../../components/alert';
 import Search from '../../components/search';
 import Pagination from '../../components/pagination';
 
-const WarehouseStock = ({}) => {
+const ManageStockWarehouse = ({}) => {
   const authSelector = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
   const params = useParams();
@@ -473,4 +473,4 @@ const WarehouseStock = ({}) => {
   );
 };
 
-export default WarehouseStock;
+export default ManageStockWarehouse;

@@ -31,7 +31,7 @@ import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 import Mutation from '../../components/admin/mutation';
 import Alert from '../../components/alert';
 
-const AdminMutationStock = () => {
+const ManageMutation = () => {
   const [stockData, setStockData] = useState([]);
   const [currentSearch, setCurrentSearch] = useState('');
   const [totalCount, setTotalCount] = useState(0);
@@ -366,4 +366,4 @@ const AdminMutationStock = () => {
     </Box>
   );
 };
-export default AdminMutationStock;
+export default ManageMutation;

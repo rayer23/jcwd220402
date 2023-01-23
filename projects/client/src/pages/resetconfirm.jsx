@@ -22,7 +22,7 @@ import { TfiControlBackward } from 'react-icons/tfi';
 import { VscEye, VscEyeClosed } from 'react-icons/vsc';
 import { detach } from '../redux/features/resetSlice';
 
-const ResetPasswordConfirmation = () => {
+const ResetConfirm = () => {
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
@@ -260,4 +260,4 @@ const ResetPasswordConfirmation = () => {
   );
 };
 
-export default ResetPasswordConfirmation;
+export default ResetConfirm;

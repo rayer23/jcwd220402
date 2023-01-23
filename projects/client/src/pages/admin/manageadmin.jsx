@@ -36,7 +36,7 @@ import { TbSearch } from 'react-icons/tb';
 import { IoIosAlert } from 'react-icons/io';
 import { BsArrowBarLeft, BsArrowBarRight } from 'react-icons/bs';
 
-const ManageAdminData = () => {
+const ManageAdmin = () => {
   const [userData, setUserData] = useState([]);
   const cancelRef = React.useRef();
   const [currentSearch, setCurrentSearch] = useState('');
@@ -567,4 +567,4 @@ const ManageAdminData = () => {
     </Box>
   );
 };
-export default ManageAdminData;
+export default ManageAdmin;

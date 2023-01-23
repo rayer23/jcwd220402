@@ -1,7 +1,7 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import Gambar from "../../assets/admin.svg";
 
-const AdminDashboard = () => {
+const Dashboard = () => {
   return (
     <>
       <Box marginTop="90px" marginLeft={"90px"} marginRight={"20px"}>
@@ -34,4 +34,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default Dashboard;

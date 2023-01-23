@@ -24,7 +24,7 @@ import { BiHide, BiShow } from "react-icons/bi"
 import { TbCameraPlus } from "react-icons/tb"
 import { axiosInstance } from "../../api"
 
-const AddNewAdmin = ({
+const AddAdmin = ({
   header,
   isOpenAddNewAdmin,
   onCloseAddNewAdmin,
@@ -277,4 +277,4 @@ const AddNewAdmin = ({
   )
 }
 
-export default AddNewAdmin
+export default AddAdmin

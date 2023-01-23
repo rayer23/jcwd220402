@@ -15,7 +15,7 @@ import { MdShoppingCart, MdOutlineAddShoppingCart } from 'react-icons/md';
 
 import CartItem from './cartitem';
 
-const CartTab = ({ authSelector, totalCartQuantity }) => {
+const Cart = ({ authSelector, totalCartQuantity }) => {
   const cartSelector = useSelector((state) => state.cart);
   const renderCartNavbar = () => {
     return cartSelector.cart.map((val) => {
@@ -173,4 +173,4 @@ const CartTab = ({ authSelector, totalCartQuantity }) => {
   );
 };
 
-export default CartTab;
+export default Cart;

@@ -13,7 +13,7 @@ import {
 import moment from 'moment';
 import OrderHistory from './orderhistory';
 
-const TransactionOrderList = ({
+const OrderList = ({
   transactionItems,
   transaction_name,
   username,
@@ -84,4 +84,4 @@ const TransactionOrderList = ({
   );
 };
 
-export default TransactionOrderList;
+export default OrderList;

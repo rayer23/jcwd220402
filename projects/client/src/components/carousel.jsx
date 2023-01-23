@@ -7,7 +7,7 @@ import Diskon from '../assets/diskon.png';
 import Diskon50 from '../assets/diskon50.png';
 import React from 'react';
 
-const CarouselSlider = () => {
+const Carousel = () => {
   const settings = {
     dots: true,
     autoplay: true,
@@ -180,4 +180,4 @@ const CarouselSlider = () => {
   );
 };
 
-export default CarouselSlider;
+export default Carousel;

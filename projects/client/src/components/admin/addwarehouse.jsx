@@ -19,7 +19,7 @@ import {
 import { useEffect, useState } from 'react';
 import { axiosInstance } from '../../api';
 
-const WarehouseAddress = ({
+const AddWarehouse = ({
   isOpen,
   onClose,
   onSubmit,
@@ -241,4 +241,4 @@ const WarehouseAddress = ({
   );
 };
 
-export default WarehouseAddress;
+export default AddWarehouse;

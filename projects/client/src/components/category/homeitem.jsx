@@ -4,7 +4,7 @@ import { axiosInstance } from '../../api';
 import { motion } from 'framer-motion';
 import { Link, useNavigate, createSearchParams } from 'react-router-dom';
 
-const CategoryHomeItems = ({ id, category_name, category_image, testfil }) => {
+const HomeItems = ({ id, category_name, category_image, testfil }) => {
   const [countProduct, setCountProduct] = useState(0);
   const navigate = useNavigate();
   const fetchCategoryByProductName = async () => {
@@ -140,4 +140,4 @@ const CategoryHomeItems = ({ id, category_name, category_image, testfil }) => {
   );
 };
 
-export default CategoryHomeItems;
+export default HomeItems;

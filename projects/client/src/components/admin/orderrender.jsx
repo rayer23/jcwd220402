@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem, Image, Text } from '@chakra-ui/react';
 
-const RenderOrder = ({ image_url, quantity, price, product_name }) => {
+const OrderRender = ({ image_url, quantity, price, product_name }) => {
   return (
     <Box
       p={'16px'}
@@ -98,4 +98,4 @@ const RenderOrder = ({ image_url, quantity, price, product_name }) => {
   );
 };
 
-export default RenderOrder;
+export default OrderRender;

@@ -14,7 +14,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-const ModalEditCategory = ({
+const EditCategory = ({
   addNewCategory,
   isOpenEditCategory,
   onOpenEditCategory,
@@ -164,4 +164,4 @@ const ModalEditCategory = ({
   );
 };
 
-export default ModalEditCategory;
+export default EditCategory;

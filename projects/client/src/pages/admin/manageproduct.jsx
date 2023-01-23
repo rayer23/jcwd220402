@@ -54,7 +54,7 @@ import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin2Line } from 'react-icons/ri';
 import Alert2 from '../../components/alert';
 
-const AdminProductData = () => {
+const ManageProduct = () => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
@@ -581,4 +581,4 @@ const AdminProductData = () => {
   );
 };
 
-export default AdminProductData;
+export default ManageProduct;
