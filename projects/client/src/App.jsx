@@ -15,9 +15,12 @@ import { attach } from './redux/features/resetSlice';
 //route
 import Navbar from './components/navbar/navbar';
 import HomePage from './pages/Home';
-import Footer from './components/footer';
-import Product from './pages/product/product';
-import ProductDetail from './pages/product/productDetail';
+import Footer from "./components/footer";
+import Profile from "./pages/profile/Profile"
+import ChangePassword from "./pages/profile/ChangePassword"
+import AddressList from "./pages/profile/ListAddress"
+import Product from "./pages/product/product"
+import ProductDetail from "./pages/product/productDetail"
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -181,6 +184,34 @@ function App() {
             </AdminRoute>
           }
         />
+
+        {/* Profile Route */}
+        <Route
+                    path="/user/profile"
+                    element={
+                        <ProtectedRoute>
+                            <Profile />
+                        </ProtectedRoute>
+                    }
+                />
+         <Route
+                    path="/user/profile/change-password"
+                    element={
+                        <ProtectedRoute>
+                            <ChangePassword />
+                        </ProtectedRoute>
+                    }
+                />
+          <Route
+                    path="/user/profile/address"
+                    element={
+                        <ProtectedRoute>
+                            <AddressList />
+                        </ProtectedRoute>
+                    }
+                />
+
+
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
         <Route path="/product/:id/:product_name" element={<ProductDetail />} />
