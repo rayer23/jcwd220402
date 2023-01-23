@@ -18,6 +18,7 @@ import HomePage from './pages/Home';
 import Footer from "./components/footer";
 import Profile from "./pages/profile/Profile"
 import ChangePassword from "./pages/profile/ChangePassword"
+import AddressList from "./pages/profile/ListAddress"
 import Product from "./pages/product/product"
 import ProductDetail from "./pages/product/productDetail"
 
@@ -194,6 +195,14 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <ChangePassword />
+                        </ProtectedRoute>
+                    }
+                />
+          <Route
+                    path="/user/profile/address"
+                    element={
+                        <ProtectedRoute>
+                            <AddressList />
                         </ProtectedRoute>
                     }
                 />
