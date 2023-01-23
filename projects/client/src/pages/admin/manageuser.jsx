@@ -51,7 +51,7 @@ const ManageUserData = () => {
   };
 
   const fetchUserData = async () => {
-    const maxItemsPerPage = 8;
+    const maxItemsPerPage = 6;
     try {
       const response = await axiosInstance.get('/userData/allUser', {
         params: {
@@ -237,48 +237,10 @@ const ManageUserData = () => {
       </Box>
 
       <AddressUser
-        color={'#0095DA'}
-        header="Details Address"
+        header="Default Address"
         isOpen={openedAddress}
         onClose={() => setOpenedAddress(null)}
-        val={openedAddress?.Addresses?.map((val) => {
-          if (!val) {
-            return 'halo';
-          } else {
-            return (
-              <Card>
-                <CardBody>
-                  <Stack divider={<StackDivider />} spacing="4">
-                    <Box>
-                      <Heading size="s" textTransform="uppercase">
-                        Receptients Name
-                      </Heading>
-                      <Text pt="2" fontSize="md">
-                        {val.recipients_name}{' '}
-                      </Text>
-                    </Box>
-                    <Box>
-                      <Heading size="s" textTransform="uppercase">
-                        Full Address
-                      </Heading>
-                      <Text pt="2" fontSize="md">
-                        {val.full_address}{' '}
-                      </Text>
-                    </Box>
-                    <Box>
-                      <Heading size="s" textTransform="uppercase">
-                        Phone Number
-                      </Heading>
-                      <Text pt="2" fontSize="md">
-                        {val.phone_number}{' '}
-                      </Text>
-                    </Box>
-                  </Stack>
-                </CardBody>
-              </Card>
-            );
-          }
-        })}
+        val={openedAddress?.Addresses?.map((val) => val)}
       />
     </Box>
   );

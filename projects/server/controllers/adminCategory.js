@@ -1,6 +1,6 @@
-const db = require("../models");
-const bcrypt = require("bcrypt");
-const { Op } = require("sequelize");
+const db = require('../models');
+const bcrypt = require('bcrypt');
+const { Op } = require('sequelize');
 
 const { Category, User } = db;
 
@@ -13,7 +13,7 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
@@ -25,7 +25,7 @@ module.exports = {
 
       if (findCategory) {
         return res.status(400).json({
-          message: "Category name already exists",
+          message: 'Category name already exists',
         });
       }
 
@@ -37,37 +37,29 @@ module.exports = {
       });
 
       return res.status(201).json({
-        message: "Successfully created new category",
+        message: 'Successfully created new category',
         data: createNewCategory,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
   adminGetAllCategories: async (req, res) => {
     try {
-      const findAdminById = await User.findByPk(req.user.id);
-
-      // if (findAdminById.RoleId !== 3) {
-      //   return res.status(400).json({
-      //     message: "User unauthorized",
-      //   });
-      // }
-
       const {
-        category_name = "",
+        category_name = '',
         _limit = 5,
         _page = 1,
-        _sortBy = "id",
-        _sortDir = "ASC",
+        _sortBy = 'id',
+        _sortDir = 'ASC',
       } = req.query;
 
       if (
-        _sortBy === "category_name" ||
-        _sortBy === "updatedAt" ||
+        _sortBy === 'category_name' ||
+        _sortBy === 'updatedAt' ||
         category_name
       ) {
         const getAllCatagories = await Category.findAndCountAll({
@@ -81,7 +73,7 @@ module.exports = {
           },
         });
         return res.status(200).json({
-          message: "Get category by name",
+          message: 'Get category by name',
           data: getAllCatagories.rows,
           dataCount: getAllCatagories.count,
         });
@@ -92,14 +84,14 @@ module.exports = {
         offset: (_page - 1) * _limit,
       });
       return res.status(200).json({
-        message: "Get category by name",
+        message: 'Get category by name',
         data: getAllCatagories.rows,
         dataCount: getAllCatagories.count,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -109,7 +101,7 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
@@ -130,17 +122,17 @@ module.exports = {
           where: {
             id: id,
           },
-        }
+        },
       );
 
       return res.status(200).json({
-        message: "Successfully edited eategory",
+        message: 'Successfully edited eategory',
         data: updatedCategory,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -152,7 +144,7 @@ module.exports = {
 
       if (findAdminById.RoleId !== 3) {
         return res.status(400).json({
-          message: "User unauthorized",
+          message: 'User unauthorized',
         });
       }
 
@@ -163,12 +155,12 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Deleted Category",
+        message: 'Deleted Category',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },

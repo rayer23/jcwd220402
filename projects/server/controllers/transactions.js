@@ -1,6 +1,6 @@
-const db = require("../models");
-const moment = require("moment");
-const { Op } = require("sequelize");
+const db = require('../models');
+const moment = require('moment');
+const { Op } = require('sequelize');
 
 const { Cart, Transaction, TransactionItem } = db;
 
@@ -25,11 +25,11 @@ module.exports = {
             ],
           },
         ],
-        order: [["createdAt", "DESC"]],
+        order: [['createdAt', 'DESC']],
       });
 
       return res.status(200).json({
-        message: "showMyItemCart",
+        message: 'showMyItemCart',
         data: getCheckedCartItems,
       });
     } catch (err) {
@@ -65,7 +65,7 @@ module.exports = {
             ],
           },
         ],
-        order: [["createdAt", "DESC"]],
+        order: [['createdAt', 'DESC']],
       });
 
       const getTotal = await db.sequelize.query(
@@ -75,7 +75,7 @@ module.exports = {
             join carts c
             on p.id = c.ProductId
             where is_checked = ${true} && UserId = ${req.user.id} 
-            group by c.id;`
+            group by c.id;`,
       );
 
       const productNameArr = getTotal[0].map((val) => val.product_name);
@@ -115,9 +115,9 @@ module.exports = {
 
       const total_quantity = totalQuantity;
 
-      const payment_date = moment().add().format("YYYY-MM-DD HH:mm:ss");
+      const payment_date = moment().add().format('YYYY-MM-DD HH:mm:ss');
 
-      const expDate = moment().add(1, "days").format("YYYY-MM-DD HH:mm:ss");
+      const expDate = moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss');
 
       const createTransaction = await Transaction.create({
         total_price: total_price,
@@ -136,13 +136,13 @@ module.exports = {
 
       await Transaction.update(
         {
-          transaction_name: `PU-${createTransaction.id}`,
+          transaction_name: `DL-${createTransaction.id}`,
         },
         {
           where: {
             id: createTransaction.id,
           },
-        }
+        },
       );
 
       await TransactionItem.bulkCreate(
@@ -151,7 +151,7 @@ module.exports = {
             ...item,
             TransactionId: createTransaction.id,
           };
-        })
+        }),
       );
 
       await db.Cart.destroy({
@@ -170,17 +170,17 @@ module.exports = {
               include: [{ model: db.Product }],
             },
           ],
-        }
+        },
       );
 
       return res.status(201).json({
-        message: "Transaction created",
+        message: 'Transaction created',
         data: findCreatedTransaction,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -191,6 +191,7 @@ module.exports = {
       const findTransactionByTransactionName = await Transaction.findOne({
         where: {
           transaction_name: transaction_name,
+          UserId: req.user.id,
         },
         include: [
           {
@@ -201,13 +202,13 @@ module.exports = {
         ],
       });
       return res.status(201).json({
-        message: "Get transaction by name",
+        message: 'Get transaction by name',
         data: findTransactionByTransactionName,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -231,24 +232,26 @@ module.exports = {
         {
           where: {
             transaction_name: transaction_name,
+            UserId: req.user.id,
           },
-        }
+        },
       );
 
       const findpaymentProof = await Transaction.findOne({
         where: {
           transaction_name: transaction_name,
+          UserId: req.user.id,
         },
       });
 
       return res.status(200).json({
-        message: "payment proof uploaded",
+        message: 'payment proof uploaded',
         data: findpaymentProof,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -264,23 +267,24 @@ module.exports = {
         {
           where: {
             transaction_name,
+            UserId: req.user.id,
           },
-        }
+        },
       );
 
       return res.status(200).json({
-        message: "payment expired",
+        message: 'payment expired',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
   getAllMyTransaction: async (req, res) => {
     try {
-      const { _page = 1, _sortBy = "id", _sortDir = "ASC" } = req.query;
+      const { _page = 1, _sortBy = 'id', _sortDir = 'ASC' } = req.query;
 
       const MyTransactionList = await Transaction.findAndCountAll({
         order: [[_sortBy, _sortDir]],
@@ -312,14 +316,14 @@ module.exports = {
       const dataCount = count.length;
 
       return res.status(200).json({
-        message: "payment expired",
+        message: 'payment expired',
         data: MyTransactionList.rows,
         dataCount: dataCount,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -328,13 +332,13 @@ module.exports = {
       const {
         _limit = 10,
         _page = 1,
-        _sortBy = "id",
-        _sortDir = "DESC",
-        status = "",
-        keyword = "",
+        _sortBy = 'id',
+        _sortDir = 'DESC',
+        status = '',
+        keyword = '',
       } = req.query;
 
-      if (keyword && status === "On Going") {
+      if (keyword && status === 'On Going') {
         const getDataQuery = await db.sequelize.query(
           `Select product_name, t.OrderStatusId, t.id as TransactionId, transaction_name, t.is_paid, t.UserId from transactionItems ti
                 join products p
@@ -344,11 +348,11 @@ module.exports = {
                 join order_statuses os
                 where (p.product_name Like '%${keyword}%' or t.transaction_name Like '%${keyword}%') && UserId =${req.user.id} && is_paid=true && 
                 (t.OrderStatusId = 1 or t.OrderStatusId = 2 or t.OrderStatusId = 3 or t.OrderStatusId = 4)
-                group by t.id;`
+                group by t.id;`,
         );
 
         const getTransactionId = getDataQuery[0].map(
-          (val) => val.TransactionId
+          (val) => val.TransactionId,
         );
 
         const MyTransactionList = await Transaction.findAndCountAll({
@@ -387,7 +391,7 @@ module.exports = {
         const dataCount = getTransactionId.length;
 
         return res.status(200).json({
-          message: "Get Keyword with status On Going List",
+          message: 'Get Keyword with status On Going List',
           data: MyTransactionList.rows,
           dataCount: dataCount,
         });
@@ -403,11 +407,11 @@ module.exports = {
                 join order_statuses os
                 on t.OrderStatusId = os.id
                 where (p.product_name Like '%${keyword}%' or t.transaction_name Like '%${keyword}%') && is_paid=true && UserId = ${req.user.id} &&
-                order_status_name like '${status}';`
+                order_status_name like '${status}';`,
         );
 
         const getTransactionId = getDataQuery[0].map(
-          (val) => val.TransactionId
+          (val) => val.TransactionId,
         );
 
         const MyTransactionList = await Transaction.findAndCountAll({
@@ -446,7 +450,7 @@ module.exports = {
         const dataCount = getTransactionId.length;
 
         return res.status(200).json({
-          message: "Get Keyword By Order Status Name",
+          message: 'Get Keyword By Order Status Name',
           data: MyTransactionList.rows,
           dataCount: dataCount,
         });
@@ -461,11 +465,11 @@ module.exports = {
                 on ti.TransactionId = t.id
                 where  (p.product_name Like '%${keyword}%' or t.transaction_name Like '%${keyword}%') && UserId = ${
             req.user.id
-          } && is_paid=${true};`
+          } && is_paid=${true};`,
         );
 
         const getTransactionId = getDataQuery[0].map(
-          (val) => val.TransactionId
+          (val) => val.TransactionId,
         );
 
         const MyTransactionList = await Transaction.findAndCountAll({
@@ -504,19 +508,19 @@ module.exports = {
         const dataCount = getTransactionId.length;
 
         return res.status(200).json({
-          message: "Get Transaction List by Keyword",
+          message: 'Get Transaction List by Keyword',
           data: MyTransactionList.rows,
           dataCount: dataCount,
         });
       }
 
-      if (status === "On Going") {
+      if (status === 'On Going') {
         const getDataQuery = await db.sequelize.query(
           `select os.order_status_name status,t.UserId,t.is_paid,t.id from transactions t
                 join order_statuses os
                 on os.id = t.OrderStatusId
                 where (order_status_name like 'Awaiting Confirmation' or order_status_name like 'Processed' 
-                or order_status_name like 'Shipping' or order_status_name like 'Delivered') && is_paid = true && UserId = ${req.user.id};`
+                or order_status_name like 'Shipping' or order_status_name like 'Delivered') && is_paid = true && UserId = ${req.user.id};`,
         );
 
         const getTransactionId = getDataQuery[0].map((val) => val.id);
@@ -557,7 +561,7 @@ module.exports = {
         const dataCount = getTransactionId.length;
 
         return res.status(200).json({
-          message: "Get Transaction By On Going",
+          message: 'Get Transaction By On Going',
           data: MyTransactionList.rows,
           dataCount: dataCount,
         });
@@ -568,7 +572,7 @@ module.exports = {
           `select os.order_status_name status,t.UserId,t.is_paid,t.id from transactions t
                 join order_statuses os
                 on os.id = t.OrderStatusId
-                where order_status_name like '%${status}%' && is_paid = true && UserId = ${req.user.id};`
+                where order_status_name like '%${status}%' && is_paid = true && UserId = ${req.user.id};`,
         );
 
         const getTransactionId = getDataQuery[0].map((val) => val.id);
@@ -609,7 +613,7 @@ module.exports = {
         const dataCount = getTransactionId.length;
 
         return res.status(200).json({
-          message: "Get Transaction By Order Status Name",
+          message: 'Get Transaction By Order Status Name',
           data: MyTransactionList.rows,
           dataCount: dataCount,
         });
@@ -682,20 +686,20 @@ module.exports = {
       const dataCount = count.length;
 
       return res.status(200).json({
-        message: "Get keyword",
+        message: 'Get keyword',
         data: MyTransactionList.rows,
         dataCount: dataCount,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
   getUnpaidTransaction: async (req, res) => {
     try {
-      const { _sortBy = "id", _sortDir = "DESC" } = req.query;
+      const { _sortBy = 'id', _sortDir = 'DESC' } = req.query;
 
       const MyTransactionList = await Transaction.findAndCountAll({
         order: [[_sortBy, _sortDir]],
@@ -732,14 +736,14 @@ module.exports = {
       const dataCount = count.length;
 
       return res.status(200).json({
-        message: "payment expired",
+        message: 'payment expired',
         data: MyTransactionList.rows,
         dataCount: dataCount,
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -754,17 +758,18 @@ module.exports = {
         {
           where: {
             transaction_name: transaction_name,
+            UserId: req.user.id,
           },
-        }
+        },
       );
 
       return res.status(200).json({
-        message: "Order finished",
+        message: 'Order finished',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -775,24 +780,25 @@ module.exports = {
 
       await Transaction.update(
         {
-          OrderStatusId: 0,
+          OrderStatusId: 6,
           PaymentStatusId: 5,
           is_paid: null,
         },
         {
           where: {
             transaction_name: transaction_name,
+            UserId: req.user.id,
           },
-        }
+        },
       );
 
       return res.status(200).json({
-        message: "You have successfully canceled this transaction",
+        message: 'You have successfully canceled this transaction',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },
@@ -808,17 +814,18 @@ module.exports = {
         {
           where: {
             transaction_name: transaction_name,
+            UserId: req.user.id,
           },
-        }
+        },
       );
 
       return res.status(200).json({
-        message: "You have successfully canceled this transaction",
+        message: 'You have successfully canceled this transaction',
       });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
-        message: "Server error",
+        message: 'Server error',
       });
     }
   },

@@ -34,7 +34,7 @@ import { useSearchParams } from "react-router-dom"
 import { CgChevronLeft, CgChevronRight } from "react-icons/cg"
 import { axiosInstance } from "../../api"
 import ProductItem from "../../components/product/ProductItem"
-import Navbar from "../../components/navbar"
+import Navbar from "../../components/navbar/navbar"
 
 const Product = () => {
     const [products, setProducts] = useState([])

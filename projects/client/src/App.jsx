@@ -13,7 +13,7 @@ import { login } from './redux/features/authSlice';
 import { attach } from './redux/features/resetSlice';
 
 //route
-import Navbar from './components/navbar';
+import Navbar from './components/navbar/navbar';
 import HomePage from './pages/Home';
 import Footer from "./components/footer";
 import Profile from "./pages/profile/Profile"
@@ -36,6 +36,8 @@ import ManageProduct from './pages/admin/manageproduct';
 import ManageProductDetail from './pages/admin/manageproductdetail';
 import ManageStock from './pages/admin/managestock';
 import ManageStockWarehouse from './pages/admin/managestockwarehouse';
+import ManageMutation from './pages/admin/managemutation';
+import OrderHistory from './pages/admin/orderhistory';
 
 import NotFound from './components/404Page';
 // roles route
@@ -123,6 +125,7 @@ function App() {
       location.pathname === '/register/verification' ||
       location.pathname === '/reset-password' ||
       location.pathname === '/reset-confirm' ||
+      location.pathname === '/cart/shipment' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
@@ -210,10 +213,7 @@ function App() {
 
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
-        <Route
-                    path="/product/:id/:product_name"
-                    element={<ProductDetail />}
-                />
+        <Route path="/product/:id/:product_name" element={<ProductDetail />} />
         <Route
           path="/admin/warehouse-management"
           element={
@@ -266,12 +266,29 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route
+          path="/admin/stock-mutation"
+          element={
+            <AdminRoute>
+              <ManageMutation />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/order-history"
+          element={
+            <AdminRoute>
+              <OrderHistory />
+            </AdminRoute>
+          }
+        />
       </Routes>
       {location.pathname === '/login' ||
       location.pathname === '/register' ||
       location.pathname === '/register/verification' ||
       location.pathname === '/reset-password' ||
       location.pathname === '/reset-confirm' ||
+      location.pathname === '/cart/shipment' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>

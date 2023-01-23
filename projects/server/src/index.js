@@ -61,7 +61,7 @@ app.use('/warehouse', verifyToken, adminWarehouse);
 app.use('/public', express.static('public'));
 app.use('/address', address);
 app.use('/stock', stock);
-app.use('/carts', cart);
+app.use('/carts', verifyToken, cart);
 app.use('/checkoutAddress', addressCheckout);
 app.use('/user-profile', verifyToken, userProfile);
 app.use('/transactions', verifyToken, transactions);

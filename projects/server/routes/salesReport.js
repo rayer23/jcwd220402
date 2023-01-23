@@ -1,7 +1,7 @@
-const router = require("express").Router();
-const { salesReport } = require("../controllers/index");
+const router = require('express').Router();
+const { salesReport } = require('../controllers/index');
 
-router.get("/get", salesReport.getReport);
-router.get("/get2", salesReport.getReportWithQuery);
+router.get('/get', salesReport.getReport);
+router.get('/findWarehouse', salesReport.findWarehouse);
 
 module.exports = router;
