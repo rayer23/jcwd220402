@@ -1,11 +1,5 @@
 const db = require('../models');
-const axios = require('axios');
 const { Op } = require('sequelize');
-const pool = require('../config/connectionConfig');
-const fastcsv = require('fast-csv');
-const mysql = require('mysql');
-
-const fs = require('fs');
 
 module.exports = {
   showAllStockData: async (req, res) => {
@@ -19,7 +13,6 @@ module.exports = {
         currentTime,
         endTime,
       } = req.query;
-      // console.log(currentTime, endTime);
       const findAdminById = await db.User.findByPk(req.user.id);
 
       if (findAdminById.RoleId !== 3) {
@@ -49,38 +42,6 @@ module.exports = {
         message: 'Successfully getting stock data',
         data: response.rows,
         dataCount: response.count,
-      });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({
-        message: 'Server error when getting stock data',
-      });
-    }
-  },
-
-  exportcsv: async (req, res) => {
-    const ws = fs.createWriteStream('stock_history.csv');
-    try {
-      const { currentTime, endTime } = req.query;
-      let sqlQuery = `SELECT SJ.*, TJ.name, TJ.type, P.product_name FROM journals AS SJ LEFT JOIN Type_journals AS TJ ON SJ.TypeJournalId = TJ.id JOIN Products AS P ON SJ.ProductId = P.id WHERE SJ.createdAt BETWEEN '${currentTime}' AND '${endTime}'`;
-      pool.query(sqlQuery, function (err, data) {
-        if (err) throw err;
-
-        //JSON
-        const jsonData = JSON.parse(JSON.stringify(data));
-        console.log('jsonData', jsonData);
-
-        //csv
-        fastcsv
-          .write(jsonData, { headers: true })
-          .on('finish', function () {
-            console.log(
-              'Write to stock_history.csv successfully in server folder!',
-            );
-          })
-          .pipe(ws);
-
-        res.send('All process is done!');
       });
     } catch (error) {
       console.log(error);

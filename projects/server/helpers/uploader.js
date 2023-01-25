@@ -1,13 +1,15 @@
 const multer = require("multer");
+const path = require("path");
 
 const upload = ({
   filePrefix = "FILE",
   fileName = Date.now(),
   acceptedFileTypes = [],
 }) => {
+  const filePath = path.join(__dirname, ".././public");
   const diskStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "public");
+      cb(null, filePath);
     },
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);

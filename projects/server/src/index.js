@@ -3,9 +3,12 @@ const cors = require('cors');
 const { join } = require('path');
 const db = require('../models');
 const { verifyToken } = require('../middlewares/authMiddleware');
-
-require('dotenv/config');
+const { sequelize } = require('../models');
 const fs = require('fs');
+const path = require('path');
+dotenv = require('dotenv').config({
+  path: path.resolve(__dirname, '../.env'),
+});
 
 // Import Routes
 const {
@@ -44,32 +47,34 @@ app.use(
 );
 
 app.use(express.json());
+app.use('/api', express.static(path.join(__dirname, '.././public')));
 
 //#region API ROUTES
 
 // ===========================
 // NOTE : Add your routes here
-app.use('/admin', verifyToken, adminCategory);
-app.use('/userData', userdata);
-app.use('/product', product);
-app.use('/categories', category);
-app.use('/auth', auth);
-app.use('/shipment', shipment);
-app.use('/profile', verifyToken, profile);
-app.use('/admin/product', verifyToken, adminProduct);
-app.use('/warehouse', verifyToken, adminWarehouse);
+
+app.use('/api/admin', verifyToken, adminCategory);
+app.use('/api/userData', userdata);
+app.use('/api/product', product);
+app.use('/api/categories', category);
+app.use('/api/auth', auth);
+app.use('/api/shipment', shipment);
+app.use('/api/profile', verifyToken, profile);
+app.use('/api/admin/product', verifyToken, adminProduct);
+app.use('/api/warehouse', verifyToken, adminWarehouse);
 app.use('/public', express.static('public'));
-app.use('/address', address);
-app.use('/stock', stock);
-app.use('/carts', verifyToken, cart);
-app.use('/checkoutAddress', addressCheckout);
-app.use('/user-profile', verifyToken, userProfile);
-app.use('/transactions', verifyToken, transactions);
-app.use('/adminOrder', verifyToken, adminOrder);
-app.use('/export', verifyToken, exports1);
-app.use('/admin/order-history', adminOrderHistory);
-app.use('/stock-mutation', verifyToken, stockMutation);
-app.use('/admin/sales-report', salesReport);
+app.use('/api/address', address);
+app.use('/api/stock', stock);
+app.use('/api/carts', verifyToken, cart);
+app.use('/api/checkoutAddress', addressCheckout);
+app.use('/api/user-profile', verifyToken, userProfile);
+app.use('/api/transactions', verifyToken, transactions);
+app.use('/api/adminOrder', verifyToken, adminOrder);
+app.use('/api/export', verifyToken, exports1);
+app.use('/api/admin/order-history', adminOrderHistory);
+app.use('/api/stock-mutation', verifyToken, stockMutation);
+app.use('/api/admin/sales-report', salesReport);
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`);
@@ -119,10 +124,10 @@ app.listen(PORT, (err) => {
   if (err) {
     console.log(`ERROR: ${err}`);
   } else {
-    // db.sequelize.sync({ alter: true })
+    // db.sequelize.sync({ alter: true });
     if (!fs.existsSync('public')) {
       fs.mkdirSync('public');
     }
-    console.log(`Server running at PORT : ${PORT}`);
+    console.log(`APP RUNNING at ${PORT} ✅`);
   }
 });

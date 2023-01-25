@@ -15,12 +15,12 @@ import { attach } from './redux/features/resetSlice';
 //route
 import Navbar from './components/navbar/navbar';
 import HomePage from './pages/Home';
-import Footer from "./components/footer";
-import Profile from "./pages/profile/Profile"
-import ChangePassword from "./pages/profile/ChangePassword"
-import AddressList from "./pages/profile/ListAddress"
-import Product from "./pages/product/product"
-import ProductDetail from "./pages/product/productDetail"
+import Footer from './components/footer';
+import Profile from './pages/profile/Profile';
+import ChangePassword from './pages/profile/ChangePassword';
+import AddressList from './pages/profile/ListAddress';
+import Product from './pages/product/product';
+import ProductDetail from './pages/product/productDetail';
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -39,6 +39,7 @@ import ManageStockWarehouse from './pages/admin/managestockwarehouse';
 import ManageMutation from './pages/admin/managemutation';
 import OrderHistory from './pages/admin/orderhistory';
 import ManageOrder from './pages/admin/manageorder';
+import ProductHistory from './pages/admin/producthistory';
 
 import NotFound from './components/404Page';
 // roles route
@@ -187,30 +188,29 @@ function App() {
 
         {/* Profile Route */}
         <Route
-                    path="/user/profile"
-                    element={
-                        <ProtectedRoute>
-                            <Profile />
-                        </ProtectedRoute>
-                    }
-                />
-         <Route
-                    path="/user/profile/change-password"
-                    element={
-                        <ProtectedRoute>
-                            <ChangePassword />
-                        </ProtectedRoute>
-                    }
-                />
-          <Route
-                    path="/user/profile/address"
-                    element={
-                        <ProtectedRoute>
-                            <AddressList />
-                        </ProtectedRoute>
-                    }
-                />
-
+          path="/user/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/profile/change-password"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/profile/address"
+          element={
+            <ProtectedRoute>
+              <AddressList />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
@@ -288,6 +288,14 @@ function App() {
           element={
             <AdminRoute>
               <ManageOrder />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/report/stock"
+          element={
+            <AdminRoute>
+              <ProductHistory />
             </AdminRoute>
           }
         />
