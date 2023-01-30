@@ -632,7 +632,7 @@ module.exports = {
       );
       const transactionLink = `${process.env.BASE_URL_FE}transaction-list`;
 
-      const rawHTML = fs.readFileSync('templates/approved.html', 'utf-8');
+      const rawHTML = fs.readFileSync('./src/templates/approved.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -695,7 +695,7 @@ module.exports = {
 
       const uploadLink = `${process.env.BASE_URL_FE}payment/${findTransaction.transaction_name}`;
 
-      const rawHTML = fs.readFileSync('templates/rejected.html', 'utf-8');
+      const rawHTML = fs.readFileSync('./src/templates/rejected.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -770,7 +770,7 @@ module.exports = {
           ),
       );
 
-      const rawHTML = fs.readFileSync('templates/orderSend.html', 'utf-8');
+      const rawHTML = fs.readFileSync('./src/templates/orderSend.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -899,7 +899,7 @@ module.exports = {
         });
       }
 
-      const rawHTML = fs.readFileSync('templates/orderCancel.html', 'utf-8');
+      const rawHTML = fs.readFileSync('./src/templates/orderCancel.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -954,7 +954,7 @@ module.exports = {
           },
         },
       );
-      const rawHTML = fs.readFileSync('templates/orderDelivered.html', 'utf-8');
+      const rawHTML = fs.readFileSync('./src/templates/orderDelivered.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 

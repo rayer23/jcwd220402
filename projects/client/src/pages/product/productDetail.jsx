@@ -226,7 +226,6 @@ const ProductDetail = ({ product_name, id }) => {
         mx="auto"
         mt="150px"
         w="1150px"
-        display={{ lg: 'block', md: 'none', base: 'none' }}
       >
         {isLoading === false ? (
           <Box

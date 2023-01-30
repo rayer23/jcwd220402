@@ -24,7 +24,7 @@ import ProductDetail from './pages/product/productDetail';
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
-
+import Transactions from './pages/transactions/transactions';
 //route admin
 import NavbarAdmin from './components/navbaradmin';
 import Dashboard from './pages/admin/dashboard';
@@ -127,7 +127,6 @@ function App() {
       location.pathname === '/register/verification' ||
       location.pathname === '/reset-password' ||
       location.pathname === '/reset-confirm' ||
-      location.pathname === '/cart/shipment' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
@@ -297,6 +296,14 @@ function App() {
             <AdminRoute>
               <ProductHistory />
             </AdminRoute>
+          }
+        />
+        <Route
+          path="/cart/shipment"
+          element={
+            <ProtectedRoute>
+              <Transactions />
+            </ProtectedRoute>
           }
         />
       </Routes>

@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const { join } = require('path');
-const db = require('../models');
-const { verifyToken } = require('../middlewares/authMiddleware');
-const { sequelize } = require('../models');
+const db = require('./models');
+const { verifyToken } = require('./middlewares/authMiddleware');
+const { sequelize } = require('./models');
 const fs = require('fs');
 const path = require('path');
 dotenv = require('dotenv').config({
@@ -32,7 +32,7 @@ const {
   stockMutation,
   salesReport,
   adminCategory,
-} = require('../routes');
+} = require('./routes');
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -47,7 +47,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use('/api', express.static(path.join(__dirname, '.././public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //#region API ROUTES
 
@@ -63,7 +63,6 @@ app.use('/api/shipment', shipment);
 app.use('/api/profile', verifyToken, profile);
 app.use('/api/admin/product', verifyToken, adminProduct);
 app.use('/api/warehouse', verifyToken, adminWarehouse);
-app.use('/public', express.static('public'));
 app.use('/api/address', address);
 app.use('/api/stock', stock);
 app.use('/api/carts', verifyToken, cart);
@@ -125,8 +124,8 @@ app.listen(PORT, (err) => {
     console.log(`ERROR: ${err}`);
   } else {
     // db.sequelize.sync({ alter: true });
-    if (!fs.existsSync('public')) {
-      fs.mkdirSync('public');
+    if (!fs.existsSync('./src/public')) {
+      fs.mkdirSync('./src/public');
     }
     console.log(`APP RUNNING at ${PORT} ✅`);
   }

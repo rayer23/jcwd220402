@@ -40,7 +40,7 @@ module.exports = {
         id: newUserData.id,
       });
       const verificationLink = ` ${process.env.BASE_URL_FE}register/verification?verification_token=${verification_token}`;
-      const rawHTML = fs.readFileSync('templates/verification.html', 'utf-8');
+      const rawHTML = fs.readFileSync('./src/templates/verification.html', 'utf-8');
       const compiledHTML = handlebars.compile(rawHTML);
       const htmlResult = compiledHTML({
         email,

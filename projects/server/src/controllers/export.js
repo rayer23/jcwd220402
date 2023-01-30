@@ -13,13 +13,7 @@ module.exports = {
         currentTime,
         endTime,
       } = req.query;
-      const findAdminById = await db.User.findByPk(req.user.id);
 
-      if (findAdminById.RoleId !== 3) {
-        return res.status(400).json({
-          message: 'User unauthorized',
-        });
-      }
       const whereCondition = {
         id: {
           [Op.like]: `%${id}%`,

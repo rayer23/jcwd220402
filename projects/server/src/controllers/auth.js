@@ -115,7 +115,7 @@ module.exports = {
 
         const link = process.env.BASE_URL_FE;
 
-        const rawHTML = fs.readFileSync('templates/welcome.html', 'utf-8');
+        const rawHTML = fs.readFileSync('./src/templates/welcome.html', 'utf-8');
 
         const compiledHTML = handlebars.compile(rawHTML);
 
@@ -181,7 +181,7 @@ module.exports = {
 
       const resetPasswordLink = `${process.env.BASE_URL_FE}reset-confirm?reset_token=${reset_token}`;
 
-      const rawHTML = fs.readFileSync('templates/reset.html', 'utf-8');
+      const rawHTML = fs.readFileSync('./src/templates/reset.html', 'utf-8');
 
       const compiledHTML = handlebars.compile(rawHTML);
 

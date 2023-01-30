@@ -107,7 +107,6 @@ const Password = () => {
         <>
             <Box
                 p="16px 0"
-                display={{ base: "none", md: "none", lg: "flex" }}
                 border="1px solid #dfe1e3"
                 borderRadius={'20px'}
             >
@@ -151,7 +150,6 @@ const Password = () => {
                         {/* Change Password */}
                         <Box
                             p="16px"
-                            display={{ base: "none", md: "none", lg: "grid" }}
                         >
                             <Center>
                                 <Text

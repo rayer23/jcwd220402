@@ -309,8 +309,7 @@ import {
           mt="120px"
           fontSize={"16px"}
           color="rgba(0,0,0,.54)"
-          display={{ base: "none", md: "none", lg: "block" }}
-        >
+          >
           <Box w="1208px" marginX={"auto"}>
             <Box display={"flex"} mt="80px" mb="16px">
               <Box mr="8px" my={"auto"}>
@@ -353,7 +352,7 @@ import {
                   </Button>
                 </Box>
               </HStack>
-              <Box display={{ base: "none", md: "none", lg: "flex" }}
+              <Box 
                     w={"1208px"}
                     h="auto"
                     border="1px solid #dfe1e3"

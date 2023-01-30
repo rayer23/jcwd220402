@@ -121,7 +121,6 @@ const UserInfo = ({ onClick }) => {
         <>
             <Box
                 p="16px 0"
-                display={{ base: "none", md: "none", lg: "flex" }}
                 border="1px solid #dfe1e3"
                 borderRadius={'20px'}
             >

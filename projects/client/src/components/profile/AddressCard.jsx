@@ -45,6 +45,7 @@ import {
               borderRadius="20px"
               m="16px 4px 4px"
               p="16px 24px"
+              w={"408px"}
               fontWeight={"bold"}
               color="black"
               fontSize={{ base: "12px", md: "12px", lg: "14px" }}
@@ -90,6 +91,7 @@ import {
           <Box
             boxShadow={"rgba(0, 0, 0, 0.24) 0px 3px 8px"}
             borderRadius="20px"
+            w={"408px"}
             m="16px 4px 4px"
             p="16px 24px"
             fontWeight={"bold"}

@@ -30,7 +30,7 @@ import {
 import { BiSearchAlt, BiReset } from "react-icons/bi";
 import { BsFilterLeft } from "react-icons/bs";
 import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useLocation, useSearchParams } from "react-router-dom"
 import { CgChevronLeft, CgChevronRight } from "react-icons/cg"
 import { axiosInstance } from "../../api"
 import ProductItem from "../../components/product/ProductItem"
@@ -38,13 +38,13 @@ import Navbar from "../../components/navbar/navbar"
 
 const Product = () => {
     const [products, setProducts] = useState([])
-    const [category, setCategory] = useState([])
+    const [categoryData, setCategoryData] = useState([])
     const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
     const [sortBy, setSortBy] = useState("product_name")
     const [sortDir, setSortDir] = useState("ASC")
-    const [filter, setFilter] = useState("All")
+    const [category, setCategory] = useState()
     const [searchProduct, setSearchProduct] = useState()
     const [searchValue, setSearchValue] = useState("")
     const [searchParam, setSearchParam] = useSearchParams()
@@ -52,9 +52,12 @@ const Product = () => {
     const [catTotalCount, setCatTotalCount] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
     const [catId, setCatId] = useState([])
-
     const catPerRow = 5
-    const [next, setNext] = useState(catPerRow)
+    const [catLimit, setCatLimit] = useState(catPerRow)
+    const [maxCategory, setMaxCategory] = useState(0)
+    const [next, setNext] = useState()
+    const query = new URLSearchParams(useLocation().search)
+    const category_id = query.get("category")
 
     const fetchProduct = async () => {
         const maxItemsPerPage = 10
@@ -66,7 +69,7 @@ const Product = () => {
                     _limit: maxItemsPerPage,
                     _sortBy: sortBy,
                     _sortDir: sortDir,
-                    CategoryId: filter,
+                    CategoryId: category_id,
                     product_name: searchValue,
                     category_name: searchValue,
                 },
@@ -78,7 +81,7 @@ const Product = () => {
                 setProducts(response.data.data)
             } else {
                 setProducts(response.data.data)
-            }  
+            }
             setIsLoading(true)
         } catch (err) {
             console.log(err)
@@ -88,16 +91,17 @@ const Product = () => {
         try {
             const response = await axiosInstance.get(`/product/category`, {
                 params: {
-                    _limit: 12,
+                    _limit: catLimit,
                     _page: catPage,
                     _sortDir: "ASC",
                 },
             })
             setCatTotalCount(response.data.dataCount)
+            setMaxCategory(response.data.categoryCount)
             if (catPage === 1) {
-                setCategory(response.data.data)
+                setCategoryData(response.data.data)
             } else {
-                setCategory(response.data.data)
+                setCategoryData(response.data.data)
             }
         } catch (err) {
             console.log(err)
@@ -107,7 +111,7 @@ const Product = () => {
     const test = async () => {
         try {
             const response = await axiosInstance.get(
-                `/product/category/${filter}`
+                `/product/category/${category}`
             )
             setCatId(response.data.data)
         } catch (err) {
@@ -144,9 +148,11 @@ const Product = () => {
 
     const filterBtnHandler = ({ target }) => {
         const { value } = target
-        setFilter(value)
-
-        setSearchParam(value)
+        setCategory(value)
+        // setSearchParam(value)
+        const params = {}
+        params["category"] = value
+        setSearchParam(params)
     }
 
     const nextPageBtnHandler = () => {
@@ -169,18 +175,20 @@ const Product = () => {
         }
     }
     const seeMoreBtnHandler = () => {
-        setNext(next + category.length)
+        // setNext(next + categoryData.length)
+        setCatLimit()
     }
+
     const seeLessBtnHandler = () => {
-        setNext(catPerRow)
+        // setNext(catPerRow)
+        setCatLimit(catPerRow)
     }
     const resetBtnHandler = () => {
         setSearchParam(false)
         setSortBy(false)
-        setFilter(false)
+        setCategory(false)
         window.location.reload(false)
     }
-
     useEffect(() => {
         for (let entry of searchParam.entries()) {
             if (entry[0] === "name") {
@@ -191,13 +199,22 @@ const Product = () => {
                 setSortDir(entry[1])
             }
             if ((entry = [0] === "category")) {
-                setFilter(entry[1])
+                setCategory(entry[1])
             }
         }
         fetchProduct()
         fetchCategory()
         test()
-    }, [page, sortBy, sortDir, filter, searchValue, catPage, searchParam])
+    }, [
+        page,
+        sortBy,
+        sortDir,
+        category,
+        searchValue,
+        catPage,
+        searchParam,
+        catLimit,
+    ])
     return (
         <>
             <Navbar
@@ -256,7 +273,9 @@ const Product = () => {
                                 placeholder="All Categories"
                                 onChange={filterBtnHandler}
                                 >
-                                    {category.slice(0, next).map((val, i) => (
+                                    {categoryData
+                                    .slice(0, catLimit)
+                                    .map((val, i) => (
                                                     <option
                                                         value={val.id || val.category_name}
                                                         bgColor="white"
@@ -312,7 +331,7 @@ const Product = () => {
                                 </FormControl> */}
                             </Flex>
                             <Box  p='5px' mt='-20px' ml="10px" display="grid" h="auto" w="160px">
-                            {next < category.length ? (
+                            {catLimit === catPerRow ? (
                                     <Button
                                         onClick={() => seeMoreBtnHandler()}
                                         mt="6"
@@ -439,7 +458,7 @@ const Product = () => {
                                 placeholder="Filter"
                                 onChange={filterBtnHandler}
                             >
-                                {category.map((val) => (
+                                {categoryData.map((val) => (
                                     <option
                                         value={val.id}
                                         bgColor="white"

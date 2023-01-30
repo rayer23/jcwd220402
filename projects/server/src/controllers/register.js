@@ -45,7 +45,7 @@ module.exports = {
 
       const verificationLink = ` ${process.env.BASE_URL_FE}register/verification?verification_token=${verification_token}`
 
-      const rawHTML = fs.readFileSync("templates/verification.html", "utf-8");
+      const rawHTML = fs.readFileSync("./src/templates/verification.html", "utf-8");
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -153,7 +153,7 @@ module.exports = {
 
         const link = process.env.BASE_URL_FE
 
-        const rawHTML = fs.readFileSync("templates/welcome.html", "utf-8");
+        const rawHTML = fs.readFileSync("./src/templates/welcome.html", "utf-8");
 
         const compiledHTML = handlebars.compile(rawHTML);
 
