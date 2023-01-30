@@ -21,6 +21,7 @@ import ChangePassword from "./pages/profile/ChangePassword"
 import AddressList from "./pages/profile/ListAddress"
 import Product from "./pages/product/product"
 import ProductDetail from "./pages/product/productDetail"
+import Cart from './pages/Cart/Cart';
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -215,6 +216,14 @@ function App() {
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
         <Route path="/product/:id/:product_name" element={<ProductDetail />} />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin/warehouse-management"
           element={
