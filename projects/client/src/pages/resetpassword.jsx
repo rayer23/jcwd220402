@@ -82,8 +82,8 @@ const ResetPassword = () => {
   return (
     <Box>
       <Link to="/">
-        <Box w={'150px'} pt={'30px'}>
-          <Button
+        
+          <Text
             size={'lg'}
             bgColor={'white'}
             fontSize={'75px'}
@@ -92,8 +92,8 @@ const ResetPassword = () => {
             color={'#0095DA'}
           >
             <TfiControlBackward />
-          </Button>
-        </Box>
+          </Text>
+        
       </Link>
 
       <Box

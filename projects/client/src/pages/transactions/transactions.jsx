@@ -15,6 +15,7 @@ import { axiosInstance } from '../../api';
 import BCA from '../../assets/BCA.png';
 import BNI from '../../assets/BNI.png';
 import mandiri from '../../assets/mandiri.png';
+import { TfiControlBackward } from 'react-icons/tfi';
 
 import CartItems from '../../components/transactions/cartitems';
 import Shipping from '../../components/transactions/shipping';
@@ -163,10 +164,27 @@ const Transactions = () => {
 
   return (
     <>
+      <Box h="52px" borderBottom="1px solid #dfe1e3">
+        <Link onClick={onOpen}>
+          <Text
+            bgColor={'white'}
+            size={'lg'}
+            fontSize={'75px'}
+            _hover={'none'}
+            pb={'5px'}
+            color={'#0095DA'}
+          >
+            <TfiControlBackward />
+          </Text>
+        </Link>
+      </Box>
+      
+
       <Box w={'1120px'} p="0 20px" mx="auto">
         <Flex>
           <Box w="685px" mr="45px">
-            <Box mt="130px">
+            
+            <Box mt="20px">
               <Box
                 w={'710px'}
                 border={'1px solid #dfe1e3'}
@@ -213,7 +231,7 @@ const Transactions = () => {
           </Box>
 
           {/* Shopping Summary */}
-          <Box w="350px" mt="130px">
+          <Box w="350px" mt="20px">
             <Box>
               <Box
                 inset="92px auto auto 0px"

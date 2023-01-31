@@ -127,6 +127,7 @@ function App() {
       location.pathname === '/register/verification' ||
       location.pathname === '/reset-password' ||
       location.pathname === '/reset-confirm' ||
+      location.pathname === '/cart/shipment' ||
       authSelector.RoleId === 3 ||
       authSelector.RoleId === 2 ? null : (
         <Box>
