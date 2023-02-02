@@ -1,4 +1,4 @@
-import { Box, Text, Grid, HStack, CircularProgress } from "@chakra-ui/react"
+import { Box, Text, Grid, HStack, CircularProgress, Spinner } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { axiosInstance } from "../../api"
@@ -81,11 +81,12 @@ const HomeProduct = () => {
                             alignItems={"center"}
                             alignContent={"center"}
                         >
-                            <CircularProgress
-                                isIndeterminate
-                                color="#0095DA"
-                                thickness="160px"
-                                size="100px"
+                            <Spinner
+                                thickness="4px"
+                                speed="0.65s"
+                                emptyColor="gray.200"
+                                color="blue.500"
+                                size="xl"
                             />
                         </Box>
                     ) : null}

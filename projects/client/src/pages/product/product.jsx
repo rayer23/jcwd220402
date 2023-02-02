@@ -416,7 +416,7 @@ const Product = () => {
                                     />
                                 )}
                                 <Text>{page}</Text>
-                                {page >= maxPage ? null : (
+                                {page >= maxPage-2 ? null : (
                                     <CgChevronRight
                                         bgColor="#0095DA"
                                         color="#0095DA"
@@ -559,7 +559,7 @@ const Product = () => {
                             />
                         )}
                         <Text>{page}</Text>
-                        {page >= maxPage ? null : (
+                        {page >= maxPage-2 ? null : (
                             <CgChevronRight
                                 bgColor="#0095DA"
                                 color="#0095DA"
