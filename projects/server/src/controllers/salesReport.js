@@ -17,11 +17,11 @@ module.exports = {
       const { _sortBy = '' } = req.query;
       let sql = `SELECT  trx.WarehouseId, pr.CategoryId, pr.id AS productId, ct.category_name, pr.product_name, pr.description, trx_items.price_per_item AS price, trx_items.quantity,
                     trx_items.price_per_item * trx_items.quantity AS total, wr.warehouse_name, trx_items.createdAt
-                    FROM transactionitems AS trx_items
-                    JOIN transactions AS trx ON trx.id = trx_items.TransactionId
-                    JOIN products AS pr ON pr.id = trx_items.ProductId
-                    JOIN categories AS ct ON ct.id = pr.CategoryId
-                    JOIN warehouses as wr ON wr.id = trx.WarehouseId `;
+                    FROM TransactionItems AS trx_items
+                    JOIN Transactions AS trx ON trx.id = trx_items.TransactionId
+                    JOIN Products AS pr ON pr.id = trx_items.ProductId
+                    JOIN Categories AS ct ON ct.id = pr.CategoryId
+                    JOIN Warehouses as wr ON wr.id = trx.WarehouseId `;
 
       if (
         WarehouseId &&

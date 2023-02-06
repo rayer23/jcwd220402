@@ -23,10 +23,10 @@ module.exports = {
     } = req.query;
     try {
       let sql = `SELECT  trx.id AS TransactionId,  trx.WarehouseId, wr.warehouse_name, trx.createdAt
-                    FROM transactionitems AS trx_items
-                    JOIN products AS pr ON pr.id = trx_items.ProductId
-                    JOIN transactions AS trx ON trx.id = trx_items.TransactionId
-                    JOIN warehouses as wr ON wr.id = trx.WarehouseId `;
+                    FROM TransactionItems AS trx_items
+                    JOIN Products AS pr ON pr.id = trx_items.ProductId
+                    JOIN Transactions AS trx ON trx.id = trx_items.TransactionId
+                    JOIN Warehouses as wr ON wr.id = trx.WarehouseId `;
 
       if (WarehouseId && createdAt && transaction_name) {
         sql += `WHERE WarehouseId=${WarehouseId} AND MONTH(trx.createdAt)=${createdAt} AND trx.transaction_name LIKE "%${transaction_name}%" `;

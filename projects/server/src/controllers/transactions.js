@@ -70,9 +70,9 @@ module.exports = {
 
       const getTotal = await db.sequelize.query(
         `select sum(stock) totalStock, p.id ProductId, p.product_name, c.is_checked, c.UserId, c.quantity from Products p
-            join total_stocks ts
+            join Total_Stocks ts
             on p.id = ts.ProductId
-            join carts c
+            join Carts c
             on p.id = c.ProductId
             where is_checked = ${true} && UserId = ${req.user.id} 
             group by c.id;`,
@@ -340,12 +340,12 @@ module.exports = {
 
       if (keyword && status === 'On Going') {
         const getDataQuery = await db.sequelize.query(
-          `Select product_name, t.OrderStatusId, t.id as TransactionId, transaction_name, t.is_paid, t.UserId from transactionItems ti
-                join products p
+          `Select product_name, t.OrderStatusId, t.id as TransactionId, transaction_name, t.is_paid, t.UserId from TransactionItems ti
+                join Products p
                 on p.id = ti.ProductId
-                join transactions t
+                join Transactions t
                 on ti.TransactionId = t.id
-                join order_statuses os
+                join Order_statuses os
                 where (p.product_name Like '%${keyword}%' or t.transaction_name Like '%${keyword}%') && UserId =${req.user.id} && is_paid=true && 
                 (t.OrderStatusId = 1 or t.OrderStatusId = 2 or t.OrderStatusId = 3 or t.OrderStatusId = 4)
                 group by t.id;`,
@@ -399,12 +399,12 @@ module.exports = {
 
       if (status && keyword) {
         const getDataQuery = await db.sequelize.query(
-          `Select product_name, t.OrderStatusId, os.order_status_name, t.id as TransactionId, transaction_name, t.is_paid, t.UserId from transactionItems ti
-                join products p
+          `Select product_name, t.OrderStatusId, os.order_status_name, t.id as TransactionId, transaction_name, t.is_paid, t.UserId from TransactionItems ti
+                join Products p
                 on p.id = ti.ProductId
-                join transactions t
+                join Transactions t
                 on ti.TransactionId = t.id
-                join order_statuses os
+                join Order_statuses os
                 on t.OrderStatusId = os.id
                 where (p.product_name Like '%${keyword}%' or t.transaction_name Like '%${keyword}%') && is_paid=true && UserId = ${req.user.id} &&
                 order_status_name like '${status}';`,
@@ -458,10 +458,10 @@ module.exports = {
 
       if (keyword) {
         const getDataQuery = await db.sequelize.query(
-          `Select product_name, t.id as TransactionId, transaction_name, t.UserId from transactionItems ti
-                join products p
+          `Select product_name, t.id as TransactionId, transaction_name, t.UserId from TransactionItems ti
+                join Products p
                 on p.id = ti.ProductId
-                join transactions t
+                join Transactions t
                 on ti.TransactionId = t.id
                 where  (p.product_name Like '%${keyword}%' or t.transaction_name Like '%${keyword}%') && UserId = ${
             req.user.id
@@ -516,8 +516,8 @@ module.exports = {
 
       if (status === 'On Going') {
         const getDataQuery = await db.sequelize.query(
-          `select os.order_status_name status,t.UserId,t.is_paid,t.id from transactions t
-                join order_statuses os
+          `select os.order_status_name status,t.UserId,t.is_paid,t.id from Transactions t
+                join Order_statuses os
                 on os.id = t.OrderStatusId
                 where (order_status_name like 'Awaiting Confirmation' or order_status_name like 'Processed' 
                 or order_status_name like 'Shipping' or order_status_name like 'Delivered') && is_paid = true && UserId = ${req.user.id};`,
@@ -569,8 +569,8 @@ module.exports = {
 
       if (status) {
         const getDataQuery = await db.sequelize.query(
-          `select os.order_status_name status,t.UserId,t.is_paid,t.id from transactions t
-                join order_statuses os
+          `select os.order_status_name status,t.UserId,t.is_paid,t.id from Transactions t
+                join Order_statuses os
                 on os.id = t.OrderStatusId
                 where order_status_name like '%${status}%' && is_paid = true && UserId = ${req.user.id};`,
         );

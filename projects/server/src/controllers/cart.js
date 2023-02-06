@@ -211,12 +211,11 @@ module.exports = {
   ShowAllMyCartItems: async (req, res) => {
     try {
       const getSelectedCart = await db.sequelize.query(
-        `select sum(stock) TotalStock, ts.ProductId, c.id CartId , c.is_checked is_checked, c.UserId from total_stocks ts
-            join carts c
-            on c.ProductId = ts.ProductId
-            -- where TotakStock 
-            group by c.id
-            having TotalStock > 0 and c.UserId=${req.user.id};`,
+        `select sum(stock) TotalStock, ts.ProductId, c.id CartId , c.is_checked is_checked, c.UserId from Total_Stocks ts
+                join Carts c
+                on c.ProductId = ts.ProductId
+                group by c.id
+                having TotalStock > 0 and c.UserId=${req.user.id};`,
       );
 
       const cartChecked = getSelectedCart[0].map((val) => val.is_checked);
@@ -506,12 +505,11 @@ module.exports = {
   checkAllCartItems: async (req, res) => {
     try {
       const getSelectedCart = await db.sequelize.query(
-        `select sum(stock) TotalStock, ts.ProductId, c.id CartId , c.is_checked is_checked, c.UserId from total_stocks ts
-            join carts c
-            on c.ProductId = ts.ProductId
-            -- where TotakStock 
-            group by c.id
-            having TotalStock > 0 and c.UserId=${req.user.id};`,
+        `select sum(stock) TotalStock, ts.ProductId, c.id CartId , c.is_checked is_checked, c.UserId from Total_Stocks ts
+                join Carts c
+                on c.ProductId = ts.ProductId
+                group by c.id
+                having TotalStock > 0 and c.UserId=${req.user.id};`,
       );
 
       const cartIdArr = getSelectedCart[0].map((val) => val.CartId);
@@ -590,8 +588,8 @@ module.exports = {
       const { id } = req.user;
 
       const getTotalPrice = await db.sequelize.query(
-        `select sum(p.price * c.quantity) as totalPrice, sum(c.quantity) as totalQuantity from carts c
-                join products p
+        `select sum(p.price * c.quantity) as totalPrice, sum(c.quantity) as totalQuantity from Carts c
+                join Products p
                 on c.ProductId = p.id
                 where is_checked = ${true} && UserId = ${id}`,
       );
