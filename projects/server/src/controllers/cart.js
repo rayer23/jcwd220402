@@ -588,8 +588,8 @@ module.exports = {
       const { id } = req.user;
 
       const getTotalPrice = await db.sequelize.query(
-        `select sum(p.price * c.quantity) as totalPrice, sum(c.quantity) as totalQuantity from carts c
-                join products p
+        `select sum(p.price * c.quantity) as totalPrice, sum(c.quantity) as totalQuantity from Carts c
+                join Products p
                 on c.ProductId = p.id
                 where is_checked = ${true} && UserId = ${id}`,
       );
