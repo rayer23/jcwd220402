@@ -70,7 +70,7 @@ module.exports = {
 
       const getTotal = await db.sequelize.query(
         `select sum(stock) totalStock, p.id ProductId, p.product_name, c.is_checked, c.UserId, c.quantity from Products p
-            join total_stocks ts
+            join Total_Stocks ts
             on p.id = ts.ProductId
             join carts c
             on p.id = c.ProductId
