@@ -22,6 +22,7 @@ import AddressList from "./pages/profile/ListAddress"
 import Product from "./pages/product/product"
 import ProductDetail from "./pages/product/productDetail"
 import Cart from './pages/Cart/Cart';
+import PaymentProof from './pages/PaymentEvidence';
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
@@ -221,6 +222,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment/:transaction_name"
+          element={
+            <ProtectedRoute>
+              <PaymentProof />
             </ProtectedRoute>
           }
         />
