@@ -67,7 +67,7 @@ const RegisterVerification = () => {
         .required(8)
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character',
+          '*Your password does not meet requirement below',
         ),
     }),
     validateOnChange: false,
@@ -189,7 +189,7 @@ const RegisterVerification = () => {
                     </FormErrorMessage>
                   </FormControl>
                   <Text fontSize={'12px'} textAlign="start" mt="4px">
-                    minimum 8 character
+                    Minimum 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character
                   </Text>
                 </Box>
               </Box>
