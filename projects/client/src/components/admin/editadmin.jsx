@@ -25,6 +25,8 @@ import { TbCameraPlus } from "react-icons/tb";
 import { axiosInstance } from "../../api";
 import { useEffect } from "react";
 import Alert from "../alert";
+import gambar from '../../assets/default_image.png';
+
 
 const EditAdmin = ({
   isOpen,
@@ -130,7 +132,7 @@ const EditAdmin = ({
                     color={color}
                     mx="auto"
                     src={
-                      selectedImage ? selectedImage : isOpen?.profile_picture
+                      selectedImage ? selectedImage : gambar
                     }
                   />
 

@@ -108,12 +108,7 @@ const AddressUser = ({ header, isOpen, onClose, val }) => {
                       </Table>
                     </Box>
                   ) : (
-                    <Box
-                      border={'1px solid #0095DA'}
-                      p="16px"
-                      borderRadius={'10px'}
-                      mb="4"
-                    >
+                    <Box mt="5" mb="4">
                       <Text fontWeight={'bold'}>Another Address</Text>
                       <Table>
                         <Tr>

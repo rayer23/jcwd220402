@@ -54,7 +54,6 @@ const Profile = () => {
             <Box
                 mt="120px"
                 fontSize={"16px"}
-                display={{ base: "none", md: "none", lg: "block" }}
                 color="rgba(0,0,0,.54)"
             >
                 <Box w="1208px" marginX={"auto"}>

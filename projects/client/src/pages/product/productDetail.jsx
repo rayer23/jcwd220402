@@ -226,7 +226,6 @@ const ProductDetail = ({ product_name, id }) => {
         mx="auto"
         mt="150px"
         w="1150px"
-        display={{ lg: 'block', md: 'none', base: 'none' }}
       >
         {isLoading === false ? (
           <Box
@@ -329,7 +328,7 @@ const ProductDetail = ({ product_name, id }) => {
                   <Stack
                     // border="1px solid brown"
                     w="468px"
-                    h="48px"
+                    minH={'92px'}
                   >
                     <Text
                       fontSize="14"

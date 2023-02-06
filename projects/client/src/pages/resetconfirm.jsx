@@ -119,18 +119,16 @@ const ResetConfirm = () => {
   return (
     <Box>
       <Link to="/login">
-        <Box w={'100px'} pt={'30px'}>
-          <Button
-            bgColor={'white'}
-            size={'lg'}
-            fontSize={'75px'}
-            _hover={'none'}
-            pb={'5px'}
-            color={'#0095DA'}
-          >
-            <TfiControlBackward />
-          </Button>
-        </Box>
+        <Text
+          bgColor={'white'}
+          size={'lg'}
+          fontSize={'75px'}
+          _hover={'none'}
+          pb={'5px'}
+          color={'#0095DA'}
+        >
+          <TfiControlBackward />
+        </Text>
       </Link>
       <Box
         display={'flex'}
@@ -230,15 +228,10 @@ const ResetConfirm = () => {
               </Box>
             </Box>
             <Box mt={'25px'} mb={'20px'} borderRadius={'10px'}>
-              {passwordFalse ? (
-                <FormErrorMessage fontSize={'11px'}>
-                  {formik.errors.newPassword}
-                </FormErrorMessage>
-              ) : (
-                <Text fontSize={'11px'} color={'#31353b'} textAlign={'left'}>
-                  Must Contain 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number.
-                </Text>
-              )}
+              <Text fontSize={'11px'} color={'#31353b'} textAlign={'left'}>
+                Must Contain 8 Characters, 1 Uppercase, 1 Lowercase, 1 Number
+                and 1 Special Case Character.
+              </Text>
             </Box>
             <Button
               display={'flex'}

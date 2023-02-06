@@ -67,7 +67,7 @@ const ManageAdmin = () => {
   const [deleteAlert, setDeleteAlert] = useState(null);
 
   const fetchAdminData = async () => {
-    const maxItemsPerPage = 6;
+    const maxItemsPerPage = 4;
     try {
       const response = await axiosInstance.get('/userData/AllWarehouseAdmin', {
         params: {

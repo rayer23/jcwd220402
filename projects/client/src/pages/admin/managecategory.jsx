@@ -165,7 +165,7 @@ const ManageCategory = () => {
 
   return (
     <>
-      <Box mt={'90px'} width="750px" h={'750px'} ml={'520px'}>
+      <Box mt={'90px'} width="750px" h={'750px'} ml={"30%"}>
         <Box p="" display={'flex'} justifyContent="space-between">
           <VStack>
             <Text fontSize={'2xl'} fontWeight="bold" mb={'10px'} mr={'410px'}>

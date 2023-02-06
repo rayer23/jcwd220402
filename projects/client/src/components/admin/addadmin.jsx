@@ -23,6 +23,8 @@ import { useEffect, useState } from "react"
 import { BiHide, BiShow } from "react-icons/bi"
 import { TbCameraPlus } from "react-icons/tb"
 import { axiosInstance } from "../../api"
+import gambar from '../../assets/default_image.png';
+
 
 const AddAdmin = ({
   header,
@@ -108,7 +110,7 @@ const AddAdmin = ({
                   color={color}
                   mx="auto"
                   src={
-                    selectedImage ? selectedImage : "Input Your Profile Picture"
+                    selectedImage ? selectedImage : gambar
                   }
                 />
 

@@ -26,7 +26,7 @@ import PaymentProof from './pages/PaymentEvidence';
 
 import ResetPassword from './pages/resetpassword';
 import ResetConfirm from './pages/resetconfirm';
-
+import Transactions from './pages/transactions/transactions';
 //route admin
 import NavbarAdmin from './components/navbaradmin';
 import Dashboard from './pages/admin/dashboard';
@@ -41,6 +41,7 @@ import ManageStockWarehouse from './pages/admin/managestockwarehouse';
 import ManageMutation from './pages/admin/managemutation';
 import OrderHistory from './pages/admin/orderhistory';
 import ManageOrder from './pages/admin/manageorder';
+import ProductHistory from './pages/admin/producthistory';
 
 import NotFound from './components/404Page';
 // roles route
@@ -189,30 +190,29 @@ function App() {
 
         {/* Profile Route */}
         <Route
-                    path="/user/profile"
-                    element={
-                        <ProtectedRoute>
-                            <Profile />
-                        </ProtectedRoute>
-                    }
-                />
-         <Route
-                    path="/user/profile/change-password"
-                    element={
-                        <ProtectedRoute>
-                            <ChangePassword />
-                        </ProtectedRoute>
-                    }
-                />
-          <Route
-                    path="/user/profile/address"
-                    element={
-                        <ProtectedRoute>
-                            <AddressList />
-                        </ProtectedRoute>
-                    }
-                />
-
+          path="/user/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/profile/change-password"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/profile/address"
+          element={
+            <ProtectedRoute>
+              <AddressList />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Product Route */}
         <Route path="/product" element={<Product />} />
@@ -307,6 +307,22 @@ function App() {
             <AdminRoute>
               <ManageOrder />
             </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/report/stock"
+          element={
+            <AdminRoute>
+              <ProductHistory />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/cart/shipment"
+          element={
+            <ProtectedRoute>
+              <Transactions />
+            </ProtectedRoute>
           }
         />
       </Routes>

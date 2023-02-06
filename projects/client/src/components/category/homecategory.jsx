@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Grid, Text } from '@chakra-ui/react';
+import { Box, CircularProgress, Grid, Text, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { axiosInstance } from '../../api';
 import HomeItems from './homeitem';
@@ -96,11 +96,12 @@ const HomeCategory = ({ filter }) => {
               alignItems={'center'}
               alignContent={'center'}
             >
-              <CircularProgress
-                isIndeterminate
-                color="#0095DA"
-                thickness="100px"
-                size="100px"
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
               />
             </Box>
           ) : null}
@@ -150,11 +151,12 @@ const HomeCategory = ({ filter }) => {
               alignItems={'center'}
               alignContent={'center'}
             >
-              <CircularProgress
-                isIndeterminate
-                color="#0095DA"
-                thickness="100px"
-                size="40px"
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
               />
             </Box>
           ) : null}

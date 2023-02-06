@@ -47,7 +47,7 @@ const WarehouseManagement = () => {
   const [maxPage, setMaxPage] = useState(0);
   const [keyword, setKeyword] = useState('');
   const [keywordHandler, setKeywordHandler] = useState('');
-  const maxItemsPage = 5;
+  const maxItemsPage = 4;
 
   const [selectedAddProvince, setSelectedAddProvince] = useState(0);
   const [selectedAddCity, setSelectedAddCity] = useState(0);
@@ -275,15 +275,16 @@ const WarehouseManagement = () => {
   }, [openedEdit]);
 
   return (
-    <Box marginLeft={'90px'}>
-      <Box p="20px 0" display={'flex'} justifyContent="space-between" mr="0">
-        <Box display={'flex'} gap="4" my={'auto'}>
+    <Box marginLeft="90px" mt={90}>
+      <HStack justifyContent="space-between">
+        <Box>
           <Text fontSize={'2xl'} fontWeight="bold">
             Warehouse Management
           </Text>
         </Box>
+      </HStack>
+      <HStack mt="5px" justifyContent="right">
         <Button
-          mr={'-850'}
           bgColor={'#0095DA'}
           color="white"
           _hover={false}
@@ -298,18 +299,19 @@ const WarehouseManagement = () => {
             fontSize={'15px'}
             fontWeight="normal"
             variant="filled"
-            width={'130px'}
+            width={'150px'}
             color={'#6D6D6F'}
             _placeholder="Sort By"
           >
-            <option value="id ASC" selected>
-              A-Z
+            <option value="ID ASC" selected>
+              ID ASC
             </option>
-            <option value="id DESC">Z-A</option>
+            <option value="ID DESC">ID DESC</option>
             <option value="createdAt DESC">Latest</option>
-            <option value="createdAt ASC">Old</option>
+            <option value="createdAt ASC">Oldest</option>
           </Select>
 
+          {/* <form onSubmit={formikSearch.handleSubmit}> */}
           <FormControl>
             <InputGroup textAlign={'right'}>
               <Button borderRightRadius={'0'} type="submit" onClick={searchKey}>
@@ -317,9 +319,9 @@ const WarehouseManagement = () => {
               </Button>
               <Input
                 type="text"
-                placeholder="Warehouse Name"
+                placeholder="Search by Warehouse Name"
                 name="search"
-                w="200px"
+                w="260px"
                 onChange={(event) => setKeywordHandler(event.target.value)}
                 borderLeftRadius="0"
                 value={keywordHandler}
@@ -327,7 +329,7 @@ const WarehouseManagement = () => {
             </InputGroup>
           </FormControl>
         </Box>
-      </Box>
+      </HStack>
 
       <Table size="lg" variant="striped" colorScheme="blue">
         <Thead>

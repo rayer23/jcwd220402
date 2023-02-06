@@ -62,7 +62,7 @@ const ManageStockWarehouse = ({}) => {
   };
 
   const fetchWarehouseData = async () => {
-    const maxItemsPerPage = 6;
+    const maxItemsPerPage = 9;
     try {
       if (authSelector.RoleId === 2) {
         const response = await axiosInstance.get(
