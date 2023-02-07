@@ -5,6 +5,7 @@ const handlebars = require('handlebars');
 const emailer = require('../helpers/emailer');
 const { signToken } = require('../helpers/jwt');
 const bcrypt = require('bcrypt');
+const path = require("path");
 
 const User = db.User;
 
@@ -40,7 +41,12 @@ module.exports = {
         id: newUserData.id,
       });
       const verificationLink = ` ${process.env.BASE_URL_FE}register/verification?verification_token=${verification_token}`;
-      const rawHTML = fs.readFileSync('./src/templates/verification.html', 'utf-8');
+
+      const rawHTML = fs.readFileSync(
+        path.resolve(__dirname, '../templates/verification.html'),
+        'utf-8',
+      );
+
       const compiledHTML = handlebars.compile(rawHTML);
       const htmlResult = compiledHTML({
         email,
@@ -103,7 +109,7 @@ module.exports = {
   editUserProfile: async (req, res) => {
     try {
       if (req.file) {
-        req.body.profile_picture = `${process.env.REACT_APP_IMAGE_URL}${req.file.filename}`
+        req.body.profile_picture = `${process.env.REACT_APP_IMAGE_URL}${req.file.filename}`;
       }
 
       const findUserByUser = await User.findOne({

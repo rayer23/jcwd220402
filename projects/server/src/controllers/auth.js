@@ -4,6 +4,7 @@ const { signToken, decode } = require('../helpers/jwt');
 const fs = require('fs');
 const handlebars = require('handlebars');
 const emailer = require('../helpers/emailer');
+const path = require("path");
 
 const User = db.User;
 
@@ -115,7 +116,10 @@ module.exports = {
 
         const link = process.env.BASE_URL_FE;
 
-        const rawHTML = fs.readFileSync('./src/templates/welcome.html', 'utf-8');
+        const rawHTML = fs.readFileSync(
+          path.resolve(__dirname, '../templates/welcome.html'),
+          'utf-8',
+        );
 
         const compiledHTML = handlebars.compile(rawHTML);
 
@@ -181,7 +185,10 @@ module.exports = {
 
       const resetPasswordLink = `${process.env.BASE_URL_FE}reset-confirm?reset_token=${reset_token}`;
 
-      const rawHTML = fs.readFileSync('./src/templates/reset.html', 'utf-8');
+      const rawHTML = fs.readFileSync(
+        path.resolve(__dirname, '../templates/reset.html'),
+        'utf-8',
+      );
 
       const compiledHTML = handlebars.compile(rawHTML);
 

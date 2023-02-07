@@ -528,7 +528,7 @@ const ChangeAddress = ({ defaultAddressUser }) => {
         onSubmit={() => doubleOnClick()}
         rightButton={'Yes'}
         leftButton={'No'}
-        color={'#F7931E'}
+        color={'#0095DA'}
       />
 
       {/* modal edit address */}
@@ -552,7 +552,7 @@ const ChangeAddress = ({ defaultAddressUser }) => {
         onSubmit={() => doubleOnClick1()}
         rightButton={'Yes'}
         leftButton={'No'}
-        color={'#F7931E'}
+        color={'#0095DA'}
       />
     </>
   );
