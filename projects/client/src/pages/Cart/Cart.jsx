@@ -586,9 +586,9 @@ import {
             isOpen={isOpenAlertAddNewAddress}
             onClose={onCloseAlertAddNewAddress}
             onSubmit={() => doubleOnClick1()}
-            rightButton={"Add Address"}
-            leftButton={"Change Address"}
-            color={"#F7931E"}
+            rightButton={"Yes"}
+            leftButton={"No"}
+            color={"#0095DA"}
           />
         </>
       )

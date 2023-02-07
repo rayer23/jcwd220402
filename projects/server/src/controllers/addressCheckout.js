@@ -1,4 +1,6 @@
-const db = require("../models");
+const db = require('../models');
+const axios = require('axios');
+const { Op } = require('sequelize');
 
 const RajaOngkirKey = process.env.RAJA_KEY;
 const OpenCageKey = process.env.GEO_KEY;
@@ -14,19 +16,19 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "Get Main Address",
+        message: 'Get Main Address',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
   getAllAddress: async (req, res) => {
     try {
-      const { recipients_name = "", full_address = "" } = req.query;
+      const { recipients_name = '', full_address = '' } = req.query;
 
       if (recipients_name || full_address) {
         const response = await db.Address.findAll({
@@ -41,11 +43,11 @@ module.exports = {
               },
             },
           },
-          order: [["is_default", "DESC"]],
+          order: [['is_default', 'DESC']],
         });
 
         return res.status(200).json({
-          message: "Get User Address by name and full address",
+          message: 'Get User Address by name and full address',
           data: response,
         });
       }
@@ -54,17 +56,17 @@ module.exports = {
         where: {
           UserId: req.user.id,
         },
-        order: [["is_default", "DESC"]],
+        order: [['is_default', 'DESC']],
       });
 
       return res.status(200).json({
-        message: "Get All Address",
+        message: 'Get All Address',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
   },
@@ -81,7 +83,7 @@ module.exports = {
       } = req.body;
 
       const provinceAndCity = await axios.get(
-        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`
+        `https://api.rajaongkir.com/starter/city?id=${city}&province=${province}&key=${RajaOngkirKey}`,
       );
 
       const provinceName = provinceAndCity.data.rajaongkir.results.province;
@@ -90,7 +92,7 @@ module.exports = {
       const cityNameAndType = `${cityType} ${cityName}`;
 
       const location = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?key=${OpenCageKey}&q=${districts},${cityNameAndType},${provinceName}`
+        `https://api.opencagedata.com/geocode/v1/json?key=${OpenCageKey}&q=${districts},${cityNameAndType},${provinceName}`,
       );
 
       const latitude = location.data.results[0].geometry.lat;
@@ -113,13 +115,13 @@ module.exports = {
       });
 
       return res.status(200).json({
-        message: "New Address",
+        message: 'New Address',
         data: response,
       });
     } catch (error) {
       console.log(error);
       return res.status(500).json({
-        message: "Server Error add address",
+        message: 'Server Error',
       });
     }
   },
