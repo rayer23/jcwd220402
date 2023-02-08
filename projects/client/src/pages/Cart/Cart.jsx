@@ -13,7 +13,7 @@ import {
   import React, { useEffect, useState } from "react"
   import { useDispatch, useSelector } from "react-redux"
   import { axiosInstance } from "../../api"
-  import { fillCart, getTotalQuantity } from "../../redux/features/cartSlice"
+  import { fillCart, getTotalQuantity,getTotalCartQuantity } from "../../redux/features/cartSlice"
   import CartItems from "./CartItems"
   import { getTotalPrice } from "../../redux/features/cartSlice"
   import { Link, useNavigate } from "react-router-dom"
@@ -58,22 +58,32 @@ import {
   
     const fetchMyCart = async () => {
       try {
-        const response = await axiosInstance.get("/carts/me")
-        dispatch(fillCart(response.data.data))
+        const response = await axiosInstance.get("/carts/me");
+        dispatch(fillCart(response.data.data));
   
-        setSelectedCart(response.data.checkedDataCount)
+        setSelectedCart(response.data.checkedDataCount);
   
-        if (!response.data.cartChecked.includes(0)) {
-          setAllChecked(true)
-        } else {
-          setAllChecked(false)
+        const cartQuantity = response.data.data.map((val) => val.quantity);
+  
+        let Total = 0;
+  
+        for (let i = 0; i < cartQuantity.length; i++) {
+          Total += Number(cartQuantity[i]);
         }
   
-        setIsLoading(true)
+        dispatch(getTotalCartQuantity(Total));
+  
+        if (!response.data.cartChecked.includes(0)) {
+          setAllChecked(true);
+        } else {
+          setAllChecked(false);
+        }
+  
+        setIsLoading(true);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
+    };
   
     const deleteBtnHandler = async (id) => {
       try {
@@ -576,9 +586,9 @@ import {
             isOpen={isOpenAlertAddNewAddress}
             onClose={onCloseAlertAddNewAddress}
             onSubmit={() => doubleOnClick1()}
-            rightButton={"Add Address"}
-            leftButton={"Change Address"}
-            color={"#F7931E"}
+            rightButton={"Yes"}
+            leftButton={"No"}
+            color={"#0095DA"}
           />
         </>
       )

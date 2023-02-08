@@ -5,6 +5,7 @@ const handlebars = require('handlebars');
 const { Op } = require('sequelize');
 const moment = require('moment');
 const schedule = require('node-schedule');
+const path = require("path");
 
 module.exports = {
   waitingConfirmation: async (req, res) => {
@@ -632,7 +633,10 @@ module.exports = {
       );
       const transactionLink = `${process.env.BASE_URL_FE}transaction-list`;
 
-      const rawHTML = fs.readFileSync('./src/templates/approved.html', 'utf-8');
+      const rawHTML = fs.readFileSync(
+        path.resolve(__dirname, '../templates/approved.html'),
+        'utf-8',
+      );
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -695,7 +699,10 @@ module.exports = {
 
       const uploadLink = `${process.env.BASE_URL_FE}payment/${findTransaction.transaction_name}`;
 
-      const rawHTML = fs.readFileSync('./src/templates/rejected.html', 'utf-8');
+      const rawHTML = fs.readFileSync(
+        path.resolve(__dirname, '../templates/rejected.html'),
+        'utf-8',
+      );
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -769,8 +776,10 @@ module.exports = {
             },
           ),
       );
-
-      const rawHTML = fs.readFileSync('./src/templates/orderSend.html', 'utf-8');
+      const rawHTML = fs.readFileSync(
+        path.resolve(__dirname, '../templates/orderSend.html'),
+        'utf-8',
+      );
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -898,8 +907,10 @@ module.exports = {
           TypeJournalId: findTypeId.id,
         });
       }
-
-      const rawHTML = fs.readFileSync('./src/templates/orderCancel.html', 'utf-8');
+      const rawHTML = fs.readFileSync(
+        path.resolve(__dirname, '../templates/orderCancel.html'),
+        'utf-8',
+      );
 
       const compiledHTML = handlebars.compile(rawHTML);
 
@@ -954,7 +965,10 @@ module.exports = {
           },
         },
       );
-      const rawHTML = fs.readFileSync('./src/templates/orderDelivered.html', 'utf-8');
+      const rawHTML = fs.readFileSync(
+        path.resolve(__dirname, '../templates/orderDelivered.html'),
+        'utf-8',
+      );
 
       const compiledHTML = handlebars.compile(rawHTML);
 
