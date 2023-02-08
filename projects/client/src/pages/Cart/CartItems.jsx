@@ -210,7 +210,7 @@ const CartItems = ({ totalStocks, cartNote, isChecked, productName, description,
                                     mt={'5px'}
                                     fontFamily={"Open Sauce One,Nunito Sans, sans-serif"}
                                     >
-                                Package weight: {package_weight} kg
+                                Package weight: {package_weight} gr
                                 </Text>
                             </Box>
                             <Box>
