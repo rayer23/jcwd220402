@@ -171,12 +171,7 @@ const ModalCancelTransaction = ({
                         fontWeight={600}
                         lineHeight={"22px"}
                         onClick={cancelPaidTransaction}
-                        // isDisabled={
-                        //     !cancelReason.length ||
-                        //         (reason === "Other reason" && inputText.length < 16)
-                        //         ? true
-                        //         : false
-                        // }
+                        
                     >
                         Click For Cancellation
                     </Button>

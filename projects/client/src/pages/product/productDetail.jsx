@@ -246,8 +246,8 @@ const ProductDetail = ({ product_name, id }) => {
           </Box>
         ) : (
           <Box display="flex" gap="20px">
-            <Box borderRadius={'12px'} display={'block'} w="348px" h="420px">
-              <Carousel showStatus={false} showArrows={true} showThumbs={false}>
+            <Box borderRadius={'15px'} display={'block'} w="348px" h="420px">
+              <Carousel showStatus={false} showArrows={true} showThumbs={false} >
                 {image.map((val) => (
                   <Stack>
                     <Box

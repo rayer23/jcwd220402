@@ -835,7 +835,7 @@ const TransactionList = () => {
                                             fontSize={'13px'}
                                             lineHeight={'16px'}
                                             textAlign={'center'}
-                                            color={order_status === "Awaiting Confirmation" ? '#0095DA' : '#31353BAD'}
+                                            color={order_status === "Awaiting Confirmation" ? '#32769C' : '#31353BAD'}
                                         >
                                             Awaiting Confirmation
                                         </Text>
@@ -858,7 +858,7 @@ const TransactionList = () => {
                                             fontSize={'13px'}
                                             lineHeight={'16px'}
                                             textAlign={'center'}
-                                            color={order_status === "Processed" ? '#0095DA' : '#31353BAD'}
+                                            color={order_status === "Processed" ? '#32769C' : '#31353BAD'}
                                         >
                                             Processed
                                         </Text>
@@ -882,7 +882,7 @@ const TransactionList = () => {
                                             fontSize={'13px'}
                                             lineHeight={'16px'}
                                             textAlign={'center'}
-                                            color={order_status === "Shipping" ? '#0095DA' : '#31353BAD'}
+                                            color={order_status === "Shipping" ? '#32769C' : '#31353BAD'}
                                         >
                                             Shipping
                                         </Text>
@@ -906,7 +906,7 @@ const TransactionList = () => {
                                             fontSize={'13px'}
                                             lineHeight={'16px'}
                                             textAlign={'center'}
-                                            color={order_status === "Delivered" ? '#0095DA' : '#31353BAD'}
+                                            color={order_status === "Delivered" ? '#32769C' : '#31353BAD'}
                                         >
                                             Delivered
                                         </Text>

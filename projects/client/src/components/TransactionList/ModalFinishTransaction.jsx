@@ -49,8 +49,8 @@ const ModalFinishTransaction = ({ doneIsOpen, doneOnOpen, doneOnClose, finishOrd
                             textAlign={"center"}
                         >
                             Make sure you've already received your products
-                            that you've ordered. Thankyou for making transaction
-                            at Delisha and give us feedback.
+                            that you've ordered. Thankyou for buying furniture
+                            at Delisha and enjoy your choosen furniture!
                         </Text>
                     </Box>
                     <Box

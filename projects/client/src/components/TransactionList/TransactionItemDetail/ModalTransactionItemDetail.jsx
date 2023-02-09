@@ -61,7 +61,7 @@ const ModalTransactionItemDetail = ({ courirDuration, transactionItems, transact
                     <Box
                         h={"146.86px"}
                         p={"24px 32px"}
-                        borderBottom={"8px solid #f3f4f5"}
+                        borderBottom={"5px solid #f3f4f5"}
                     >
                         <Box
                             m={"0px 0px 12px"}
@@ -157,7 +157,7 @@ const ModalTransactionItemDetail = ({ courirDuration, transactionItems, transact
                         pl={"32px"}
                         pt={"24px"}
                         pb={"16px"}
-                        borderBottom={"8px solid #f3f4f5"}
+                        borderBottom={"5px solid #f3f4f5"}
                     >
                         <Text
                             color={"#31353BF5"}

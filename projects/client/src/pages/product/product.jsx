@@ -174,15 +174,7 @@ const Product = () => {
             setSearchValue(searchProduct)
         }
     }
-    const seeMoreBtnHandler = () => {
-        // setNext(next + categoryData.length)
-        setCatLimit()
-    }
-
-    const seeLessBtnHandler = () => {
-        // setNext(catPerRow)
-        setCatLimit(catPerRow)
-    }
+    
     const resetBtnHandler = () => {
         setSearchParam(false)
         setSortBy(false)
@@ -330,41 +322,6 @@ const Product = () => {
                                 </InputGroup>
                                 </FormControl> */}
                             </Flex>
-                            <Box  p='5px' mt='-20px' ml="10px" display="grid" h="auto" w="160px">
-                            {catLimit === catPerRow ? (
-                                    <Button
-                                        onClick={() => seeMoreBtnHandler()}
-                                        mt="6"
-                                        colorScheme="linkedin"
-                                        variant="link"
-                                        justifyContent="flex-start"
-                                        >
-                                            <Text
-                                                fontSize="12px"
-                                                w="110px"
-                                                textAlign="start"
-                                                >
-                                                See More
-                                            </Text>
-                                    </Button>
-                                            ) : (
-                                    <Button
-                                        onClick={() => seeLessBtnHandler()}
-                                         mt="6"
-                                        colorScheme="linkedin"
-                                        variant="link"
-                                        justifyContent="flex-start"
-                                                >
-                                            <Text
-                                                fontSize="12px"
-                                                w="110px"
-                                                textAlign="start"
-                                                >
-                                            See Less
-                                            </Text>
-                                    </Button>
-                                    )}
-                            </Box>
                             </Box>
                         </Box>
                         </Flex>
@@ -389,12 +346,11 @@ const Product = () => {
                                 />
                             </Box>
                         ) : !products.length ? (
-                            <Alert status="warning">
-                                <AlertIcon />
-                                <AlertTitle textAlign="center">
-                                There were No Products Found.
-                                </AlertTitle>
-                            </Alert>
+                            <Center>
+                                <Text fontWeight={500} fontSize={'18px'}>
+                                    Products Not Found
+                                </Text>
+                            </Center> 
                         ) : null}
                         <GridItem>
                             <Grid
@@ -408,9 +364,9 @@ const Product = () => {
                             <HStack justifyContent="end" gap="2px">
                                 {page === 1 ? null : (
                                     <CgChevronLeft
-                                        bgColor="#0095DA"
+                                        bgColor="#0058a3"
                                         onClick={prevPageBtnHandler}
-                                        color="#0095DA"
+                                        color="#0058a3"
                                         cursor="pointer"
                                         size={30}
                                     />
@@ -418,8 +374,8 @@ const Product = () => {
                                 <Text>{page}</Text>
                                 {page >= maxPage ? null : (
                                     <CgChevronRight
-                                        bgColor="#0095DA"
-                                        color="#0095DA"
+                                        bgColor="#0058a3"
+                                        color="#0058a3"
                                         onClick={nextPageBtnHandler}
                                         cursor="pointer"
                                         size={30}
@@ -523,12 +479,11 @@ const Product = () => {
                                     />
                                 </Box>
                             ) : !products.length ? (
-                                <Alert status="warning">
-                                    <AlertIcon />
-                                    <AlertTitle textAlign="center">
-                                        No Products Found
-                                    </AlertTitle>
-                                </Alert>
+                                <Center>
+                                <Text fontWeight={500} fontSize={'18px'}>
+                                    Products Not Found
+                                </Text>
+                                </Center> 
                             ) : null}
 
                             <Grid
@@ -551,9 +506,9 @@ const Product = () => {
                     <Center>
                         {page === 1 ? null : (
                             <CgChevronLeft
-                                bgColor="#0095DA"
+                                bgColor="#0058a3"
                                 onClick={prevPageBtnHandler}
-                                color="#0095DA"
+                                color="#0058a3"
                                 cursor="pointer"
                                 size={30}
                             />
@@ -561,8 +516,8 @@ const Product = () => {
                         <Text>{page}</Text>
                         {page >= maxPage ? null : (
                             <CgChevronRight
-                                bgColor="#0095DA"
-                                color="#0095DA"
+                                bgColor="#0058a3"
+                                color="#0058a3"
                                 onClick={nextPageBtnHandler}
                                 cursor="pointer"
                                 size={30}

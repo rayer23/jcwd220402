@@ -102,9 +102,9 @@ const RenderProductTransactionDetail = ({ productImage, productName, price, quan
 
     return (
         <Box
-            p={'16px'}
-            border={'1px solid #e5e7e9'}
-            borderRadius={'8px'}
+            p={'10px'}
+            // border={'3px solid #e5e7e9'}
+            // borderRadius={'8px'}
             cursor={'default'}
             mb={'10px'}
         >
@@ -113,8 +113,8 @@ const RenderProductTransactionDetail = ({ productImage, productName, price, quan
                     <Box pr={'14px'} display={'flex'} alignItems={'flex-start'} mt={'2px'} >
                         <Image
                             src={productImage}
-                            w={'45.99px'}
-                            h={'45.99px'}
+                            w={'100px'}
+                            h={'70px'}
                             mr={'13px'}
                             borderRadius={'6px'}
                         />
@@ -174,26 +174,6 @@ const RenderProductTransactionDetail = ({ productImage, productName, price, quan
                                 currency: "IDR",
                             }).format(quantity * price).split(",")[0]}
                         </Text>
-                        {orderStatusName !== "Done" ? null : (
-                            <Button
-                                mt={'9.98px'}
-                                w={'135px'}
-                                h={'31.99px'}
-                                p={'0px 16px'}
-                                border={'1px solid #0095DA'}
-                                bgColor={'#fff'}
-                                onClick={cartItemQuantity === null ? addToCart : addToCartByProductId}
-                            >
-                                <Text
-                                    fontSize={'12px'}
-                                    fontWeight={700}
-                                    lineHeight={'18px'}
-                                    color={'#0095DA'}
-                                >
-                                    Buy Again
-                                </Text>
-                            </Button>
-                        )}
                     </Box>
                 </GridItem>
             </Grid>
