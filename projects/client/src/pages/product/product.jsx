@@ -74,8 +74,8 @@ const Product = () => {
                     category_name: searchValue,
                 },
             })
-            setTotalCount(response.data.dataCount)
-            setMaxPage(Math.ceil(response.data.dataCount / maxItemsPerPage))
+            setTotalCount(response.data.dataCount-36)
+            setMaxPage(Math.ceil((response.data.dataCount-36) / maxItemsPerPage))
 
             if (page === 1) {
                 setProducts(response.data.data)
@@ -416,7 +416,7 @@ const Product = () => {
                                     />
                                 )}
                                 <Text>{page}</Text>
-                                {page >= maxPage-2 ? null : (
+                                {page >= maxPage ? null : (
                                     <CgChevronRight
                                         bgColor="#0095DA"
                                         color="#0095DA"
@@ -559,7 +559,7 @@ const Product = () => {
                             />
                         )}
                         <Text>{page}</Text>
-                        {page >= maxPage-2 ? null : (
+                        {page >= maxPage ? null : (
                             <CgChevronRight
                                 bgColor="#0095DA"
                                 color="#0095DA"
