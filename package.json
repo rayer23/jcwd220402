@@ -19,5 +19,14 @@
   },
   "workspaces": [
     "projects/*"
-  ]
+  ],
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.12",
+    "fast-csv": "^4.3.6",
+    "moment": "^2.29.4",
+    "mysql": "^2.18.1",
+    "node-schedule": "^2.1.0",
+    "opencage-api-client": "^1.0.0",
+    "scheduler": "^0.23.0"
+  }
 }
