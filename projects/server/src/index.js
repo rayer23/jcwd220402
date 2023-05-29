@@ -124,9 +124,9 @@ app.listen(PORT, (err) => {
     console.log(`ERROR: ${err}`);
   } else {
     // db.sequelize.sync({ alter: true });
-//     if (!fs.existsSync('./src/public')) {
-//       fs.mkdirSync('./src/public');
-//     }
+    //     if (!fs.existsSync('./src/public')) {
+    //       fs.mkdirSync('./src/public');
+    //     }
     console.log(`APP RUNNING at ${PORT} ✅`);
   }
 });
